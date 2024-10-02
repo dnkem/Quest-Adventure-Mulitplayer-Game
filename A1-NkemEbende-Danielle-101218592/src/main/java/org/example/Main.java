@@ -3,6 +3,7 @@ package org.example;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -129,13 +130,38 @@ public class Main {
 
     // COMMIT 2 - RESP 2
     public void shuffleDecks(){
+        Collections.shuffle(eventDeck);
+        Collections.shuffle(advDeck);
     }
 
     static class Player{
+        String id;          // P1, P2, P3, P4
+        int numShields = 0;
+        ArrayList<Card> cards = new ArrayList<Card>();
 
+        Player(String ID){
+            this.id = ID;
+        }
     }
 
+    Player p1 = new Player("P1");
+    Player p2 = new Player("P2");
+    Player p3 = new Player("P3");
+    Player p4 = new Player("P4");
+
     public void distributeCards(){
+        for (int j=0; j<12; j++){
+            p1.cards.add(advDeck.removeLast());
+        }
+        for (int j=0; j<12; j++){
+            p2.cards.add(advDeck.removeLast());
+        }
+        for (int j=0; j<12; j++){
+            p3.cards.add(advDeck.removeLast());
+        }
+        for (int j=0; j<12; j++){
+            p4.cards.add(advDeck.removeLast());
+        }
 
     }
 
