@@ -11,6 +11,7 @@ public class Main {
         System.out.println("COMP 4004 - A1");
     }
 
+    // COMMIT 1 - RESP 1
     static class Card {
         String type;    // Adventure Event
         String name;    // F W Q D... Plague..
@@ -124,6 +125,18 @@ public class Main {
     }
     public int getAdvDeckSize(){
         return advDeck.size();
+    }
+
+    // COMMIT 2 - RESP 2
+    public void shuffleDecks(){
+    }
+
+    static class Player{
+
+    }
+
+    public void distributeCards(){
+
     }
 
 }

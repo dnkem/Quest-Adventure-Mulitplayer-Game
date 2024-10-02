@@ -123,4 +123,72 @@ class MainTest {
 
     }
 
-}
+    @Test
+    @DisplayName("Check for Shuffled Cards")
+    public void RESP_2_test_01(){
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+
+        // test 1: check that both decks are shuffled
+
+        // after decks that get updated once shuffled
+        ArrayList<Main.Card> afterAdvDeck = game.getAdvDeck();
+        ArrayList<Main.Card> afterEventDeck = game.getEventDeck();
+
+        // create deep copy of decks before shuffle
+        ArrayList<Main.Card> beforeAdvDeck = new ArrayList<Main.Card>();
+        for (int i=0; i< game.getAdvDeckSize(); i++){
+            Main.Card card = new Main.Card(afterAdvDeck.get(i).type,afterAdvDeck.get(i).name, afterAdvDeck.get(i).value);
+            beforeAdvDeck.add(card);
+        }
+        ArrayList<Main.Card> beforeEventDeck = new ArrayList<Main.Card>();
+        for (int i=0; i< game.getEventDeckSize(); i++){
+            Main.Card card = new Main.Card(afterEventDeck.get(i).type,afterEventDeck.get(i).name, afterEventDeck.get(i).value);
+            beforeEventDeck.add(card);
+        }
+
+        //shuffle
+        game.shuffleDecks();
+
+        // check and compare
+        assertNotEquals(beforeAdvDeck, afterAdvDeck);
+        assertNotEquals(beforeEventDeck, afterEventDeck);
+    }
+
+    @Test
+    @DisplayName("Check for Card Distribution")
+    public void RESP_2_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+
+        Main.Player p1 = game.p1;
+        Main.Player p2 = game.p2;
+        Main.Player p3 = game.p3;
+        Main.Player p4 = game.p4;
+
+        // don't shuffle cards first so we can tell they are being removed
+        game.distributeCards();
+
+        // test 1: check that all players have 12 cards
+        assertEquals(12, p1.cards.size(), "P1 card number issue");
+        assertEquals(12, p2.cards.size(), "P2 card number issue");
+        assertEquals(12, p3.cards.size(), "P3 card number issue");
+        assertEquals(12, p4.cards.size(), "P4 card number issue");
+    }
+
+    @Test
+    @DisplayName("Check that the Adventure Deck was Updated")
+    public void RESP_2_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 1: check adventure size to ensure cards were distributed (100 - 12 - 12 - 12 - 12 = 52)
+        assertEquals(52, game.getAdvDeckSize(), "Cards were not distributed");
+    }
+
+
+    }
