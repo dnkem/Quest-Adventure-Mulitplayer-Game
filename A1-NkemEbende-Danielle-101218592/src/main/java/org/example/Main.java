@@ -207,7 +207,7 @@ public class Main {
     Card currentDrawnEventCard;
 
     public void drawEventCard(){
-        
+        currentDrawnEventCard = eventDeck.removeLast();
     }
 
 

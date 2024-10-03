@@ -286,7 +286,6 @@ class MainTest {
         String name = game.eventDeck.get(game.getEventDeckSize() - 1).name;
         String type = game.eventDeck.get(game.getEventDeckSize() - 1).type;
         int value = game.eventDeck.get(game.getEventDeckSize() - 1).value;
-        System.out.println("correct: " + name + value + " " + type);
 
 
         game.drawEventCard();
