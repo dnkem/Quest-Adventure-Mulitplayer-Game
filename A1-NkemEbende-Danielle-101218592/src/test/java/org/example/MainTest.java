@@ -190,5 +190,36 @@ class MainTest {
         assertEquals(52, game.getAdvDeckSize(), "Cards were not distributed");
     }
 
+    @Test
+    @DisplayName("Check Game's First Player")
+    public void RESP_3_test_01() {
+        Main game = new Main();
 
+        // test 1: check that the game starts with player 1
+        assertEquals("P1", game.currentPlayer, "Current player is incorrect");
     }
+
+    @Test
+    @DisplayName("Game assigns current player")
+    public void RESP_3_test_02() {
+        Main game = new Main();
+
+        // test 2: check that the game loops in the correct order for 2 rounds
+        int i=0;
+        while (i<9) {
+            if (i == 0 || i == 4 || i == 8) {
+                assertEquals("P1", game.currentPlayer);
+            } else if (i == 1 || i == 5){
+                assertEquals("P2", game.currentPlayer);
+            } else if (i == 2 || i == 6){
+                assertEquals("P3", game.currentPlayer);
+            } else if (i == 3 || i == 7){
+                assertEquals("P4", game.currentPlayer);
+            }
+            game.nextPlayer();
+            i++;
+        }
+    }
+
+
+}

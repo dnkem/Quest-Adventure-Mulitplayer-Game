@@ -165,4 +165,9 @@ public class Main {
 
     }
 
+    String currentPlayer;
+    public void nextPlayer(){
+
+    }
+
 }
