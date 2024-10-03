@@ -2,6 +2,7 @@ package org.example;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -10,6 +11,8 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
         System.out.println("COMP 4004 - A1");
+        // note that the printed items don't need to actually print when test but should when the corresponding function runs in main
+        // test printed fucntions here
     }
 
     // COMMIT 1 - RESP 1
@@ -165,6 +168,7 @@ public class Main {
 
     }
 
+    // COMMIT 3 - RESP 3
     String currentPlayer = "P1";
     public void nextPlayer(){
         switch (currentPlayer){
@@ -182,5 +186,11 @@ public class Main {
                 break;
         }
     }
+
+    // COMMIT 4 - RESP 4
+    public void printPlayersCards(Player player, PrintWriter printWriter){
+
+    }
+
 
 }

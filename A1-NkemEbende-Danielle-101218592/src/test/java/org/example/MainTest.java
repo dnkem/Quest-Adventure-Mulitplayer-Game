@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class MainTest {
     @Test
@@ -190,6 +193,7 @@ class MainTest {
         assertEquals(52, game.getAdvDeckSize(), "Cards were not distributed");
     }
 
+    // COMMIT 3 - RESP 3
     @Test
     @DisplayName("Check Game's First Player")
     public void RESP_3_test_01() {
@@ -220,6 +224,25 @@ class MainTest {
             i++;
         }
     }
+
+    // COMMIT 4 - RESP 4
+    @Test
+    @DisplayName("A Player's Cards Are Visible") // deck is unshuffled so we know what the player's card should display
+    public void RESP_4_test_01() {
+        String string = "";
+        StringWriter stringWriter = new StringWriter(); // use stringWriter as a replacement for Scanner for JUnit tests
+
+        Main game = new Main();
+        game.initAdvDeck();
+        game.distributeCards();
+
+        // test 1: check that a player's cards were printed to the screen
+        game.printPlayersCards(game.p1, new PrintWriter(stringWriter));
+        string = stringWriter.toString();
+        assertTrue(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15"));
+        // note that the test doesn't need to actually print but it should when the corresponding function runs in main
+    }
+
 
 
 }
