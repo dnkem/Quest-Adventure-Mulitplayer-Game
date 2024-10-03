@@ -165,9 +165,22 @@ public class Main {
 
     }
 
-    String currentPlayer;
+    String currentPlayer = "P1";
     public void nextPlayer(){
-
+        switch (currentPlayer){
+            case "P1":
+                currentPlayer = "P2";
+                break;
+            case "P2":
+                currentPlayer = "P3";
+                break;
+            case "P3":
+                currentPlayer = "P4";
+                break;
+            case "P4":
+                currentPlayer = "P1";
+                break;
+        }
     }
 
 }
