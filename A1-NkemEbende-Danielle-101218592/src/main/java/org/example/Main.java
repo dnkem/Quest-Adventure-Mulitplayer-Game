@@ -189,7 +189,18 @@ public class Main {
 
     // COMMIT 4 - RESP 4
     public void printPlayersCards(Player player, PrintWriter printWriter){
+        // collect player card info into a string
+        String cards = "";
+        for (int i=0; i<player.cards.size(); i++){
+            cards += player.cards.get(i).name + player.cards.get(i).value + "   ";
+        }
+        printWriter.println("Checks there's items in card: " + cards);
 
+        // print into the terminal
+        printWriter.println("Printing " + player.id + " Cards:");
+        printWriter.printf("%s", cards);
+        printWriter.flush();
+        printWriter.close();
     }
 
 
