@@ -203,5 +203,12 @@ public class Main {
         printWriter.close();
     }
 
+    // COMMIT 5 - RESP 5
+    Card currentDrawnEventCard;
+
+    public void drawEventCard(){
+        
+    }
+
 
 }

@@ -243,6 +243,79 @@ class MainTest {
         // note that the test doesn't need to actually print but it should when the corresponding function runs in main
     }
 
+    // COMMIT 5 - RESP 5
+    @Test
+    @DisplayName("Player Draws Single Event Card and the event deck updates")
+    public void RESP_5_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        // non-shuffled deck
 
+        // test 1: a card is removed from event deck
+        game.drawEventCard();
+        assertEquals(16, game.eventDeck.size(), "Event card drawn issue");
+    }
+
+    @Test
+    @DisplayName("Player Draws Many Event Card and the event deck updates")
+    public void RESP_5_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        // non-shuffled deck
+
+        // test 2: Multiple drawn cards are removed from event deck
+        game.drawEventCard();
+        game.drawEventCard();
+        game.drawEventCard();
+        assertEquals(14, game.eventDeck.size(), "Event card drawn issue");
+
+    }
+
+    @Test
+    @DisplayName("Player Draws Event Card and the correct card is drawn")
+    public void RESP_5_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        // non-shuffled deck
+
+        // test 3: a card is removed from event deck
+        // getting last card in eventDeck
+        String name = game.eventDeck.get(game.getEventDeckSize() - 1).name;
+        String type = game.eventDeck.get(game.getEventDeckSize() - 1).type;
+        int value = game.eventDeck.get(game.getEventDeckSize() - 1).value;
+        System.out.println("correct: " + name + value + " " + type);
+
+
+        game.drawEventCard();
+        assertEquals(name, game.currentDrawnEventCard.name, "Wrong card");
+        assertEquals(type, game.currentDrawnEventCard.type, "Wrong card");
+        assertEquals(value, game.currentDrawnEventCard.value, "Wrong card");
+
+    }
+
+    @Test
+    @DisplayName("Player Draws Many Event Cards and the correct card is drawn")
+    public void RESP_5_test_04() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        // non-shuffled deck
+
+        // test 4:  Multiple cards drawn are removed form the event deck
+        // getting last card in eventDeck
+        String name = game.eventDeck.get(game.getEventDeckSize()-3).name;
+        String type = game.eventDeck.get(game.getEventDeckSize()-3).type;
+        int value = game.eventDeck.get(game.getEventDeckSize()-3).value;
+
+        game.drawEventCard();
+        game.drawEventCard();
+        game.drawEventCard();
+        assertEquals(name, game.currentDrawnEventCard.name, "Wrong card");
+        assertEquals(type, game.currentDrawnEventCard.type, "Wrong card");
+        assertEquals(value, game.currentDrawnEventCard.value, "Wrong card");
+    }
 
 }
