@@ -239,6 +239,12 @@ public class Main {
     Card currentDrawnEventCard;
 
     public void playQueenEventCard(Player p){
+        if (currentPlayer.getID().equals(p.id) && currentDrawnEventCard.getName().equals("Queen’s favor")){
+            p.drawAdvCard();
+            p.drawAdvCard();
+        } else {
+            System.out.println("Can't draw adv cards for Queens favor event");
+        }
     }
 
 
