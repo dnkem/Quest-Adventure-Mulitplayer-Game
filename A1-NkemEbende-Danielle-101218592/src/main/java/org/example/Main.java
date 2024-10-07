@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("COMP 4004 - A1");
         // note that the printed items don't need to actually print when test but should when the corresponding function runs in main
-        // test printed fucntions here
+        // test printed functions here
     }
 
     // COMMIT 1 - RESP 1
@@ -26,6 +26,12 @@ public class Main {
             this.name = n;
             this.value = v;
         }
+
+        // getters - REFACTOR 1
+        public String getType(){ return type; }
+        public String getName(){ return  name; }
+        public int getValue() { return value; }
+
     }
 
     ArrayList<Card> advDeck = new ArrayList<Card>();
@@ -137,13 +143,55 @@ public class Main {
         Collections.shuffle(advDeck);
     }
 
-    static class Player{
+    // - REFACTOR 1
+    class Player{
         String id;          // P1, P2, P3, P4
         int numShields = 0;
         ArrayList<Card> cards = new ArrayList<Card>();
 
         Player(String ID){
             this.id = ID;
+        }
+
+        // getters and setters
+        public String getID(){ return id; }
+        public int getNumShields(){ return numShields; }
+        public void setId(String i){this.id = i; }
+        public void setNumShields(int s){ this.numShields = s; }
+        public int getCardsSize(){ return cards.size(); }
+        public Card getCard(int i){ return cards.get(i); }
+
+        public void add(Card c){
+            cards.add(c);
+        }
+
+        // COMMIT 4 - RESP 4 - REFACTOR 1
+        public void printPlayersCards(PrintWriter printWriter){
+            // collect player card info into a string
+            String cards = "";
+            for (int i=0; i<getCardsSize(); i++){
+                cards += getCard(i).getName() + getCard(i).getValue() + "   ";
+            }
+            printWriter.println("Checks there's items in card: " + cards);
+
+            // print into the terminal
+            printWriter.println("Printing " + getID() + " Cards:");
+            printWriter.printf("%s", cards);
+            printWriter.flush();
+            printWriter.close();
+        }
+
+        // COMMIT 5 - RESP 5
+        public void drawAdvCard(){
+            cards.add(advDeck.removeLast());
+            
+        }
+
+        public void drawEventCard(){
+            currentDrawnEventCard = eventDeck.removeLast();
+            if (currentDrawnEventCard.getName().equals("Queen’s favor")){
+                // call function
+            } // else call another function
         }
     }
 
@@ -152,63 +200,44 @@ public class Main {
     Player p3 = new Player("P3");
     Player p4 = new Player("P4");
 
+
     public void distributeCards(){
         for (int j=0; j<12; j++){
-            p1.cards.add(advDeck.removeLast());
+            p1.drawAdvCard();
         }
         for (int j=0; j<12; j++){
-            p2.cards.add(advDeck.removeLast());
+            p2.drawAdvCard();
         }
         for (int j=0; j<12; j++){
-            p3.cards.add(advDeck.removeLast());
+            p3.drawAdvCard();
         }
         for (int j=0; j<12; j++){
-            p4.cards.add(advDeck.removeLast());
+            p4.drawAdvCard();
         }
-
     }
 
     // COMMIT 3 - RESP 3
-    String currentPlayer = "P1";
+    Player currentPlayer = p1;      // shallow copy
     public void nextPlayer(){
-        switch (currentPlayer){
+        switch (currentPlayer.id){
             case "P1":
-                currentPlayer = "P2";
+                currentPlayer = p2;
                 break;
             case "P2":
-                currentPlayer = "P3";
+                currentPlayer = p3;
                 break;
             case "P3":
-                currentPlayer = "P4";
+                currentPlayer = p4;
                 break;
             case "P4":
-                currentPlayer = "P1";
+                currentPlayer = p1;
                 break;
         }
-    }
-
-    // COMMIT 4 - RESP 4
-    public void printPlayersCards(Player player, PrintWriter printWriter){
-        // collect player card info into a string
-        String cards = "";
-        for (int i=0; i<player.cards.size(); i++){
-            cards += player.cards.get(i).name + player.cards.get(i).value + "   ";
-        }
-        printWriter.println("Checks there's items in card: " + cards);
-
-        // print into the terminal
-        printWriter.println("Printing " + player.id + " Cards:");
-        printWriter.printf("%s", cards);
-        printWriter.flush();
-        printWriter.close();
     }
 
     // COMMIT 5 - RESP 5
     Card currentDrawnEventCard;
 
-    public void drawEventCard(){
-        currentDrawnEventCard = eventDeck.removeLast();
-    }
 
 
 }

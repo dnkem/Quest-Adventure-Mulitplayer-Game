@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 class MainTest {
     @Test
@@ -44,25 +43,25 @@ class MainTest {
         int i=0;
         while (i < (game.getAdvDeckSize() / 2)){
             if (i >= 0 && i < 8) {
-                assertTrue(advDeck.get(i).name.equals("F") && advDeck.get(i).value == 5, "F5s issue");
+                assertTrue(advDeck.get(i).getName().equals("F") && advDeck.get(i).getValue() == 5, "F5s issue");
             } else if (i>=8 && i<15){
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 10,"F10s issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 10,"F10s issue");
             } else if (i>=15 && i<23){
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 15, "F15 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 15, "F15 issue");
             } else if (i>=23 && i<30){
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 20, "F20 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 20, "F20 issue");
             } else if (i>=30 && i<37){
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 25, "F25 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 25, "F25 issue");
             } else if (i>=37 && i<41){
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 30, "F30 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 30, "F30 issue");
             } else if (i>=41 && i<45) {
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 35, "F35 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 35, "F35 issue");
             } else if (i>=45 && i<47) {
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 40, "F40 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 40, "F40 issue");
             } else if (i==47 || i==48) {
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 50, "F50 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 50, "F50 issue");
             } else if (i == 49) {
-                assertTrue(advDeck.get(i).name == "F" && advDeck.get(i).value == 70, "F70 issue");
+                assertTrue(advDeck.get(i).getName() == "F" && advDeck.get(i).getValue() == 70, "F70 issue");
             }
             i++;
         }
@@ -71,17 +70,17 @@ class MainTest {
         i=50;
         while (i<game.getAdvDeckSize()){
             if (i < 56){
-                assertTrue(advDeck.get(i).name == "D" && advDeck.get(i).value == 5, "D5 issue");
+                assertTrue(advDeck.get(i).getName() == "D" && advDeck.get(i).getValue() == 5, "D5 issue");
             } else if (i >= 56 && i < 68){
-                assertTrue(advDeck.get(i).name == "H" && advDeck.get(i).value == 10, "H10 issue");
+                assertTrue(advDeck.get(i).getName() == "H" && advDeck.get(i).getValue() == 10, "H10 issue");
             } else if (i >= 68 && i < 84){
-                assertTrue(advDeck.get(i).name == "S" && advDeck.get(i).value == 10, "S10 issue");
+                assertTrue(advDeck.get(i).getName() == "S" && advDeck.get(i).getValue() == 10, "S10 issue");
             } else if (i >= 84 && i < 92){
-                assertTrue(advDeck.get(i).name == "B" && advDeck.get(i).value == 15, "B15 issue");
+                assertTrue(advDeck.get(i).getName() == "B" && advDeck.get(i).getValue() == 15, "B15 issue");
             } else if (i >= 92 && i < 98){
-                assertTrue(advDeck.get(i).name == "L" && advDeck.get(i).value == 20, "L20 issue");
+                assertTrue(advDeck.get(i).getName() == "L" && advDeck.get(i).getValue() == 20, "L20 issue");
             } else if (i >= 98 && i < 100){
-                assertTrue(advDeck.get(i).name == "E" && advDeck.get(i).value == 30, "E30 issue");
+                assertTrue(advDeck.get(i).getName() == "E" && advDeck.get(i).getValue() == 30, "E30 issue");
             }
             i++;
         }
@@ -99,13 +98,13 @@ class MainTest {
         int i=0;
         while (i<game.getEventDeckSize() - 6){ // minus 5 for Events and minus 1 for index
             if (i < 3) {
-                assertTrue(eventDeck.get(i).name == "Q" && eventDeck.get(i).value == 2, "Q2 issue");
+                assertTrue(eventDeck.get(i).getName() == "Q" && eventDeck.get(i).getValue() == 2, "Q2 issue");
             } else if (i >= 3 && i < 7){
-                assertTrue(eventDeck.get(i).name == "Q" && eventDeck.get(i).value == 3, "Q3 issue");
+                assertTrue(eventDeck.get(i).getName() == "Q" && eventDeck.get(i).getValue() == 3, "Q3 issue");
             } else if (i >= 7 && i < 10){
-                assertTrue(eventDeck.get(i).name == "Q" && eventDeck.get(i).value == 4, "Q4 issue");
+                assertTrue(eventDeck.get(i).getName() == "Q" && eventDeck.get(i).getValue() == 4, "Q4 issue");
             } else if (i >= 10 && i < 12){
-                assertTrue(eventDeck.get(i).name == "Q" && eventDeck.get(i).value == 5, "Q5 issue");
+                assertTrue(eventDeck.get(i).getName() == "Q" && eventDeck.get(i).getValue() == 5, "Q5 issue");
             }
             i++;
         }
@@ -114,11 +113,11 @@ class MainTest {
         i=12;
         while (i<game.getEventDeckSize()){
             if (i==12) {
-                assertTrue(eventDeck.get(i).name == "Plague" && eventDeck.get(i).value == 2, "Plague issue");
+                assertTrue(eventDeck.get(i).getName() == "Plague" && eventDeck.get(i).getValue() == 2, "Plague issue");
             } else if(i==13 || i==14){
-                assertTrue(eventDeck.get(i).name == "Queen’s favor" && eventDeck.get(i).value == 2, "Queens favor issue");
+                assertTrue(eventDeck.get(i).getName() == "Queen’s favor" && eventDeck.get(i).getValue() == 2, "Queens favor issue");
             } else if (i==15 || i == 16){
-                assertTrue(eventDeck.get(i).name == "Prosperity" && eventDeck.get(i).value == 2, "Proseperity issue");
+                assertTrue(eventDeck.get(i).getName() == "Prosperity" && eventDeck.get(i).getValue() == 2, "Proseperity issue");
             }
             i++;
         }
@@ -142,12 +141,12 @@ class MainTest {
         // create deep copy of decks before shuffle
         ArrayList<Main.Card> beforeAdvDeck = new ArrayList<Main.Card>();
         for (int i=0; i< game.getAdvDeckSize(); i++){
-            Main.Card card = new Main.Card(afterAdvDeck.get(i).type,afterAdvDeck.get(i).name, afterAdvDeck.get(i).value);
+            Main.Card card = new Main.Card(afterAdvDeck.get(i).getType(), afterAdvDeck.get(i).getName(), afterAdvDeck.get(i).getValue());
             beforeAdvDeck.add(card);
         }
         ArrayList<Main.Card> beforeEventDeck = new ArrayList<Main.Card>();
         for (int i=0; i< game.getEventDeckSize(); i++){
-            Main.Card card = new Main.Card(afterEventDeck.get(i).type,afterEventDeck.get(i).name, afterEventDeck.get(i).value);
+            Main.Card card = new Main.Card(afterEventDeck.get(i).getType(), afterEventDeck.get(i).getName(), afterEventDeck.get(i).getValue());
             beforeEventDeck.add(card);
         }
 
@@ -175,10 +174,10 @@ class MainTest {
         game.distributeCards();
 
         // test 1: check that all players have 12 cards
-        assertEquals(12, p1.cards.size(), "P1 card number issue");
-        assertEquals(12, p2.cards.size(), "P2 card number issue");
-        assertEquals(12, p3.cards.size(), "P3 card number issue");
-        assertEquals(12, p4.cards.size(), "P4 card number issue");
+        assertEquals(12, p1.getCardsSize(), "P1 card number issue");
+        assertEquals(12, p2.getCardsSize(), "P2 card number issue");
+        assertEquals(12, p3.getCardsSize(), "P3 card number issue");
+        assertEquals(12, p4.getCardsSize(), "P4 card number issue");
     }
 
     @Test
@@ -200,7 +199,7 @@ class MainTest {
         Main game = new Main();
 
         // test 1: check that the game starts with player 1
-        assertEquals("P1", game.currentPlayer, "Current player is incorrect");
+        assertEquals("P1", game.currentPlayer.getID(), "Current player is incorrect");
     }
 
     @Test
@@ -212,13 +211,13 @@ class MainTest {
         int i=0;
         while (i<9) {
             if (i == 0 || i == 4 || i == 8) {
-                assertEquals("P1", game.currentPlayer);
+                assertEquals("P1", game.currentPlayer.getID());
             } else if (i == 1 || i == 5){
-                assertEquals("P2", game.currentPlayer);
+                assertEquals("P2", game.currentPlayer.getID());
             } else if (i == 2 || i == 6){
-                assertEquals("P3", game.currentPlayer);
+                assertEquals("P3", game.currentPlayer.getID());
             } else if (i == 3 || i == 7){
-                assertEquals("P4", game.currentPlayer);
+                assertEquals("P4", game.currentPlayer.getID());
             }
             game.nextPlayer();
             i++;
@@ -237,7 +236,7 @@ class MainTest {
         game.distributeCards();
 
         // test 1: check that a player's cards were printed to the screen
-        game.printPlayersCards(game.p1, new PrintWriter(stringWriter));
+        game.p1.printPlayersCards(new PrintWriter(stringWriter));
         string = stringWriter.toString();
         assertTrue(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15"));
         // note that the test doesn't need to actually print but it should when the corresponding function runs in main
@@ -253,7 +252,7 @@ class MainTest {
         // non-shuffled deck
 
         // test 1: a card is removed from event deck
-        game.drawEventCard();
+        game.p1.drawEventCard();
         assertEquals(16, game.eventDeck.size(), "Event card drawn issue");
     }
 
@@ -266,10 +265,10 @@ class MainTest {
         // non-shuffled deck
 
         // test 2: Multiple drawn cards are removed from event deck
-        game.drawEventCard();
-        game.drawEventCard();
-        game.drawEventCard();
-        assertEquals(14, game.eventDeck.size(), "Event card drawn issue");
+        game.p1.drawEventCard();
+        game.p1.drawEventCard();
+        game.p1.drawEventCard();
+        assertEquals(14, game.getEventDeckSize(), "Event card drawn issue");
 
     }
 
@@ -288,7 +287,7 @@ class MainTest {
         int value = game.eventDeck.get(game.getEventDeckSize() - 1).value;
 
 
-        game.drawEventCard();
+        game.p1.drawEventCard();
         assertEquals(name, game.currentDrawnEventCard.name, "Wrong card");
         assertEquals(type, game.currentDrawnEventCard.type, "Wrong card");
         assertEquals(value, game.currentDrawnEventCard.value, "Wrong card");
@@ -309,9 +308,9 @@ class MainTest {
         String type = game.eventDeck.get(game.getEventDeckSize()-3).type;
         int value = game.eventDeck.get(game.getEventDeckSize()-3).value;
 
-        game.drawEventCard();
-        game.drawEventCard();
-        game.drawEventCard();
+        game.p1.drawEventCard();
+        game.p1.drawEventCard();
+        game.p1.drawEventCard();
         assertEquals(name, game.currentDrawnEventCard.name, "Wrong card");
         assertEquals(type, game.currentDrawnEventCard.type, "Wrong card");
         assertEquals(value, game.currentDrawnEventCard.value, "Wrong card");
