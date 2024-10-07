@@ -316,4 +316,63 @@ class MainTest {
         assertEquals(value, game.currentDrawnEventCard.value, "Wrong card");
     }
 
+    // COMMIT 6 - RESP 6
+    @Test
+    @DisplayName("Player Draws Queens Favour E Card is Correct")
+    public void RESP_6_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
+
+        // test 1: check that the drawn card is Queens favor
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+        game.p1.drawEventCard();
+        assertEquals("Queen’s favor", game.currentDrawnEventCard.getName());
+    }
+
+    @Test
+    @DisplayName("Player Draws Queens Favour E Card draws 2 adv card")
+    public void RESP_6_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
+
+        // test 2: the player drew 2 cards
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+//        game.drawEventCard();
+
+        if (game.currentPlayer.getID().equals("P1")){
+            game.p1.drawEventCard();
+            assertEquals(14, game.p1.cards.size());
+        } else if (game.currentPlayer.getID().equals("P2")){
+            game.p2.drawEventCard();
+            assertEquals(14, game.p2.cards.size());
+        } else if (game.currentPlayer.getID().equals("P3")){
+            game.p3.drawEventCard();
+            assertEquals(14, game.p3.cards.size());
+        } else if (game.currentPlayer.getID().equals("P4")){
+            game.p4.drawEventCard();
+            assertEquals(14, game.p4.cards.size());
+        }
+    }
+
+    @Test
+    @DisplayName("Player Draws Queens Favour E Card number of Event and Adventure deck")
+    public void RESP_6_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
+
+        // test 3: check number of cards in deck after
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+        game.p1.drawEventCard();
+        assertEquals(50, game.getAdvDeckSize());
+    }
+
+
+
+
 }

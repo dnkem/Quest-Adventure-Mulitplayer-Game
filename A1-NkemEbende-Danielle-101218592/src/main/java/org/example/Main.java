@@ -190,7 +190,7 @@ public class Main {
         public void drawEventCard(){
             currentDrawnEventCard = eventDeck.removeLast();
             if (currentDrawnEventCard.getName().equals("Queen’s favor")){
-                // call function
+                playQueenEventCard(currentPlayer);
             } // else call another function
         }
     }
@@ -238,6 +238,8 @@ public class Main {
     // COMMIT 5 - RESP 5
     Card currentDrawnEventCard;
 
+    public void playQueenEventCard(Player p){
+    }
 
 
 }
