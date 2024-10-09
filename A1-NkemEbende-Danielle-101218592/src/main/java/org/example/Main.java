@@ -12,11 +12,10 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("COMP 4004 - A1");
         // note that the printed items don't need to actually print when test but should when the corresponding function runs in main
-        // test printed functions here
     }
 
     // COMMIT 1 - RESP 1
-    static class Card {
+    class Card {
         String type;    // Adventure Event
         String name;    // F W Q D... Plague..
         int value;      // #'s
@@ -193,6 +192,15 @@ public class Main {
                 playQueenEventCard(currentPlayer);
             } // else call another function
         }
+
+        public void playQueenEventCard(Player p){
+            if (currentPlayer.getID().equals(p.id) && currentDrawnEventCard.getName().equals("Queen’s favor")){
+                p.drawAdvCard();
+                p.drawAdvCard();
+            } else {
+                System.out.println("Can't draw adv cards for Queens favor event");
+            }
+        }
     }
 
     Player p1 = new Player("P1");
@@ -238,14 +246,6 @@ public class Main {
     // COMMIT 5 - RESP 5
     Card currentDrawnEventCard;
 
-    public void playQueenEventCard(Player p){
-        if (currentPlayer.getID().equals(p.id) && currentDrawnEventCard.getName().equals("Queen’s favor")){
-            p.drawAdvCard();
-            p.drawAdvCard();
-        } else {
-            System.out.println("Can't draw adv cards for Queens favor event");
-        }
-    }
 
 
 }

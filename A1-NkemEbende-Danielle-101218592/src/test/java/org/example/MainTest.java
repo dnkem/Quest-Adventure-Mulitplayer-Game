@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class MainTest {
     @Test
@@ -141,12 +142,12 @@ class MainTest {
         // create deep copy of decks before shuffle
         ArrayList<Main.Card> beforeAdvDeck = new ArrayList<Main.Card>();
         for (int i=0; i< game.getAdvDeckSize(); i++){
-            Main.Card card = new Main.Card(afterAdvDeck.get(i).getType(), afterAdvDeck.get(i).getName(), afterAdvDeck.get(i).getValue());
+            Main.Card card = game.new Card(afterAdvDeck.get(i).getType(), afterAdvDeck.get(i).getName(), afterAdvDeck.get(i).getValue());
             beforeAdvDeck.add(card);
         }
         ArrayList<Main.Card> beforeEventDeck = new ArrayList<Main.Card>();
         for (int i=0; i< game.getEventDeckSize(); i++){
-            Main.Card card = new Main.Card(afterEventDeck.get(i).getType(), afterEventDeck.get(i).getName(), afterEventDeck.get(i).getValue());
+            Main.Card card = game.new Card(afterEventDeck.get(i).getType(), afterEventDeck.get(i).getName(), afterEventDeck.get(i).getValue());
             beforeEventDeck.add(card);
         }
 
@@ -381,29 +382,31 @@ class MainTest {
         game.initEventDeck(); // no shuffle
         game.distributeCards();
 
-        // test 1: check that card is removed
-        game.p1.trimCard();
+        // test 1: check that last card is removed
+        game.p1.trimCard(12);
         assertEquals(11, game.p1.getCardsSize());
     }
 
     @Test
     @DisplayName("Player Trims Cards by 3")
     public void RESP_7_test_02() {
+        System.out.println("\n\n *Trim By 3*");
         Main game = new Main();
         game.initAdvDeck();
         game.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 2: check that cards are removed
-        game.p1.trimCard();
-        game.p1.trimCard();
-        game.p1.trimCard();
+        game.p1.trimCard(9);
+        game.p1.trimCard(9);
+        game.p1.trimCard(9);
         assertEquals(9, game.p1.getCardsSize());
     }
 
     @Test
-    @DisplayName("Player Trims Cards by 3 Again")
+    @DisplayName("Player Trims Cards by 4 Again")
     public void RESP_7_test_03() {
+        System.out.println("\n\n *Trim By LAST 4*");
         Main game = new Main();
         game.initAdvDeck();
         game.initEventDeck(); // no shuffle
@@ -415,10 +418,10 @@ class MainTest {
         int value = game.p1.cards.get(game.p1.getCardsSize()  - 5).value;
 
         // test 3: check that 3 last cards were removed and that the last card in hand is correct
-        game.p1.trimCard();
-        game.p1.trimCard();
-        game.p1.trimCard();
-        game.p1.trimCard();
+        game.p1.trimCard(game.p1.getCardsSize());
+        game.p1.trimCard(game.p1.getCardsSize());
+        game.p1.trimCard(game.p1.getCardsSize());
+        game.p1.trimCard(game.p1.getCardsSize());
         assertEquals(name, game.p1.cards.get(game.p1.getCardsSize()-1).getName(), "Wrong card");
         assertEquals(type, game.p1.cards.get(game.p1.getCardsSize()-1).getType(), "Wrong card");
         assertEquals(value, game.p1.cards.get(game.p1.getCardsSize()-1).getValue(), "Wrong card");
@@ -427,6 +430,7 @@ class MainTest {
     @Test
     @DisplayName("Player Trims Cards and Console Shows Update")
     public void RESP_7_test_04() {
+        System.out.println("\n\n *Trim By LAST 1 & Check Print*");
         String string = "";
         StringWriter stringWriter = new StringWriter();
 
@@ -436,22 +440,22 @@ class MainTest {
         // UNSHUFFLED CARDS SO THIS IS P1s ORG HAND: E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15
 
         // test 4: check that a player's cards were printed to the screen after trim
-        game.p1.trimCard(); // trim last card B15
+        game.p1.trimCard(12); // trim last card B15
         game.p1.printPlayersCards(new PrintWriter(stringWriter));
         string = stringWriter.toString();
-        assertFalse(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15"));
+        assertFalse(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15 "));
         // note that the test doesn't need to actually print but it should when the corresponding function runs in main
     }
 
     @Test
     @DisplayName("Player has 12+ Cards and Trims Cards")
     public void RESP_7_test_05() {
-        String string = "";
-        StringWriter stringWriter = new StringWriter();
-
+        System.out.println("\n\n *Trim By LAST 5 Down to 12*");
         Main game = new Main();
         game.initAdvDeck();
         game.distributeCards();
+        String input = String.valueOf("12\n12\n12\n12\n12\n");
+        StringWriter output = new StringWriter();
         // UNSHUFFLED CARDS SO THIS IS P1s ORG HAND: E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15
 
         // test 5: add 2 cards to the initial 12 and trim down to 12 cards
@@ -460,11 +464,24 @@ class MainTest {
         game.p1.drawAdvCard();
         game.p1.drawAdvCard();
         game.p1.drawAdvCard();
-        System.out.println("trim TO 12");
-        game.p1.trimToTwelve();
+        game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
         assertEquals(12, game.p1.getCardsSize());
     }
 
+    @Test
+    @DisplayName("Player Trims Cards and Console Shows Update")
+    public void RESP_7_test_06() {
+        String input = "12\n";
+        StringWriter output = new StringWriter();
+        Main game = new Main();
+        game.initAdvDeck();
+        game.distributeCards();
+
+        // test 4: check that a player's cards were printed to the screen after trim
+        game.p1.promptPosition(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+
+    }
 
 
 
