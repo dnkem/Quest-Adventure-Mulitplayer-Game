@@ -200,7 +200,6 @@ public class Main {
         // COMMIT 5 - RESP 5
         public void drawAdvCard(){
             cards.add(advDeck.removeLast());
-            
         }
 
         public void drawEventCard(){
@@ -217,6 +216,9 @@ public class Main {
             } else {
                 System.out.println("Can't draw adv cards for Queens favor event");
             }
+        }
+
+        public void playProsperityCard(Player p){
         }
 
         // COMMIT 7

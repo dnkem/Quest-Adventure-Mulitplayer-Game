@@ -527,7 +527,72 @@ class MainTest {
         assertEquals(5, game.getDiscardAdvDeckSize());
     }
 
+    // COMMIT 9
+    @Test
+    @DisplayName("Player Draws Prosperity E Card Correctly")
+    public void RESP_9_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
 
+        // test 1: check that the drawn card is Prosperity
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.p1.drawEventCard();
+        assertEquals("Prosperity", game.currentDrawnEventCard.getName());
+    }
+
+    @Test
+    @DisplayName("Player Draws Prosperity E Card then draws 2 adv card")
+    public void RESP_9_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
+
+        // test 2: all players drew 2 cards
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+
+        if (game.currentPlayer.getID().equals("P1")){
+            game.p1.drawEventCard();
+            assertEquals(14, game.p1.cards.size());
+            assertEquals(14, game.p2.cards.size());
+            assertEquals(14, game.p3.cards.size());
+            assertEquals(14, game.p4.cards.size());
+        } else if (game.currentPlayer.getID().equals("P2")){
+            game.p2.drawEventCard();
+            assertEquals(14, game.p1.cards.size());
+            assertEquals(14, game.p2.cards.size());
+            assertEquals(14, game.p3.cards.size());
+            assertEquals(14, game.p4.cards.size());
+        } else if (game.currentPlayer.getID().equals("P3")){
+            game.p3.drawEventCard();
+            assertEquals(14, game.p1.cards.size());
+            assertEquals(14, game.p2.cards.size());
+            assertEquals(14, game.p3.cards.size());
+            assertEquals(14, game.p4.cards.size());
+        } else if (game.currentPlayer.getID().equals("P4")){
+            game.p4.drawEventCard();
+            assertEquals(14, game.p1.cards.size());
+            assertEquals(14, game.p2.cards.size());
+            assertEquals(14, game.p3.cards.size());
+            assertEquals(14, game.p4.cards.size());
+        }
+    }
+
+    @Test
+    @DisplayName("Player Draws Prosperity E Card number of Event and Adventure deck")
+    public void RESP_9_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck(); // no shuffle
+        game.distributeCards();
+
+        // test 3: check number of cards in adv deck after prosperity is drawn
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.p1.drawEventCard();
+        assertEquals(44, game.getAdvDeckSize());
+    }
 
 
 
