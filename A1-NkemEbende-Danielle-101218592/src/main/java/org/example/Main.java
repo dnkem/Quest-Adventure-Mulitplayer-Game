@@ -5,6 +5,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -160,6 +161,15 @@ public class Main {
         public int getCardsSize(){ return cards.size(); }
         public Card getCard(int i){ return cards.get(i); }
 
+        // Commit 7
+        public String cardsToString(){
+            String cards = "";
+            for (int i=0; i<getCardsSize(); i++){
+                cards += getCard(i).getName() + getCard(i).getValue() + " ";
+            }
+            return cards;
+        }
+
         public void add(Card c){
             cards.add(c);
         }
@@ -200,6 +210,47 @@ public class Main {
             } else {
                 System.out.println("Can't draw adv cards for Queens favor event");
             }
+        }
+
+        // COMMIT 7
+        public void promptPosition(Scanner input, PrintWriter output){
+            output.println("Enter a Position from 1 to " + this.getCardsSize() + ": "); output.flush();
+            String inputStr = input.nextLine();
+            int inputNum = -1;
+
+            try{
+                inputNum = Integer.parseInt(inputStr);
+                output.println("input is valid"); output.flush();
+            } catch(NumberFormatException e) {
+                output.println("input is not valid"); output.flush();
+                return;
+            }
+
+            // delete at index
+            trimCard(inputNum);
+        }
+
+        public void trimCard(int index){
+            // print
+            System.out.println("Cards Before Deletion:      " + cardsToString());
+
+            // delete at index
+            if (index > 0 && index <= this.getCardsSize()){
+                cards.remove(index - 1);
+                System.out.println("Deleted card at position: " + index);
+            }
+
+            // re print correctly
+            System.out.println("Cards After deletion:       " + cardsToString());
+        }
+
+        public void trimToTwelve(Scanner input, PrintWriter output){
+            if (getCardsSize() <= 12) return;
+            int extraCards = this.getCardsSize() - 12;
+            for (int i=0; i<extraCards; i++){
+                promptPosition(input, output);
+            }
+            System.out.println(cardsToString());
         }
     }
 
