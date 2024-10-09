@@ -322,6 +322,10 @@ public class Main {
 
     // Commit 10
     public void clearScreen(PrintWriter printWriter){
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        printWriter.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        printWriter.flush();
+        printWriter.close();
     }
 
 }
