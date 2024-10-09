@@ -483,6 +483,50 @@ class MainTest {
 
     }
 
+    // COMMIT 8
+    @Test
+    @DisplayName("From Hand to Discard pile via Trim")
+    public void RESP_8_test_01(){
+        Main game = new Main();
+        game.advDeck = new ArrayList<Main.Card>();
+
+        // test 1: add in adv cards and assign them to P1 then they discard them
+        Main.Card cardF5 = game.new Card("Adventure","F",5);
+        game.advDeck.add(cardF5);
+        Main.Card cardF10 = game.new Card("Adventure","F",10);
+        game.advDeck.add(cardF10);
+
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
+        assertEquals(2, game.p1.getCardsSize());
+        assertEquals(0, game.getDiscardAdvDeckSize());
+        game.p1.trimCard(1);
+        game.p1.trimCard(1);
+        assertEquals(0, game.p1.getCardsSize());
+        assertEquals(2, game.getDiscardAdvDeckSize());
+    }
+
+    @Test
+    @DisplayName("From Hand to Discard pile via Trim to 12")
+    public void RESP_8_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.distributeCards();
+        String input = String.valueOf("12\n12\n12\n12\n12\n");
+        StringWriter output = new StringWriter();
+        // UNSHUFFLED CARDS SO THIS IS P1s ORG HAND: E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15
+
+        // test 2: add 5 cards to the initial 12 and trim down to 12 cards and make sure they go to discard pile
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
+        game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertEquals(12, game.p1.getCardsSize());
+        assertEquals(5, game.getDiscardAdvDeckSize());
+    }
+
 
 
 

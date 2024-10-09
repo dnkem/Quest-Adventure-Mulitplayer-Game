@@ -31,11 +31,11 @@ public class Main {
         public String getType(){ return type; }
         public String getName(){ return  name; }
         public int getValue() { return value; }
-
     }
 
     ArrayList<Card> advDeck = new ArrayList<Card>();
     ArrayList<Card> eventDeck = new ArrayList<Card>();
+    ArrayList<Card> discardAdvDeck = new ArrayList<Card>();
 
     public ArrayList<Card> getAdvDeck(){
         return advDeck;
@@ -43,6 +43,9 @@ public class Main {
 
     public ArrayList<Card> getEventDeck(){
         return eventDeck;
+    }
+
+    public ArrayList<Card> getDiscardAdvDeck(){
     }
 
     public void initAdvDeck(){
@@ -135,6 +138,8 @@ public class Main {
     }
     public int getAdvDeckSize(){
         return advDeck.size();
+    }
+    public int getDiscardAdvDeckSize(){
     }
 
     // COMMIT 2 - RESP 2
@@ -251,6 +256,9 @@ public class Main {
                 promptPosition(input, output);
             }
             System.out.println(cardsToString());
+        }
+
+        public void discardAdvCard(Card c) {
         }
     }
 
