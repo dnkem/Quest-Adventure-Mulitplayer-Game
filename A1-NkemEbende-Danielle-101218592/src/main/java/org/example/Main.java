@@ -46,6 +46,7 @@ public class Main {
     }
 
     public ArrayList<Card> getDiscardAdvDeck(){
+        return discardAdvDeck;
     }
 
     public void initAdvDeck(){
@@ -140,6 +141,7 @@ public class Main {
         return advDeck.size();
     }
     public int getDiscardAdvDeckSize(){
+        return discardAdvDeck.size();
     }
 
     // COMMIT 2 - RESP 2
@@ -241,7 +243,7 @@ public class Main {
 
             // delete at index
             if (index > 0 && index <= this.getCardsSize()){
-                cards.remove(index - 1);
+                this.discardAdvCard(cards.remove(index - 1));
                 System.out.println("Deleted card at position: " + index);
             }
 
@@ -259,6 +261,7 @@ public class Main {
         }
 
         public void discardAdvCard(Card c) {
+            discardAdvDeck.add(c);
         }
     }
 
