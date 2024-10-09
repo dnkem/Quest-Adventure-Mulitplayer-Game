@@ -206,6 +206,8 @@ public class Main {
             currentDrawnEventCard = eventDeck.removeLast();
             if (currentDrawnEventCard.getName().equals("Queen’s favor")){
                 playQueenEventCard(currentPlayer);
+            } else if (currentDrawnEventCard.getName().equals("Prosperity")){
+                playProsperityCard(currentPlayer);
             } // else call another function
         }
 
@@ -219,6 +221,14 @@ public class Main {
         }
 
         public void playProsperityCard(Player p){
+            if (currentPlayer.getID().equals(p.id) && currentDrawnEventCard.getName().equals("Prosperity")){
+                p1.drawAdvCard(); p1.drawAdvCard();
+                p2.drawAdvCard(); p2.drawAdvCard();
+                p3.drawAdvCard(); p3.drawAdvCard();
+                p4.drawAdvCard(); p4.drawAdvCard();
+            } else {
+                System.out.println("Can't draw adv cards for Prosperity event");
+            }
         }
 
         // COMMIT 7
