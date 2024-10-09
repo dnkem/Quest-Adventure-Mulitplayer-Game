@@ -594,6 +594,64 @@ class MainTest {
         assertEquals(44, game.getAdvDeckSize());
     }
 
+    @Test
+    @DisplayName("All Players have 12+ Cards and Trims to 12")
+    public void RESP_10_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = String.valueOf("12\n12\n12\n12\n12\n");
+        StringWriter output = new StringWriter();
 
+        // test 1: p1 picks Prosperity card and all players pick 2 and trim down to 12 cards
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.p1.drawEventCard();
+        game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        game.p2.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        game.p3.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        game.p4.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertEquals(12, game.p1.getCardsSize());
+        assertEquals(12, game.p2.getCardsSize());
+        assertEquals(12, game.p3.getCardsSize());
+        assertEquals(12, game.p4.getCardsSize());
+    }
+
+    @Test
+    @DisplayName("Player Trim Cards, Screen Clears, and Console Shows Update")
+    public void RESP_10_test_02() {
+        String input = "12\n12\n";
+        StringWriter output = new StringWriter();
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 2: check that all player's cards were printed when trimmed & cleared on the screen after trim
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.p1.drawEventCard();
+
+        game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+        game.clearScreen(new PrintWriter(output));
+        assertTrue(output.toString().contains("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+
+        game.p2.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+        game.clearScreen(new PrintWriter(output));
+        assertTrue(output.toString().contains("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+
+        game.p3.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+        game.clearScreen(new PrintWriter(output));
+        assertTrue(output.toString().contains("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+
+        game.p4.trimToTwelve(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+        game.clearScreen(new PrintWriter(output));
+        assertTrue(output.toString().contains("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+
+
+    }
 
 }

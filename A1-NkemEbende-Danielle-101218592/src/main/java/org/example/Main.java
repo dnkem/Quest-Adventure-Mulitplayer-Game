@@ -320,6 +320,8 @@ public class Main {
     // COMMIT 5 - RESP 5
     Card currentDrawnEventCard;
 
-
+    // Commit 10
+    public void clearScreen(PrintWriter printWriter){
+    }
 
 }
