@@ -231,6 +231,10 @@ public class Main {
             }
         }
 
+        // Commit 11
+        public void playPlagueCard(Player p){
+        }
+
         // COMMIT 7
         public void promptPosition(Scanner input, PrintWriter output){
             output.println("Enter a Position from 1 to " + this.getCardsSize() + ": "); output.flush();

@@ -650,7 +650,39 @@ class MainTest {
         assertTrue(output.toString().contains("input is valid"));
         game.clearScreen(new PrintWriter(output));
         assertTrue(output.toString().contains("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+    }
 
+    @Test
+    @DisplayName("Player Plays Plague E card")
+    public void RESP_11_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 1: Player plays plague card with 0  shields
+        assertEquals(17, game.getEventDeckSize());
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        game.p1.drawEventCard();
+        assertEquals(0, game.p1.getNumShields());
+        assertEquals(16, game.getEventDeckSize());
+    }
+
+    @Test
+    @DisplayName("Player w/ 3 shields Plays Plague E card")
+    public void RESP_11_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 2: Player plays plague card with many shields
+        assertEquals(17, game.getEventDeckSize());
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        game.p1.setNumShields(6);
+        game.p1.drawEventCard();
+        assertEquals(4, game.p1.getNumShields());
+        assertEquals(16, game.getEventDeckSize());
 
     }
 
