@@ -686,4 +686,46 @@ class MainTest {
 
     }
 
+    @Test
+    @DisplayName("Player draws an E card then discarded")
+    public void RESP_12_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 1: Player draws an E card, it gets played then discarded
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(0, game.getDiscardEventDeckSize());
+        game.p1.drawEventCard();
+        assertEquals("Plague", game.getDiscardEventDeck().get(0).getName());
+    }
+
+    @Test
+    @DisplayName("Player draws many E cards then discarded")
+    public void RESP_12_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+
+        // test 2: Player draws many E cards, they get played then discarded
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(0, game.getDiscardEventDeckSize());
+        game.p1.drawEventCard();
+        assertEquals("Plague", game.getDiscardEventDeck().get(0).getName());
+
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen's favour";
+        assertEquals(1, game.getDiscardEventDeckSize());
+        game.p1.drawEventCard();
+        assertEquals("Queen's favour", game.getDiscardEventDeck().get(1).getName());
+
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity";
+        assertEquals(2, game.getDiscardEventDeckSize());
+        game.p1.drawEventCard();
+        assertEquals("Prosperity", game.getDiscardEventDeck().get(2).getName());
+        assertEquals(3, game.getDiscardEventDeckSize());
+
+    }
+
 }

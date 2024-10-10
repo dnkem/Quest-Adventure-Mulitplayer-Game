@@ -36,6 +36,7 @@ public class Main {
     ArrayList<Card> advDeck = new ArrayList<Card>();
     ArrayList<Card> eventDeck = new ArrayList<Card>();
     ArrayList<Card> discardAdvDeck = new ArrayList<Card>();
+    ArrayList<Card> discardEventDeck = new ArrayList<Card>();
 
     public ArrayList<Card> getAdvDeck(){
         return advDeck;
@@ -47,6 +48,9 @@ public class Main {
 
     public ArrayList<Card> getDiscardAdvDeck(){
         return discardAdvDeck;
+    }
+    public ArrayList<Card> getDiscardEventDeck(){
+        return new ArrayList<Card>();
     }
 
     public void initAdvDeck(){
@@ -142,6 +146,9 @@ public class Main {
     }
     public int getDiscardAdvDeckSize(){
         return discardAdvDeck.size();
+    }
+    public int getDiscardEventDeckSize(){
+        return -1;
     }
 
     // COMMIT 2 - RESP 2
@@ -290,6 +297,9 @@ public class Main {
 
         public void discardAdvCard(Card c) {
             discardAdvDeck.add(c);
+        }
+
+        public void discardEventCard(Card c){
         }
     }
 
