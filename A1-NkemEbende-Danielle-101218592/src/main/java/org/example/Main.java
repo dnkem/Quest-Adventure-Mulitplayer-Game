@@ -50,7 +50,7 @@ public class Main {
         return discardAdvDeck;
     }
     public ArrayList<Card> getDiscardEventDeck(){
-        return new ArrayList<Card>();
+        return discardEventDeck;
     }
 
     public void initAdvDeck(){
@@ -148,7 +148,7 @@ public class Main {
         return discardAdvDeck.size();
     }
     public int getDiscardEventDeckSize(){
-        return -1;
+        return discardEventDeck.size();
     }
 
     // COMMIT 2 - RESP 2
@@ -218,6 +218,9 @@ public class Main {
             } else if (currentDrawnEventCard.getName().equals("Plague")){
                 playPlagueCard(currentPlayer);
             } // else call another function
+
+            // deal with used event card
+            discardEventCard(currentDrawnEventCard);
         }
 
         public void playQueenEventCard(Player p){
@@ -300,6 +303,7 @@ public class Main {
         }
 
         public void discardEventCard(Card c){
+            discardEventDeck.add(c);
         }
     }
 
