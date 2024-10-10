@@ -208,6 +208,8 @@ public class Main {
                 playQueenEventCard(currentPlayer);
             } else if (currentDrawnEventCard.getName().equals("Prosperity")){
                 playProsperityCard(currentPlayer);
+            } else if (currentDrawnEventCard.getName().equals("Plague")){
+                playPlagueCard(currentPlayer);
             } // else call another function
         }
 
@@ -233,7 +235,17 @@ public class Main {
 
         // Commit 11
         public void playPlagueCard(Player p){
+            if (currentPlayer.getID().equals(p.id) && currentDrawnEventCard.getName().equals("Plague")){
+                if (p.getNumShields() == 0 || p.getNumShields() == 1){
+                    p.numShields = 0;
+                } else {
+                    p.numShields -= 2;
+                }
+            } else {
+                System.out.println("Can't do Plague  event");
+            }
         }
+
 
         // COMMIT 7
         public void promptPosition(Scanner input, PrintWriter output){
