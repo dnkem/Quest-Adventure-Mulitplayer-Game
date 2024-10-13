@@ -223,7 +223,13 @@ public class Main {
             discardEventCard(currentDrawnEventCard);
         }
 
+        // COMMIT 13
         public void drawQuestCard(Scanner input, PrintWriter output){
+            currentDrawnEventCard = eventDeck.removeLast();
+            if (currentDrawnEventCard.getName().equals("Q")){
+                currentPlayer.promptSponsor(input, output, currentDrawnEventCard);
+            }
+            // discardEventCard(currentDrawnEventCard);
         }
 
         public void playQueenEventCard(Player p){
@@ -259,8 +265,21 @@ public class Main {
             }
         }
 
-        // Commit 12
+        // Commit 13
         public void promptSponsor(Scanner input, PrintWriter output, Card c){
+            System.out.println(this.getID() + " do you want to sponsor " + c.getName() + c.getValue() + " Y/N: ");
+            output.println(this.getID() + " do you want to sponsor " + c.getName() + c.getValue() + " Y/N: "); output.flush();
+            String inputStr = input.nextLine();
+
+            try{
+                if (inputStr.equals("Y") || inputStr.equals("N")){
+                    output.println("input is valid"); output.flush();
+                } else{
+                    throw new Exception("wrong item");
+                }
+            } catch(Exception e) {
+                output.println("input is not valid"); output.flush();
+            }
         }
 
         // COMMIT 7
