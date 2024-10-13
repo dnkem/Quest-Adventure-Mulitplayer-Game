@@ -728,4 +728,22 @@ class MainTest {
 
     }
 
+    @Test
+    @DisplayName("Player draws a Q card and doesn't sponsor it")
+    public void RESP_13_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\n";
+        StringWriter output = new StringWriter();
+
+        // test 1:
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.p1.drawQuestCard(new Scanner(input), new PrintWriter(output));
+        assertTrue(output.toString().contains("input is valid"));
+    }
+
+
+
 }

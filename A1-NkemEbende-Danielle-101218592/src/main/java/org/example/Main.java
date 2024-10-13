@@ -217,10 +217,13 @@ public class Main {
                 playProsperityCard(currentPlayer);
             } else if (currentDrawnEventCard.getName().equals("Plague")){
                 playPlagueCard(currentPlayer);
-            } // else call another function
+            }
 
             // deal with used event card
             discardEventCard(currentDrawnEventCard);
+        }
+
+        public void drawQuestCard(Scanner input, PrintWriter output){
         }
 
         public void playQueenEventCard(Player p){
@@ -256,6 +259,9 @@ public class Main {
             }
         }
 
+        // Commit 12
+        public void promptSponsor(Scanner input, PrintWriter output, Card c){
+        }
 
         // COMMIT 7
         public void promptPosition(Scanner input, PrintWriter output){
