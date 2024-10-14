@@ -493,13 +493,24 @@ public class Main {
         }
         return s1;
     }
-
     public void printEligiblePlayers(){
+        System.out.println("Eligible Players for this Quest:");
+        for (int i=0; i<eligiblePlayers.size(); i++){
+            System.out.println(eligiblePlayers.get(i).getID());
+        }
     }
 
     public void getEligiblePlayers(){
+        if (sponsoringPlayer.getID().equals("P1")){
+            eligiblePlayers.add(p2); eligiblePlayers.add(p3); eligiblePlayers.add(p4);
+        } else if (sponsoringPlayer.getID().equals("P2")){
+            eligiblePlayers.add(p1); eligiblePlayers.add(p3); eligiblePlayers.add(p4);
+        }else if (sponsoringPlayer.getID().equals("P3")){
+            eligiblePlayers.add(p1); eligiblePlayers.add(p2); eligiblePlayers.add(p4);
+        }else if (sponsoringPlayer.getID().equals("P4")){
+            eligiblePlayers.add(p1); eligiblePlayers.add(p2); eligiblePlayers.add(p3);
+        }
     }
-
 
     Player p1 = new Player("P1");
     Player p2 = new Player("P2");
