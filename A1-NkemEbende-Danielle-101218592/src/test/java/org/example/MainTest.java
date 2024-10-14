@@ -908,4 +908,25 @@ class MainTest {
         assertEquals(2, game.stage3.size());
         assertEquals(40, game.stage3Value);
     }
+    @Test
+    @DisplayName("Game gives eligible players")
+    public void RESP_16_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\nY\n";
+        StringWriter output = new StringWriter();
+
+        // test 2: Test that no one sponsored and it's the next persons turn
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(game.p2, game.sponsoringPlayer);
+        game.getEligiblePlayers();
+        game.printEligiblePlayers();
+        assertEquals(game.p1, game.eligiblePlayers.get(0));
+        assertEquals(game.p3, game.eligiblePlayers.get(1));
+        assertEquals(game.p4, game.eligiblePlayers.get(2));
+    }
 }

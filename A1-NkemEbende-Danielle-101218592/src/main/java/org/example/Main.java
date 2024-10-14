@@ -492,13 +492,21 @@ public class Main {
             s1 += array.get(j).getName() + array.get(j).getValue() + " ";
         }
         return s1;
-
     }
+
+    public void printEligiblePlayers(){
+    }
+
+    public void getEligiblePlayers(){
+    }
+
 
     Player p1 = new Player("P1");
     Player p2 = new Player("P2");
     Player p3 = new Player("P3");
     Player p4 = new Player("P4");
+
+    ArrayList<Player> eligiblePlayers = new ArrayList<Player>();
 
     Player sponsoringPlayer; // shallow copy of sponsoring player
 
