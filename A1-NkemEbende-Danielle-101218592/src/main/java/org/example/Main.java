@@ -3,6 +3,7 @@ package org.example;
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -227,6 +228,7 @@ public class Main {
         public void drawQuestCard(Scanner input, PrintWriter output){
             currentDrawnEventCard = eventDeck.removeLast();
             if (currentDrawnEventCard.getName().equals("Q")){
+                // replace w/ playersSponsorPrompt(input, output);
                 currentPlayer.promptSponsor(input, output, currentDrawnEventCard);
             }
             // discardEventCard(currentDrawnEventCard);
@@ -266,7 +268,7 @@ public class Main {
         }
 
         // Commit 13
-        public void promptSponsor(Scanner input, PrintWriter output, Card c){
+        public String promptSponsor(Scanner input, PrintWriter output, Card c){
             System.out.println(this.getID() + " do you want to sponsor " + c.getName() + c.getValue() + " Y/N: ");
             output.println(this.getID() + " do you want to sponsor " + c.getName() + c.getValue() + " Y/N: "); output.flush();
             String inputStr = input.nextLine();
@@ -274,11 +276,20 @@ public class Main {
             try{
                 if (inputStr.equals("Y") || inputStr.equals("N")){
                     output.println("input is valid"); output.flush();
+                    if (inputStr.equals("Y")){
+                        output.println("Y");output.flush();
+                        return inputStr;
+                    } else {
+                        output.println("N");output.flush();
+                        System.out.println(inputStr);
+                        return inputStr;
+                    }
                 } else{
                     throw new Exception("wrong item");
                 }
             } catch(Exception e) {
                 output.println("input is not valid"); output.flush();
+                return "input is not valid";
             }
         }
 
