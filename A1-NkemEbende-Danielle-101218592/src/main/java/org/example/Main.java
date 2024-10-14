@@ -501,6 +501,11 @@ public class Main {
                 }
             }
         }
+        public void discardStageCards(){
+        }
+
+        public void drawAdvCardsTo12(){
+        }
     }
 
     public int getValues(ArrayList<Card> array){

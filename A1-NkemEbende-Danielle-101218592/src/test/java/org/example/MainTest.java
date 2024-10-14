@@ -980,4 +980,44 @@ class MainTest {
         assertEquals(0, game.eligiblePlayers.size());
     }
 
+    @Test
+    @DisplayName("No quest participants end quest")
+    public void RESP_18_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "Y\nN\nN\n";
+        String input2 = "N\nN\nN\n";
+        String input3 = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n";
+        StringWriter output = new StringWriter();
+        StringWriter output2 = new StringWriter();
+
+        // test 1: End quest cause of no quest participants
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 3; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(input3));
+        assertEquals(6, game.sponsoringPlayer.getCardsSize());
+
+        game.getEligiblePlayers();
+        game.printEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(input2), new PrintWriter(output2));
+        game.printEligiblePlayers();
+
+        game.sponsoringPlayer.discardStageCards();
+        assertEquals(0, game.stage1.size());
+        assertEquals(0, game.stage2.size());
+        assertEquals(0, game.stage3.size());
+        assertEquals(0, game.stage4.size());
+        assertEquals(0, game.stage5.size());
+
+        game.sponsoringPlayer.drawAdvCardsTo12();
+        assertEquals(12, game.sponsoringPlayer.getCardsSize());
+
+        game.nextPlayer();
+        assertEquals(game.currentPlayer, game.p2);
+    }
+
 }
