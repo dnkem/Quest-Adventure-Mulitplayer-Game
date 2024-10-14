@@ -502,9 +502,33 @@ public class Main {
             }
         }
         public void discardStageCards(){
+            int num = stage1.size();
+            for (int i=0; i<num; i++){
+                discardAdvCard(stage1.removeFirst());
+            }
+            num = stage2.size();
+            for (int i=0; i<num; i++){
+                discardAdvCard(stage2.removeLast());
+            }
+            num = stage3.size();
+            for (int i=0; i<num; i++){
+                discardAdvCard(stage3.removeLast());
+            }
+            num = stage4.size();
+            for (int i=0; i<num; i++){
+                discardAdvCard(stage4.removeLast());
+            }
+            num = stage5.size();
+            for (int i=0; i<num; i++){
+                discardAdvCard(stage5.removeLast());
+            }
         }
 
         public void drawAdvCardsTo12(){
+            int num = 12 - this.getCardsSize();
+            for (int j=0; j<num; j++){
+                drawAdvCard();
+            }
         }
     }
 
