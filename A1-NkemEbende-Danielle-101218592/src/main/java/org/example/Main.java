@@ -343,7 +343,28 @@ public class Main {
         }
 
         public String promptJoin(Scanner input, PrintWriter output){
-            return "";
+            System.out.println(this.getID() + " do you want to join the quest (Y/N): ");
+            output.println(this.getID() + " do you want to join the quest (Y/N): "); output.flush();
+            String inputStr = input.nextLine();
+
+            try{
+                if (inputStr.equals("Y") || inputStr.equals("N")){
+                    output.println("input is valid"); output.flush();
+                    if (inputStr.equals("Y")){
+                        output.println("Y");output.flush();
+                        return inputStr;
+                    } else {
+                        output.println("N");output.flush();
+                        System.out.println(inputStr);
+                        return inputStr;
+                    }
+                } else{
+                    throw new Exception("wrong item");
+                }
+            } catch(Exception e) {
+                output.println("input is not valid"); output.flush();
+                return "input is not valid";
+            }
         }
 
         public boolean eligibleStage(ArrayList<Card> array){
@@ -517,9 +538,25 @@ public class Main {
     }
 
     public void askEligiblePlayers(Scanner input, PrintWriter output){
+        String item = "";
+        for (int i=eligiblePlayers.size() - 1; i>=0; i--){
+            item = eligiblePlayers.get(i).promptJoin(input, output);
+            if (item.equals("N")){
+                updateEligiblePlayers(eligiblePlayers.get(i));
+            }
+        }
     }
 
     public void updateEligiblePlayers(Player removed){
+        if (removed.getID().equals("P1")){
+            eligiblePlayers.remove(p1);
+        } else if (removed.getID().equals("P2")){
+            eligiblePlayers.remove(p2);
+        }else if (removed.getID().equals("P3")){
+            eligiblePlayers.remove(p3);
+        }else if (removed.getID().equals("P4")){
+            eligiblePlayers.remove(p4);
+        }
     }
 
     Player p1 = new Player("P1");
