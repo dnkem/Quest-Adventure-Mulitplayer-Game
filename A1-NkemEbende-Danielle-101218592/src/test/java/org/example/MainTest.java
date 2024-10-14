@@ -744,6 +744,59 @@ class MainTest {
         assertTrue(output.toString().contains("input is valid"));
     }
 
+    @Test
+    @DisplayName("Game prompts many players to sponsor quest")
+    public void RESP_14_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\nN\nY\nN\n";
+        StringWriter output = new StringWriter();
 
+        // test 1: Game prompts many players to sponsor quest and p3 accepts and sponsors
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(game.p3, game.sponsoringPlayer);
+    }
+
+    @Test
+    @DisplayName("Test that no one sponsored and it's the next persons turn")
+    public void RESP_14_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\nN\nN\nN\n";
+        StringWriter output = new StringWriter();
+
+        // test 2: Test that no one sponsored and it's the next persons turn
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        assertEquals(game.p1, game.currentPlayer);
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(game.p2, game.currentPlayer);
+
+
+    }
+
+    @Test
+    @DisplayName("Current player accepts sponsor")
+    public void RESP_14_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "Y\nN\nN\nN\n";
+        StringWriter output = new StringWriter();
+
+        // test 2: Test that no one sponsored and it's the next persons turn
+        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        assertEquals(game.p1, game.currentPlayer);
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(game.p1, game.sponsoringPlayer);
+    }
 
 }

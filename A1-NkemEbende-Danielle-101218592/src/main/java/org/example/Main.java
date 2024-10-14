@@ -348,6 +348,7 @@ public class Main {
     Player p3 = new Player("P3");
     Player p4 = new Player("P4");
 
+    Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void distributeCards(){
         for (int j=0; j<12; j++){
@@ -392,6 +393,10 @@ public class Main {
         printWriter.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         printWriter.flush();
         printWriter.close();
+    }
+
+    // Commit #14
+    public void playersSponsorPrompt(Scanner input, PrintWriter output){
     }
 
 }
