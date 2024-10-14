@@ -342,6 +342,10 @@ public class Main {
             discardEventDeck.add(c);
         }
 
+        public String promptJoin(Scanner input, PrintWriter output){
+            return "";
+        }
+
         public boolean eligibleStage(ArrayList<Card> array){
             boolean eligible = false;
             for (int i=0; i<array.size(); i++){
@@ -510,6 +514,12 @@ public class Main {
         }else if (sponsoringPlayer.getID().equals("P4")){
             eligiblePlayers.add(p1); eligiblePlayers.add(p2); eligiblePlayers.add(p3);
         }
+    }
+
+    public void askEligiblePlayers(Scanner input, PrintWriter output){
+    }
+
+    public void updateEligiblePlayers(Player removed){
     }
 
     Player p1 = new Player("P1");

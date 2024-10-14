@@ -918,7 +918,7 @@ class MainTest {
         String input = "N\nY\n";
         StringWriter output = new StringWriter();
 
-        // test 2: Test that no one sponsored and it's the next persons turn
+        // test
         game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
@@ -929,4 +929,55 @@ class MainTest {
         assertEquals(game.p3, game.eligiblePlayers.get(1));
         assertEquals(game.p4, game.eligiblePlayers.get(2));
     }
+
+    @Test
+    @DisplayName("Prompt eligible players to join quest")
+    public void RESP_17_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\nY\nN\n";
+        String input2 = "Y\nN\nY\n";
+        StringWriter output = new StringWriter();
+        StringWriter output2 = new StringWriter();
+
+        // test 1: Some yes's
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(0, game.eligiblePlayers.size());
+        game.getEligiblePlayers();
+        assertEquals(3, game.eligiblePlayers.size());
+        game.printEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(input2), new PrintWriter(output2));
+        game.printEligiblePlayers();
+        assertEquals(2, game.eligiblePlayers.size());
+    }
+
+    @Test
+    @DisplayName("Prompt eligible players to join quest w/ all no's")
+    public void RESP_17_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "N\nY\nN\n";
+        String input2 = "N\nN\nN\n";
+        StringWriter output = new StringWriter();
+        StringWriter output2 = new StringWriter();
+
+        // test 1: All no's for asking eligible players to join quest
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
+        assertEquals(0, game.eligiblePlayers.size());
+        game.getEligiblePlayers();
+        assertEquals(3, game.eligiblePlayers.size());
+        game.printEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(input2), new PrintWriter(output2));
+        game.printEligiblePlayers();
+        assertEquals(0, game.eligiblePlayers.size());
+    }
+
 }
