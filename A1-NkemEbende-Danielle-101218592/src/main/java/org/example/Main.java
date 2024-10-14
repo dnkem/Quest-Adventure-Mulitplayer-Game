@@ -397,6 +397,66 @@ public class Main {
 
     // Commit #14
     public void playersSponsorPrompt(Scanner input, PrintWriter output){
+        String responseP2 = "";
+        String responseP3 = "";
+        String responseP4 = "";
+        String responseP1 = "";
+
+        if (currentDrawnEventCard.getName().equals("Q")){
+            String response = currentPlayer.promptSponsor(input, output, currentDrawnEventCard);
+            int count = 0;
+            String id = currentPlayer.getID();
+            if (response.equals("N")){
+                while (count < 3) {
+                    if (id.equals("P1")) {
+                        responseP2 = p2.promptSponsor(input, output, currentDrawnEventCard);
+                        if (responseP2.equals("Y")){
+                            System.out.println("Player 2 Sponsored Quest");
+                            sponsoringPlayer = p2;
+                            break;
+                        } else {
+                            id = "P2";
+                        }
+                    } else if (id.equals("P2")) {
+                        responseP3 = p3.promptSponsor(input, output, currentDrawnEventCard);
+                        if (responseP3.equals("Y")){
+                            System.out.println("Player 3 Sponsored Quest");
+                            sponsoringPlayer = p3;
+                            break;
+                        } else {
+                            id = "P3";
+                        }
+                    } else if (id.equals("P3")) {
+                        responseP4 = p4.promptSponsor(input, output, currentDrawnEventCard);
+                        if (responseP4.equals("Y")){
+                            System.out.println("Player 4 Sponsored Quest");
+                            sponsoringPlayer = p4;
+                            break;
+                        } else {
+                            id = "P4";
+                        }
+                    } else if (id.equals("P4")) {
+                        responseP1 = p1.promptSponsor(input, output, currentDrawnEventCard);
+                        if (responseP1.equals("Y")){
+                            System.out.println("Player 1 Sponsored Quest");
+                            sponsoringPlayer = p1;
+                            break;
+                        } else {
+                            id = "P1";
+                        }
+                    }
+                    count++;
+                }
+                if (count == 4 && (responseP1.equals("N") && responseP2.equals("N") && responseP3.equals("N")) || (responseP4.equals("N") && responseP1.equals("N") && responseP2.equals("N")) || (responseP2.equals("N") && responseP3.equals("N") && responseP4.equals("N"))){
+                    // no one sponsored it end turn next player
+                    System.out.println("No sponsored this quest, next player's turn");
+                    nextPlayer();
+                }
+            } else if (response.equals("Y")){
+                System.out.println("Current Player " + currentPlayer.getID() + " Sponsored Quest");
+                sponsoringPlayer = currentPlayer;
+            }
+        }
     }
 
 }
