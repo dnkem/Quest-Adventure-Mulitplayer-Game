@@ -341,6 +341,22 @@ public class Main {
         public void discardEventCard(Card c){
             discardEventDeck.add(c);
         }
+
+        public boolean eligibleStage(ArrayList<Card> array){
+            return false;
+        }
+
+        public void buildStages(Scanner input){
+        }
+    }
+
+    public int getValues(ArrayList<Card> array){
+        return -1;
+    }
+
+    public String arrayToString(ArrayList<Card> array){
+        return "";
+
     }
 
     Player p1 = new Player("P1");
@@ -349,6 +365,17 @@ public class Main {
     Player p4 = new Player("P4");
 
     Player sponsoringPlayer; // shallow copy of sponsoring player
+
+    ArrayList<Card> stage1 = new ArrayList<>();
+    int stage1Value = 0;
+    ArrayList<Card> stage2 = new ArrayList<>();
+    int stage2Value = 0;
+    ArrayList<Card> stage3 = new ArrayList<>();
+    int stage3Value = 0;
+    ArrayList<Card> stage4 = new ArrayList<>();
+    int stage4Value = 0;
+    ArrayList<Card> stage5 = new ArrayList<>();
+    int stage5Value = 0;
 
     public void distributeCards(){
         for (int j=0; j<12; j++){

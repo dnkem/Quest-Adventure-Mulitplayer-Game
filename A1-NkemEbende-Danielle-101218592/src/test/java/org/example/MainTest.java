@@ -799,4 +799,113 @@ class MainTest {
         assertEquals(game.p1, game.sponsoringPlayer);
     }
 
+    @Test
+    @DisplayName("Player builds stage for quest")
+    public void RESP_15_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\nQ\n";
+        StringWriter output = new StringWriter();
+
+        // test 1: player 1 builds stage by adding into each stage and
+        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.getEventDeck().get(game.getEventDeckSize()-1).value = 4; // set last card as a Q card
+        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.currentPlayer.buildStages(new Scanner(input));
+        assertEquals(2, game.stage1.size());
+        assertEquals(2, game.stage2.size());
+        assertEquals(2, game.stage3.size());
+        assertEquals(2, game.stage4.size());
+        assertEquals(0, game.stage5.size());
+        assertTrue(game.stage1Value != 0);
+        assertEquals(30, game.stage1Value);
+        assertTrue(game.stage2Value != 0);
+        assertEquals(35, game.stage2Value);
+        assertTrue(game.stage3Value != 0);
+        assertEquals(40, game.stage3Value);
+        assertTrue(game.stage4Value != 0);
+        assertEquals(50, game.stage4Value);
+    }
+
+    @Test
+    @DisplayName("Player tries to quit w/ empty stage")
+    public void RESP_15_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "12\n11\nQ\nQ\n10\n8\nQ\n";
+        StringWriter output = new StringWriter();
+
+        // test 2: player 1 builds stage and tries to quit with an empty stage but is reprompted to continue
+        game.getEventDeck().get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.getEventDeck().get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.currentPlayer.buildStages(new Scanner(input));
+        assertEquals(2, game.stage1.size());
+        assertEquals(2, game.stage2.size());
+    }
+
+    @Test
+    @DisplayName("Player tries to enter invalid position")
+    public void RESP_15_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "12\n11\nQ\n10\n8\n0\nQ\n";
+        StringWriter output = new StringWriter();
+
+        // test 3: player 1 builds stage and tries to enter invalid position
+        game.getEventDeck().get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.getEventDeck().get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.currentPlayer.buildStages(new Scanner(input));
+        assertEquals(2, game.stage1.size());
+        assertEquals(2, game.stage2.size());
+    }
+
+    @Test
+    @DisplayName("Player tries to add to last stage with empty hand")
+    public void RESP_15_test_04() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\n1\n1\n1\nQ\n";
+        StringWriter output = new StringWriter();
+
+        // test 4: player 1 builds stage and add to last stage with empty hand
+        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.getEventDeck().get(game.getEventDeckSize()-1).value = 5; // set last card as a Q card
+        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.currentPlayer.buildStages(new Scanner(input));
+        assertEquals(2, game.stage1.size());
+        assertEquals(4, game.stage5.size());
+    }
+
+    @Test
+    @DisplayName("Check that stage values are valid")
+    public void RESP_15_test_05() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n";
+        StringWriter output = new StringWriter();
+
+        // test 5:
+        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.getEventDeck().get(game.getEventDeckSize()-1).value = 3; // set last card as a Q card
+        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.currentPlayer.buildStages(new Scanner(input));
+        assertEquals(2, game.stage1.size());
+        assertEquals(30, game.stage1Value);
+        assertEquals(2, game.stage2.size());
+        assertEquals(35, game.stage2Value);
+        assertEquals(2, game.stage3.size());
+        assertEquals(40, game.stage3Value);
+    }
 }
