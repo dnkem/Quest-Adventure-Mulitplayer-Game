@@ -343,19 +343,155 @@ public class Main {
         }
 
         public boolean eligibleStage(ArrayList<Card> array){
-            return false;
+            boolean eligible = false;
+            for (int i=0; i<array.size(); i++){
+                if (array.get(i).getName().equals("F")){
+                    eligible = true;
+                }
+            }
+            for (int i=0; i<array.size(); i++){
+                for (int j=1; j<array.size()-1; j++){
+                    if (array.get(i).getName().equals(array.get(j).getName())){
+                        eligible = false;
+                        cards.add(array.remove(j));
+                    }
+                }
+            }
+            return eligible;
         }
 
         public void buildStages(Scanner input){
+            for (int i=0; i<currentDrawnEventCard.getValue(); i++){
+                boolean go = true;
+                while(go) {
+                    System.out.println(getID() + " Cards: " + cardsToString());
+                    System.out.println("Stage " + (i + 1) + ": Select what position (1-" + getCardsSize() + ") should be used in this stage (enter 'Q' to quit): ");
+                    String inputStr = input.nextLine();
+
+                    int inputNum = -1;
+                    try {
+                        inputNum = Integer.parseInt(inputStr);
+                        if (getCardsSize() == 0){
+                            System.out.println("*The player's hand of cards is empty");
+                            break;
+                        } else if (inputNum > getCardsSize() || inputNum < 1) {
+                            System.out.println("*This number, " + inputNum + ", is an invalid position");
+                        } else {
+                            switch (i) {
+                                case 0: stage1.add(cards.remove(inputNum-1)); break;
+                                case 1: stage2.add(cards.remove(inputNum-1)); break;
+                                case 2: stage3.add(cards.remove(inputNum-1)); break;
+                                case 3: stage4.add(cards.remove(inputNum-1)); break;
+                                case 4: stage5.add(cards.remove(inputNum-1)); break;
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        if (i == 0 && stage1.isEmpty()){
+                            System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
+                        } else if (i == 1 && stage2.isEmpty()) {
+                            System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
+                        } else if (i == 2 && stage3.isEmpty()) {
+                            System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
+                        } else if (i == 3 && stage4.isEmpty()) {
+                            System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
+                        } else if (i == 4 && stage5.isEmpty()) {
+                            System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
+                        } else {
+                            System.out.println("BREAK");
+                            go = false;
+                            break;
+                        }
+                    }
+                }
+                boolean eligible = true;
+                // assign the stages values and check if valid
+                switch (i) {
+                    case 0: stage1Value = getValues(stage1); break;
+                    case 1:
+                        if (getValues(stage2) > stage1Value) {
+                            stage2Value = getValues(stage2);
+                            eligible = true;
+                        } else {
+                            System.out.println("*Insufficient value for this stage");
+                            eligible = false;
+                            i -= 1;
+                        }
+                        break;
+                    case 2:
+                        if (getValues(stage3) > stage2Value) {
+                            stage3Value = getValues(stage3);
+                            eligible = true;
+                        } else {
+                            System.out.println("*Insufficient value for this stage");
+                            eligible = false;
+                            i -= 1;
+                        }
+                        break;
+                    case 3:
+                        if (getValues(stage4) > stage3Value) {
+                            stage4Value = getValues(stage4);
+                            eligible = true;
+                        } else {
+                            System.out.println("*Insufficient value for this stage");
+                            eligible = false;
+                            i -= 1;
+                        }
+                        break;
+                    case 4:
+                        if (getValues(stage5) > stage4Value) {
+                            stage5Value = getValues(stage5);
+                            eligible = true;
+                        } else {
+                            System.out.println("*Insufficient value for this stage");
+                            eligible = false;
+                            i -= 1;
+                        }
+                        break;
+                }
+
+                // print stages
+                if (eligible) {
+                    switch (i) {
+                        case 0:
+                            String s1 = arrayToString(stage1);
+                            System.out.println("    Stage 1: " + s1);
+                            break;
+                        case 1:
+                            String s2 = arrayToString(stage2);
+                            System.out.println("    Stage 2: " + s2);
+                            break;
+                        case 2:
+                            String s3 = arrayToString(stage3);
+                            System.out.println("    Stage 3: " + s3);
+                            break;
+                        case 3:
+                            String s4 = arrayToString(stage4);
+                            System.out.println("    Stage 4: " + s4);
+                            break;
+                        case 4:
+                            String s5 = arrayToString(stage5);
+                            System.out.println("    Stage 5: " + s5);
+                            break;
+                    }
+                }
+            }
         }
     }
 
     public int getValues(ArrayList<Card> array){
-        return -1;
+        int value = 0;
+        for (int i=0; i< array.size(); i++){
+            value += array.get(i).getValue();
+        }
+        return value;
     }
 
     public String arrayToString(ArrayList<Card> array){
-        return "";
+        String s1 = "";
+        for (int j = 0; j < array.size(); j++) {
+            s1 += array.get(j).getName() + array.get(j).getValue() + " ";
+        }
+        return s1;
 
     }
 
