@@ -1020,4 +1020,49 @@ class MainTest {
         assertEquals(game.currentPlayer, game.p2);
     }
 
+    @Test
+    @DisplayName("P2 sets up attack")
+    public void RESP_19_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "1\n2\n2\nQ\n";
+        StringWriter output = new StringWriter();
+
+        assertEquals(12, game.p2.getCardsSize());
+        game.p2.setUpAttack(new Scanner(input));
+        assertEquals(3, game.p2.attack.size());
+        assertEquals(9, game.p2.getCardsSize());
+    }
+
+    @Test
+    @DisplayName("All eligible set up attack")
+    public void RESP_19_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String input = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String input2 = "Y\nN\nN\n";
+        String input3 = "12\n11\nQ\n10\n1\nQ";
+        StringWriter output = new StringWriter();
+
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(input2), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(input3));
+        game.getEligiblePlayers();
+
+        assertEquals(12, game.p2.getCardsSize());
+        game.participantsSetUpAttack(new Scanner(input), new PrintWriter(output));
+        assertEquals(2, game.p2.attack.size());
+        assertEquals(10, game.p2.getCardsSize());
+        assertEquals(3, game.p3.attack.size());
+        assertEquals(9, game.p3.getCardsSize());
+        assertEquals(3, game.p4.attack.size());
+        assertEquals(9, game.p4.getCardsSize());
+    }
+
 }

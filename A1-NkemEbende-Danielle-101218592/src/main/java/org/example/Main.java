@@ -163,6 +163,7 @@ public class Main {
         String id;          // P1, P2, P3, P4
         int numShields = 0;
         ArrayList<Card> cards = new ArrayList<Card>();
+        ArrayList<Card> attack = new ArrayList<>();
 
         Player(String ID){
             this.id = ID;
@@ -530,6 +531,16 @@ public class Main {
                 drawAdvCard();
             }
         }
+
+        public String promptAttack(Scanner input){
+            return "";
+        }
+
+        public void setUpAttack(Scanner input){
+        }
+    }
+
+    public void participantsSetUpAttack(Scanner input, PrintWriter output){
     }
 
     public int getValues(ArrayList<Card> array){
