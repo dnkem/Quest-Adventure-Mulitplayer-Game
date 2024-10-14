@@ -533,14 +533,39 @@ public class Main {
         }
 
         public String promptAttack(Scanner input){
-            return "";
+            System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attach (enter 'Q' to quit): ");
+            String inputStr = input.nextLine();
+            int inputNum = -1;
+
+            try{
+                inputNum = Integer.parseInt(inputStr);
+                attack.add(cards.remove(inputNum - 1));
+                return inputStr;
+            } catch(NumberFormatException e) {
+                System.out.println("QUIT");
+                return inputStr;
+            }
         }
 
         public void setUpAttack(Scanner input){
+            boolean go = true;
+            while (go){
+                String item = promptAttack(input);
+                if (item.equals("Q")) {
+                    go = false;
+                    break;
+                }
+            }
         }
     }
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
+        clearScreen(output);
+        for (int i=0; i<eligiblePlayers.size(); i++){
+            System.out.println(eligiblePlayers.get(i).getID() +" "+ eligiblePlayers.get(i).cardsToString());
+            eligiblePlayers.get(i).setUpAttack(input);
+            clearScreen(output);
+        }
     }
 
     public int getValues(ArrayList<Card> array){
