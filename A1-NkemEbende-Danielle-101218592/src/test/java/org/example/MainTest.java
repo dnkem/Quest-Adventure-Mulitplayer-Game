@@ -1218,4 +1218,31 @@ class MainTest {
         assertEquals("Adventure", game.p1.getCard(0).type);
     }
 
+    @Test
+    @DisplayName("Sort player's hand")
+    public void RESP_23_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.distributeCards();
+        StringWriter output = new StringWriter();
+        game.overwriteCard(game.p1.cards, 0, "Adventure", "F", 10);
+
+        game.p1.printPlayersCards(new PrintWriter(output));
+        game.p1.sortCards();
+        game.p1.printPlayersCards(new PrintWriter(output));
+        assertEquals("F", game.p1.getCard(0).getName());assertEquals(10, game.p1.getCard(0).getValue());
+        assertEquals("B", game.p1.getCard(1).getName());assertEquals(15, game.p1.getCard(1).getValue());
+        assertEquals("B", game.p1.getCard(2).getName());assertEquals(15, game.p1.getCard(2).getValue());
+        assertEquals("B", game.p1.getCard(3).getName());assertEquals(15, game.p1.getCard(3).getValue());
+        assertEquals("B", game.p1.getCard(4).getName());assertEquals(15, game.p1.getCard(4).getValue());
+        assertEquals("L", game.p1.getCard(5).getName());assertEquals(20, game.p1.getCard(5).getValue());
+        assertEquals("L", game.p1.getCard(6).getName());assertEquals(20, game.p1.getCard(6).getValue());
+        assertEquals("L", game.p1.getCard(7).getName());assertEquals(20, game.p1.getCard(7).getValue());
+        assertEquals("L", game.p1.getCard(8).getName());assertEquals(20, game.p1.getCard(8).getValue());
+        assertEquals("L", game.p1.getCard(9).getName());assertEquals(20, game.p1.getCard(9).getValue());
+        assertEquals("L", game.p1.getCard(10).getName());assertEquals(20, game.p1.getCard(10).getValue());
+        assertEquals("E", game.p1.getCard(11).getName());assertEquals(30, game.p1.getCard(11).getValue());
+
+    }
+
 }

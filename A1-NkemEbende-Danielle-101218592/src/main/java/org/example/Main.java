@@ -667,6 +667,9 @@ public class Main {
                 }
             }
         }
+
+        public void sortCards(){
+        }
     }
 
     public void concludeQuest(PrintWriter output){
@@ -736,6 +739,7 @@ public class Main {
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
         clearScreen(output);
+        //Collections.reverse(eligiblePlayers);
         for (int i=0; i<eligiblePlayers.size(); i++){
             eligiblePlayers.get(i).setUpAttack(input);
             clearScreen(output);
