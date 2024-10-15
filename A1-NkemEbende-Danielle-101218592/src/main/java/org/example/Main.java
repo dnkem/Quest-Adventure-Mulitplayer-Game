@@ -1,6 +1,5 @@
 package org.example;
 
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -58,72 +57,111 @@ public class Main {
         advDeck = new ArrayList<Card>();
         // add in foes
         // F5s
-        Card cardF5 = new Card("Adventure","F", 5);
-        for (int i=0; i<8; i++){ advDeck.add(cardF5);}
+
+        for (int i=0; i<8; i++){
+            Card cardF5 = new Card("Adventure","F", 5);
+            advDeck.add(cardF5);
+        }
         // F10s
-        Card cardF10 = new Card("Adventure","F", 10);
-        for (int i=8; i<15; i++){ advDeck.add(cardF10);}
+        for (int i=8; i<15; i++){
+            Card cardF10 = new Card("Adventure","F", 10);
+            advDeck.add(cardF10);
+        }
         // F15s
-        Card cardF15 = new Card("Adventure","F", 15);
-        for (int i=15; i<23; i++){ advDeck.add(cardF15);}
+        for (int i=15; i<23; i++){
+            Card cardF15 = new Card("Adventure","F", 15);
+            advDeck.add(cardF15);
+        }
         // F20s
-        Card cardF20 = new Card("Adventure","F", 20);
-        for (int i=23; i<30; i++){ advDeck.add(cardF20);}
+        for (int i=23; i<30; i++){
+            Card cardF20 = new Card("Adventure","F", 20);
+            advDeck.add(cardF20);
+        }
         // F25s
-        Card cardF25 = new Card("Adventure","F", 25);
-        for (int i=30; i<37; i++){ advDeck.add(cardF25);}
+        for (int i=30; i<37; i++){
+            Card cardF25 = new Card("Adventure","F", 25);
+            advDeck.add(cardF25);
+        }
         // F30s
-        Card cardF30 = new Card("Adventure","F", 30);
-        for (int i=37; i<41; i++){ advDeck.add(cardF30);}
+        for (int i=37; i<41; i++){
+            Card cardF30 = new Card("Adventure","F", 30);
+            advDeck.add(cardF30);
+        }
         // F35s
-        Card cardF35 = new Card("Adventure","F", 35);
-        for (int i=41; i<45; i++){ advDeck.add(cardF35);}
+        for (int i=41; i<45; i++){
+            Card cardF35 = new Card("Adventure","F", 35);
+            advDeck.add(cardF35);
+        }
         // F40s
-        Card cardF40 = new Card("Adventure","F", 40);
-        for (int i=45; i<47; i++){ advDeck.add(cardF40);}
+        for (int i=45; i<47; i++){
+            Card cardF40 = new Card("Adventure","F", 40);
+            advDeck.add(cardF40);
+        }
         // F50s
-        Card cardF50 = new Card("Adventure","F", 50);
-        for (int i=47; i<49; i++){ advDeck.add(cardF50);}
+        for (int i=47; i<49; i++){
+            Card cardF50 = new Card("Adventure","F", 50);
+            advDeck.add(cardF50);
+        }
         // F70
         Card cardF70 = new Card("Adventure","F", 70);
         advDeck.add(cardF70);
 
         // add in weapons
         // D5s
-        Card cardD5 = new Card("Adventure","D", 5);
-        for (int i=50; i<56; i++){ advDeck.add(cardD5);}
+        for (int i=50; i<56; i++){
+            Card cardD5 = new Card("Adventure","D", 5);
+            advDeck.add(cardD5);
+        }
         // H10s
-        Card cardH10 = new Card("Adventure","H", 10);
-        for (int i=56; i<68; i++){ advDeck.add(cardH10);}
+        for (int i=56; i<68; i++){
+            Card cardH10 = new Card("Adventure","H", 10);
+            advDeck.add(cardH10);
+        }
         // S10s
-        Card cardS10 = new Card("Adventure","S", 10);
-        for (int i=68; i<84; i++){ advDeck.add(cardS10);}
+        for (int i=68; i<84; i++){
+            Card cardS10 = new Card("Adventure","S", 10);
+            advDeck.add(cardS10);
+        }
         // B15s
-        Card cardB15 = new Card("Adventure","B", 15);
-        for (int i=84; i<92; i++){ advDeck.add(cardB15);}
+        for (int i=84; i<92; i++){
+            Card cardB15 = new Card("Adventure","B", 15);
+            advDeck.add(cardB15);
+        }
         // L20s
-        Card cardL20 = new Card("Adventure","L", 20);
-        for (int i=92; i<98; i++){ advDeck.add(cardL20);}
+        for (int i=92; i<98; i++){
+            Card cardL20 = new Card("Adventure","L", 20);
+            advDeck.add(cardL20);
+        }
         // E30s
-        Card cardE30 = new Card("Adventure","E", 30);
-        for (int i=98; i<100; i++){ advDeck.add(cardE30);}
+        for (int i=98; i<100; i++){
+            Card cardE30 = new Card("Adventure","E", 30);
+            advDeck.add(cardE30);
+        }
     }
 
     public void initEventDeck(){
         eventDeck = new ArrayList<Card>();
         // add in quests
         // Q2s
-        Card cardQ2 = new Card("Event","Q", 2);
-        for (int i=0; i<3; i++){ eventDeck.add(cardQ2);}
+        for (int i=0; i<3; i++){
+            Card cardQ2 = new Card("Event","Q", 2);
+            eventDeck.add(cardQ2);
+        }
         // Q3s
-        Card cardQ3 = new Card("Event","Q", 3);
-        for (int i=3; i<7; i++){ eventDeck.add(cardQ3);}
+        for (int i=3; i<7; i++){
+            Card cardQ3 = new Card("Event","Q", 3);
+            eventDeck.add(cardQ3);
+        }
         // Q4s
-        Card cardQ4 = new Card("Event","Q", 4);
-        for (int i=7; i<10; i++){ eventDeck.add(cardQ4);}
+        for (int i=7; i<10; i++){
+            Card cardQ4 = new Card("Event","Q", 4);
+            eventDeck.add(cardQ4);
+        }
         // Q5s
-        Card cardQ5 = new Card("Event","Q", 5);
-        for (int i=10; i<12; i++){ eventDeck.add(cardQ5);}
+        for (int i=10; i<12; i++){
+            Card cardQ5 = new Card("Event","Q", 5);
+            eventDeck.add(cardQ5);
+        }
 
         // add in events
         // Plagues
@@ -132,11 +170,13 @@ public class Main {
         // Queens favor
         Card cardFavor = new Card("Event","Queen’s favor", 2);
         eventDeck.add(cardFavor);
-        eventDeck.add(cardFavor);
+        Card cardFavor2 = new Card("Event","Queen’s favor", 2);
+        eventDeck.add(cardFavor2);
         // Prosperity
         Card cardProsperity = new Card("Event","Prosperity", 2);
         eventDeck.add(cardProsperity);
-        eventDeck.add(cardProsperity);
+        Card cardProsperity2 = new Card("Event","Prosperity", 2);
+        eventDeck.add(cardProsperity2);
     }
 
     public int getEventDeckSize(){
@@ -163,7 +203,7 @@ public class Main {
         String id;          // P1, P2, P3, P4
         int numShields = 0;
         ArrayList<Card> cards = new ArrayList<Card>();
-        ArrayList<Card> attack = new ArrayList<>();
+        ArrayList<Card> attack = new ArrayList<Card>();
 
         Player(String ID){
             this.id = ID;
@@ -198,6 +238,7 @@ public class Main {
                 cards += getCard(i).getName() + getCard(i).getValue() + "   ";
             }
             printWriter.println("Checks there's items in card: " + cards);
+            System.out.println(cards);
 
             // print into the terminal
             printWriter.println("Printing " + getID() + " Cards:");
@@ -213,6 +254,7 @@ public class Main {
 
         public void drawEventCard(){
             currentDrawnEventCard = eventDeck.removeLast();
+            System.out.println("    " + currentDrawnEventCard.type +": " + currentDrawnEventCard.getName() + currentDrawnEventCard.getValue());
             if (currentDrawnEventCard.getName().equals("Queen’s favor")){
                 playQueenEventCard(currentPlayer);
             } else if (currentDrawnEventCard.getName().equals("Prosperity")){
@@ -230,6 +272,7 @@ public class Main {
             currentDrawnEventCard = eventDeck.removeLast();
             if (currentDrawnEventCard.getName().equals("Q")){
                 // replace w/ playersSponsorPrompt(input, output);
+                System.out.println("    " + currentDrawnEventCard.type +": " + currentDrawnEventCard.getName() + currentDrawnEventCard.getValue());
                 currentPlayer.promptSponsor(input, output, currentDrawnEventCard);
             }
             // discardEventCard(currentDrawnEventCard);
@@ -279,6 +322,7 @@ public class Main {
                     output.println("input is valid"); output.flush();
                     if (inputStr.equals("Y")){
                         output.println("Y");output.flush();
+                        System.out.println(inputStr);
                         return inputStr;
                     } else {
                         output.println("N");output.flush();
@@ -303,6 +347,7 @@ public class Main {
             try{
                 inputNum = Integer.parseInt(inputStr);
                 output.println("input is valid"); output.flush();
+                System.out.println(inputNum);
             } catch(NumberFormatException e) {
                 output.println("input is not valid"); output.flush();
                 return;
@@ -353,6 +398,7 @@ public class Main {
                     output.println("input is valid"); output.flush();
                     if (inputStr.equals("Y")){
                         output.println("Y");output.flush();
+                        System.out.println(inputStr);
                         return inputStr;
                     } else {
                         output.println("N");output.flush();
@@ -397,6 +443,7 @@ public class Main {
                     int inputNum = -1;
                     try {
                         inputNum = Integer.parseInt(inputStr);
+                        System.out.println(inputNum);
                         if (getCardsSize() == 0){
                             System.out.println("*The player's hand of cards is empty");
                             break;
@@ -423,7 +470,7 @@ public class Main {
                         } else if (i == 4 && stage5.isEmpty()) {
                             System.out.println("*This stage has no cards, A stage cannot be empty"); continue;
                         } else {
-                            System.out.println("BREAK");
+                            System.out.println("Q");
                             go = false;
                             break;
                         }
@@ -540,6 +587,7 @@ public class Main {
         }
 
         public String promptAttack(Scanner input){
+            System.out.println(getID() + " Cards: " + cardsToString());
             System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attach (enter 'Q' to quit): ");
             String inputStr = input.nextLine();
             int inputNum = -1;
@@ -547,9 +595,10 @@ public class Main {
             try{
                 inputNum = Integer.parseInt(inputStr);
                 attack.add(cards.remove(inputNum - 1));
+                System.out.println(inputNum);
                 return inputStr;
             } catch(NumberFormatException e) {
-                System.out.println("QUIT");
+                System.out.println("Q");
                 return inputStr;
             }
         }
@@ -688,7 +737,6 @@ public class Main {
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
         clearScreen(output);
         for (int i=0; i<eligiblePlayers.size(); i++){
-            System.out.println(eligiblePlayers.get(i).getID() +" "+ eligiblePlayers.get(i).cardsToString());
             eligiblePlayers.get(i).setUpAttack(input);
             clearScreen(output);
         }
