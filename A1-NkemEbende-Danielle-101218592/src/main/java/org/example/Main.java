@@ -525,6 +525,9 @@ public class Main {
             }
         }
 
+        public void discardAttackCards(){
+        }
+
         public void drawAdvCardsTo12(){
             int num = 12 - this.getCardsSize();
             for (int j=0; j<num; j++){
@@ -557,6 +560,16 @@ public class Main {
                 }
             }
         }
+
+        public void attackStage(ArrayList<Card> stage, String stageStr) {
+        }
+    }
+
+    public void allEligiblePlayersAttackStage(ArrayList<Card> stage, String stageName){
+    }
+
+    public void discardAllEligibleAttackCards(){
+    }
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
         clearScreen(output);

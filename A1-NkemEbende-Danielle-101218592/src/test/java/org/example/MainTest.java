@@ -1065,4 +1065,101 @@ class MainTest {
         assertEquals(9, game.p4.getCardsSize());
     }
 
+    @Test
+    @DisplayName("Do attacks for all eligible")
+    public void RESP_20_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String sponsorPrompt = "Y\nN\nN\n";
+        String buildStages = "12\n11\nQ\n1\n1\n1\nQ";
+        String joinQuestInput = "Y\nY\nY\n";
+        StringWriter output = new StringWriter();
+
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(buildStages));
+        game.getEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(joinQuestInput), new PrintWriter(output));
+        game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
+
+        // test 1: testing stage1 for successful attack
+        game.allEligiblePlayersAttackStage(game.stage1, "stage1");
+        assertEquals(2, game.eligiblePlayers.size());
+    }
+
+    @Test
+    @DisplayName("Do attacks for all eligible and discard all attack cards")
+    public void RESP_20_test_02() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String sponsorPrompt = "Y\nN\nN\n";
+        String buildStages = "12\n11\nQ\n1\n1\n1\nQ";
+        String joinQuestInput = "Y\nY\nY\n";
+        StringWriter output = new StringWriter();
+
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(buildStages));
+        game.getEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(joinQuestInput), new PrintWriter(output));
+        game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
+
+        // test 2: discard all eligible attack cards
+        game.allEligiblePlayersAttackStage(game.stage1, "stage1");
+        assertEquals(2, game.eligiblePlayers.size());
+        game.discardAllEligibleAttackCards();
+        assertEquals(0, game.p2.attack.size());
+        assertEquals(0, game.p3.attack.size());
+        assertEquals(0, game.p4.attack.size());
+    }
+
+    @Test
+    @DisplayName("Do attacks for all eligible for 2 stages")
+    public void RESP_20_test_03() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String sponsorPrompt = "Y\nN\nN\n";
+        String buildStages = "12\n11\nQ\n1\n1\n1\nQ";
+        String joinQuestInput = "Y\nY\nY\n";
+        String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        StringWriter output = new StringWriter();
+
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(buildStages));
+        game.getEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(joinQuestInput), new PrintWriter(output));
+        game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
+
+        // test 3: Do attacks for all eligible players for 2 stages
+        game.allEligiblePlayersAttackStage(game.stage1, "stage1");
+        assertEquals(2, game.eligiblePlayers.size());
+        game.discardAllEligibleAttackCards();
+        assertEquals(0, game.p2.attack.size());
+        assertEquals(0, game.p3.attack.size());
+        assertEquals(0, game.p4.attack.size());
+
+
+        game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
+        game.allEligiblePlayersAttackStage(game.stage2, "stage2");
+        assertEquals(0, game.eligiblePlayers.size());
+        game.discardAllEligibleAttackCards();
+
+    }
+
 }
