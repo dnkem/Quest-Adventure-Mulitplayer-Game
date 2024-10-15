@@ -1057,12 +1057,12 @@ class MainTest {
 
         assertEquals(12, game.p2.getCardsSize());
         game.participantsSetUpAttack(new Scanner(input), new PrintWriter(output));
-        assertEquals(2, game.p2.attack.size());
-        assertEquals(10, game.p2.getCardsSize());
+        assertEquals(3, game.p2.attack.size());
+        assertEquals(9, game.p2.getCardsSize());
         assertEquals(3, game.p3.attack.size());
         assertEquals(9, game.p3.getCardsSize());
-        assertEquals(3, game.p4.attack.size());
-        assertEquals(9, game.p4.getCardsSize());
+        assertEquals(2, game.p4.attack.size());
+        assertEquals(10, game.p4.getCardsSize());
     }
 
     @Test
@@ -1089,7 +1089,7 @@ class MainTest {
 
         // test 1: testing stage1 for successful attack
         game.allEligiblePlayersAttackStage(game.stage1, "stage1");
-        assertEquals(2, game.eligiblePlayers.size());
+        assertEquals(3, game.eligiblePlayers.size());
     }
 
     @Test
@@ -1116,7 +1116,7 @@ class MainTest {
 
         // test 2: discard all eligible attack cards
         game.allEligiblePlayersAttackStage(game.stage1, "stage1");
-        assertEquals(2, game.eligiblePlayers.size());
+        assertEquals(3, game.eligiblePlayers.size());
         game.discardAllEligibleAttackCards();
         assertEquals(0, game.p2.attack.size());
         assertEquals(0, game.p3.attack.size());
@@ -1148,7 +1148,7 @@ class MainTest {
 
         // test 3: Do attacks for all eligible players for 2 stages
         game.allEligiblePlayersAttackStage(game.stage1, "stage1");
-        assertEquals(2, game.eligiblePlayers.size());
+        assertEquals(3, game.eligiblePlayers.size());
         game.discardAllEligibleAttackCards();
         assertEquals(0, game.p2.attack.size());
         assertEquals(0, game.p3.attack.size());
@@ -1242,7 +1242,6 @@ class MainTest {
         assertEquals("L", game.p1.getCard(9).getName());assertEquals(20, game.p1.getCard(9).getValue());
         assertEquals("L", game.p1.getCard(10).getName());assertEquals(20, game.p1.getCard(10).getValue());
         assertEquals("E", game.p1.getCard(11).getName());assertEquals(30, game.p1.getCard(11).getValue());
-
     }
 
 }
