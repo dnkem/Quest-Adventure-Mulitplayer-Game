@@ -929,4 +929,7 @@ public class Main {
         }
     }
 
+    public void overwriteCard(ArrayList<Card> cards, int index, String type, String name, int value){
+    }
+
 }

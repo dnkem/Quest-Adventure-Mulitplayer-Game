@@ -1205,4 +1205,17 @@ class MainTest {
         game.printWinners();
     }
 
+    @Test
+    @DisplayName("Rig hand")
+    public void RESP_22_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.distributeCards();
+        game.overwriteCard(game.p1.cards, 0, "Adventure", "F", 10);
+
+        assertEquals(10, game.p1.getCard(0).value);
+        assertEquals("F", game.p1.getCard(0).name);
+        assertEquals("Adventure", game.p1.getCard(0).type);
+    }
+
 }
