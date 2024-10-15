@@ -557,7 +557,6 @@ public class Main {
                 }
             }
         }
-    }
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
         clearScreen(output);
@@ -603,6 +602,7 @@ public class Main {
     }
 
     public void askEligiblePlayers(Scanner input, PrintWriter output){
+        Collections.reverse(eligiblePlayers);
         String item = "";
         for (int i=eligiblePlayers.size() - 1; i>=0; i--){
             item = eligiblePlayers.get(i).promptJoin(input, output);
