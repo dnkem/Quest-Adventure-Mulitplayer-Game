@@ -669,6 +669,70 @@ public class Main {
         }
 
         public void sortCards(){
+            ArrayList<Card> newCards = new ArrayList<Card>();
+            ArrayList<Integer> numF = new ArrayList<>();
+            int numH = 0;
+            int numS = 0;
+            int numD = 0;
+            int numB = 0;
+            int numL = 0;
+            int numE = 0;
+
+            for (int i=0; i<getCardsSize(); i++){
+                if (getCard(i).getName().equals("F")){
+                    numF.add(getCard(i).getValue());
+                } else if (getCard(i).getName().equals("D")){
+                    numD++;
+                } else if (getCard(i).getName().equals("H")){
+                    numH++;
+                } else if (getCard(i).getName().equals("S")){
+                    numS++;
+                } else if (getCard(i).getName().equals("B")){
+                    numB++;
+                }else if (getCard(i).getName().equals("L")){
+                    numL++;
+                } else if (getCard(i).getName().equals("E")){
+                    numE++;
+                }
+            }
+
+            Collections.sort(numF);
+
+            // add in f's to new card
+            if (!numF.isEmpty()){
+                for (int i=0; i<numF.size(); i++){
+                    newCards.add(new Card("Adventure", "F", numF.get(i)));
+                }
+            }
+            int total = numF.size();
+
+            // add in the rest
+            total += numD;
+            for (int i=numF.size(); i<total; i++){
+                newCards.add(new Card("Adventure", "D", 5));
+            }
+
+            total += numS;
+            for (int i=total; i<total + numS; i++){
+                newCards.add(new Card("Adventure", "S", 10));
+            }
+            total += numH;
+            for (int i=total; i<total + numH; i++){
+                newCards.add(new Card("Adventure", "H", 10));
+            }
+            total += numB;
+            for (int i=total; i<total + numB; i++){
+                newCards.add(new Card("Adventure", "B", 15));
+            }
+            total += numL;
+            for (int i=total; i<total + numL; i++){
+                newCards.add(new Card("Adventure", "L", 20));
+            }
+            total += numE;
+            for (int i=total; i<total + numE; i++){
+                newCards.add(new Card("Adventure", "E", 30));
+            }
+            cards = newCards;
         }
     }
 
@@ -739,7 +803,7 @@ public class Main {
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output){
         clearScreen(output);
-        //Collections.reverse(eligiblePlayers);
+//        Collections.reverse(eligiblePlayers);
         for (int i=0; i<eligiblePlayers.size(); i++){
             eligiblePlayers.get(i).setUpAttack(input);
             clearScreen(output);
