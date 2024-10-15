@@ -1162,4 +1162,47 @@ class MainTest {
 
     }
 
+    @Test
+    @DisplayName("Conclude Quest, distribute shields and check for winners")
+    public void RESP_21_test_01() {
+        Main game = new Main();
+        game.initAdvDeck();
+        game.initEventDeck();
+        game.distributeCards();
+        String attackSetUp = "1\n2\nQ\n12\n1\n2\nQ\n1\n2\n2\nQ\n";
+        String sponsorPrompt = "Y\nN\nN\n";
+        String buildStages = "12\n11\nQ\n10\n7\nQ\n";
+        String joinQuestInput = "Y\nY\nN\n";
+        String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        StringWriter output = new StringWriter();
+
+        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.p1.cards.get(11).value = 5;
+
+        game.p3.cards.get(11).value = 20;
+        game.p2.setNumShields(5);
+
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+        game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
+        game.sponsoringPlayer.buildStages(new Scanner(buildStages));
+        game.getEligiblePlayers();
+        game.askEligiblePlayers(new Scanner(joinQuestInput), new PrintWriter(output));
+        game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
+
+        // test 1:
+        game.allEligiblePlayersAttackStage(game.stage1, "stage1");
+        game.discardAllEligibleAttackCards();
+        game.participantsSetUpAttack(new Scanner(attackSetUp2), new PrintWriter(output));
+        game.allEligiblePlayersAttackStage(game.stage2, "stage2");
+        game.discardAllEligibleAttackCards();
+
+        game.concludeQuest(new PrintWriter(output));
+        assertEquals(0, game.eligiblePlayers.size());
+        game.checkForWinners();
+        assertEquals(7, game.p2.getNumShields());
+        assertEquals(1, game.gameWinners.size());
+        game.printWinners();
+    }
+
 }

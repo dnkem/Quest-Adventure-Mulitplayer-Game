@@ -620,6 +620,16 @@ public class Main {
         }
     }
 
+    public void concludeQuest(PrintWriter output){
+    }
+
+    public boolean checkForWinners(){
+        return true;
+    }
+
+    public void printWinners(){
+    }
+
     public void allEligiblePlayersAttackStage(ArrayList<Card> stage, String stageName){
         int num = eligiblePlayers.size();
         System.out.println("STAGE: " + arrayToString(stage) + "\n");
@@ -710,6 +720,7 @@ public class Main {
     Player p4 = new Player("P4");
 
     ArrayList<Player> eligiblePlayers = new ArrayList<Player>();
+    ArrayList<Player> gameWinners = new ArrayList<Player>();
 
     Player sponsoringPlayer; // shallow copy of sponsoring player
 
