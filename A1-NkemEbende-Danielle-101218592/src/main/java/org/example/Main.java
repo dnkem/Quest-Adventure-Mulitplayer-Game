@@ -621,13 +621,50 @@ public class Main {
     }
 
     public void concludeQuest(PrintWriter output){
+        // distribute shields
+        if(!eligiblePlayers.isEmpty()) {
+            for (int i=0; i<eligiblePlayers.size(); i++) {
+                eligiblePlayers.get(i).setNumShields(eligiblePlayers.get(i).getNumShields() + currentDrawnEventCard.getValue());
+            }
+        }
+
+        System.out.println("END OF " + currentPlayer.getID() + "'s TURN\n");
+        clearScreen(output);
+
+        // empty eligible players attack
+        discardAllEligibleAttackCards();
+        // empty eligible players list
+        eligiblePlayers.clear();
+        // discard current event drawn
+        sponsoringPlayer.discardEventCard(currentDrawnEventCard);
     }
 
     public boolean checkForWinners(){
+        ArrayList<Player> winners = new ArrayList<Player>();
+        if (p1.getNumShields() >= 7){
+            winners.add(p1);
+        }
+        if (p2.getNumShields() >= 7){
+            winners.add(p2);
+        }
+        if (p3.getNumShields() >= 7){
+            winners.add(p3);
+        }
+        if (p4.getNumShields() >= 7){
+            winners.add(p4);
+        }
+
+        if (winners.isEmpty()) return false;
+        gameWinners = winners;
         return true;
     }
 
     public void printWinners(){
+        String w ="";
+        for (int i=0; i<gameWinners.size(); i++){
+            w += gameWinners.get(i).getID();
+        }
+        System.out.println("WINNER(S) of the game: " + w);
     }
 
     public void allEligiblePlayersAttackStage(ArrayList<Card> stage, String stageName){
