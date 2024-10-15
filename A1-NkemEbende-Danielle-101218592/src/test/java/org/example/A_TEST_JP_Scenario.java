@@ -175,6 +175,7 @@ public class A_TEST_JP_Scenario {
         game.printEligiblePlayers();
 
         // OFFICIAL ASSERT TEST
+        assertEquals(0, game.p1.getNumShields());
         assertEquals("F", game.p1.getCard(0).getName());assertEquals(5, game.p1.getCard(0).getValue());
         assertEquals("F", game.p1.getCard(1).getName());assertEquals(10, game.p1.getCard(1).getValue());
         assertEquals("F", game.p1.getCard(2).getName());assertEquals(15, game.p1.getCard(2).getValue());
@@ -252,6 +253,8 @@ public class A_TEST_JP_Scenario {
         game.sponsoringPlayer.drawAdvCard();
         game.sponsoringPlayer.drawAdvCard();
         game.sponsoringPlayer.drawAdvCard();
+        game.sponsoringPlayer.drawAdvCard();
+
         game.sponsoringPlayer.sortCards();
 
         String trim = "1\n3\n7\n4\n";
