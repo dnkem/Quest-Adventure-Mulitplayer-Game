@@ -930,6 +930,9 @@ public class Main {
     }
 
     public void overwriteCard(ArrayList<Card> cards, int index, String type, String name, int value){
+        cards.get(index).name = name;
+        cards.get(index).type = type;
+        cards.get(index).value = value;
     }
 
 }
