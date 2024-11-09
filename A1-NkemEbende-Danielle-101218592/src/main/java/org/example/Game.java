@@ -31,6 +31,7 @@ public class Game {
     public Player p4 = new Player("P4", this);
 
     public ArrayList<Player> eligiblePlayers = new ArrayList<Player>();
+    public ArrayList<Player> noLongerEligible = new ArrayList<Player>();
     public ArrayList<Player> gameWinners = new ArrayList<Player>();
 
 
@@ -53,11 +54,12 @@ public class Game {
         discardAllEligibleAttackCards();
         // empty eligible players list
         eligiblePlayers.clear();
+        noLongerEligible.clear();
         // discard current event drawn
         sponsoringPlayer.discardEventCard(currentDrawnEventCard);
     }
 
-    public boolean checkForWinners() {
+    public void checkForWinners() {
         ArrayList<Player> winners = new ArrayList<Player>();
         if (p1.getNumShields() >= 7) {
             winners.add(p1);
@@ -71,10 +73,7 @@ public class Game {
         if (p4.getNumShields() >= 7) {
             winners.add(p4);
         }
-
-        if (winners.isEmpty()) return false;
         gameWinners = winners;
-        return true;
     }
 
     public void printWinners() {
@@ -83,15 +82,44 @@ public class Game {
             w += gameWinners.get(i).getID();
         }
         System.out.println("WINNER(S) of the game: " + w);
+        if (gameWinners.isEmpty()) System.out.println("No Winners");
+    }
+
+    public void eligiblePlayersDrawAdvCard(){
+        for (int i=0; i<eligiblePlayers.size(); i++){
+            eligiblePlayers.get(i).drawAdvCard();
+            eligiblePlayers.get(i).sortCards();
+            // make sure to call trim to 12
+        }
     }
 
     public void allEligiblePlayersAttackStage(ArrayList<Card> stage, String stageName) {
-        int num = eligiblePlayers.size();
         System.out.println("STAGE: " + arrayToString(stage) + "\n");
-        for (int i = num - 1; i >= 0; i--) {
+        for (int i=0; i<eligiblePlayers.size(); i++) {
             System.out.println(eligiblePlayers.get(i).getID());
             eligiblePlayers.get(i).attackStage(stage, stageName);
             System.out.println();
+        }
+        removeIneligiblePlayersFromList();
+    }
+
+    public void removeIneligiblePlayersFromList(){
+        List<Integer> indices = new ArrayList<>();
+
+        // remove the players that are no longer eligible
+        // find indices of no longer eligible players
+        int count = eligiblePlayers.size();
+        for (int i=0; i<count; i++){
+            for (int j=0; j<noLongerEligible.size(); j++){
+                if (noLongerEligible.get(j).getID().equals(eligiblePlayers.get(i).getID())){
+                    indices.add(i);
+                }
+            }
+        }
+
+        // remove those indices
+        for (int i=indices.size()-1; i>=0; i--){
+            updateEligiblePlayers(eligiblePlayers.get(indices.get(i)));
         }
     }
 
@@ -105,7 +133,6 @@ public class Game {
 
     public void participantsSetUpAttack(Scanner input, PrintWriter output) {
         clearScreen(output);
-        Collections.reverse(eligiblePlayers);
         for (int i = 0; i < eligiblePlayers.size(); i++) {
             eligiblePlayers.get(i).setUpAttack(input);
             clearScreen(output);
@@ -126,6 +153,13 @@ public class Game {
             s1 += array.get(j).getName() + array.get(j).getValue() + " ";
         }
         return s1;
+    }
+
+    public void printIleligiblePlayers() {
+        System.out.println("Ileligible Players for this Quest:");
+        for (int i = 0; i < noLongerEligible.size(); i++) {
+            System.out.println(noLongerEligible.get(i).getID());
+        }
     }
 
     public void printEligiblePlayers() {
@@ -156,14 +190,14 @@ public class Game {
     }
 
     public void askEligiblePlayers(Scanner input, PrintWriter output) {
-        Collections.reverse(eligiblePlayers);
         String item = "";
-        for (int i = eligiblePlayers.size() - 1; i >= 0; i--) {
+        for (int i=0; i<eligiblePlayers.size(); i++){
             item = eligiblePlayers.get(i).promptJoin(input, output);
             if (item.equals("N")) {
-                updateEligiblePlayers(eligiblePlayers.get(i));
+                noLongerEligible.add(eligiblePlayers.get(i));
             }
         }
+        removeIneligiblePlayersFromList();
     }
 
     public void updateEligiblePlayers(Player removed) {

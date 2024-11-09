@@ -433,7 +433,7 @@ public class Player {
 
     public String promptAttack(Scanner input) {
         System.out.println(getID() + " Cards: " + cardsToString());
-        System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attach (enter 'Q' to quit): ");
+        System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attack (enter 'Q' to quit): ");
         String inputStr = input.nextLine();
         int inputNum = -1;
 
@@ -460,6 +460,7 @@ public class Player {
     }
 
     public void attackStage(ArrayList<Card> stage, String stageStr) {
+        // define attack value
         int attackValue = 0;
         for (int i = 0; i < attack.size(); i++) {
             attackValue += attack.get(i).getValue();
@@ -469,7 +470,8 @@ public class Player {
             System.out.println("Attack Value:" + attackValue);
             if (attackValue < game.stage1Value) {
                 discardAttackCards();
-                game.updateEligiblePlayers(this); // remove this player from eligibility list of players
+                game.noLongerEligible.add(this);
+//                game.updateEligiblePlayers(this); // remove this player from eligibility list of players
                 System.out.println("Didn't clear stage, removed from eligible players");
             } else {
                 System.out.println("Stage is cleared successful");
@@ -478,7 +480,8 @@ public class Player {
             System.out.println("Attack Value:" + attackValue);
             if (attackValue < game.stage2Value) {
                 discardAttackCards();
-                game.updateEligiblePlayers(this);
+                game.noLongerEligible.add(this);
+//                game.updateEligiblePlayers(this);
                 System.out.println("Didn't clear stage, removed from eligible players");
             } else {
                 System.out.println("Stage is cleared successful");
@@ -487,7 +490,8 @@ public class Player {
             System.out.println("Attack Value:" + attackValue);
             if (attackValue < game.stage3Value) {
                 discardAttackCards();
-                game.updateEligiblePlayers(this);
+                game.noLongerEligible.add(this);
+//                game.updateEligiblePlayers(this);
                 System.out.println("Didn't clear stage, removed from eligible players");
             } else {
                 System.out.println("Stage is cleared successfully");
@@ -496,7 +500,8 @@ public class Player {
             System.out.println("Attack Value:" + attackValue);
             if (attackValue < game.stage4Value) {
                 discardAttackCards();
-                game.updateEligiblePlayers(this);
+                game.noLongerEligible.add(this);
+//                game.updateEligiblePlayers(this);
                 System.out.println("Didn't clear stage, removed from eligible players");
             } else {
                 System.out.println("Stage is cleared successfully");
@@ -505,7 +510,8 @@ public class Player {
             System.out.println("Attack Value:" + attackValue);
             if (attackValue < game.stage5Value) {
                 discardAttackCards();
-                game.updateEligiblePlayers(this);
+                game.noLongerEligible.add(this);
+//                game.updateEligiblePlayers(this);
                 System.out.println("Didn't clear stage, removed from eligible players");
             } else {
                 System.out.println("Stage is cleared successfully");

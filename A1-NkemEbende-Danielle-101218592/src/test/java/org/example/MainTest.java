@@ -1045,7 +1045,7 @@ class MainTest {
         game.advDeck.initAdvDeck();
         game.eventDeck.initEventDeck();
         game.distributeCards();
-        String input = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String input = "1\n2\n2\nQ\n1\n2\n2\nQ\n1\n2\nQ\n"; // updated cause of switch of direction
         String input2 = "Y\nN\nN\n";
         String input3 = "12\n11\nQ\n10\n1\nQ";
         StringWriter output = new StringWriter();
@@ -1171,11 +1171,13 @@ class MainTest {
         game.advDeck.initAdvDeck();
         game.eventDeck.initEventDeck();
         game.distributeCards();
-        String attackSetUp = "1\n2\nQ\n12\n1\n2\nQ\n1\n2\n2\nQ\n";
+        String attackSetUp = "12\n1\n2\nQ\n1\n2\n2\nQ\n1\n2\nQ\n";
+//        String attackSetUp = "1\n2\nQ\n12\n1\n2\nQ\n1\n2\n2\nQ\n";
         String sponsorPrompt = "Y\nN\nN\n";
         String buildStages = "12\n11\nQ\n10\n7\nQ\n";
         String joinQuestInput = "Y\nY\nN\n";
-        String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
+        String attackSetUp2 = "1\n2\n2\nQ\n1\n2\n2\nQ\n1\n2\nQ\n";
+//        String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         StringWriter output = new StringWriter();
 
         game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
@@ -1189,6 +1191,7 @@ class MainTest {
         game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(buildStages));
         game.getEligiblePlayers();
+        game.printEligiblePlayers();
         game.askEligiblePlayers(new Scanner(joinQuestInput), new PrintWriter(output));
         game.participantsSetUpAttack(new Scanner(attackSetUp), new PrintWriter(output));
 
@@ -1197,6 +1200,7 @@ class MainTest {
         game.discardAllEligibleAttackCards();
         game.participantsSetUpAttack(new Scanner(attackSetUp2), new PrintWriter(output));
         game.allEligiblePlayersAttackStage(game.stage2, "stage2");
+        game.removeIneligiblePlayersFromList();
         game.discardAllEligibleAttackCards();
 
         game.concludeQuest(new PrintWriter(output));
