@@ -7,42 +7,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class MainTest {
     @Test
     @DisplayName("Check Adventure Deck Size")
     public void RESP_1_test_01(){
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
 
         // test 1: there should be 100 adventure cards
-        int advDeckSize = game.getAdvDeckSize();
+        int advDeckSize = game.advDeck.getDeckSize();
         assertEquals(100, advDeckSize);
     }
 
     @Test
     @DisplayName("Check Event Deck Size")
     public void RESP_1_test_02(){
-        Main game = new Main();
-        game.initEventDeck();
+        Game game = new Game();
+        game.eventDeck.initEventDeck();
 
         // test 2: there should be 17 cards
-        int eventDeckSize = game.getEventDeckSize();
+        int eventDeckSize = game.eventDeck.getDeckSize();
         assertEquals(17, eventDeckSize);
     }
 
     @Test
     @DisplayName("Check Adventure Deck contents")
     public void RESP_1_test_03(){
-        Main game = new Main();
-        game.initAdvDeck();
-        ArrayList<Main.Card> advDeck = game.getAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        List<Card> advDeck = game.advDeck.getDeck();
 
         // test 3: check that all card types of Foe and Weapon cards in the adventure deck
         // check foe and weapon cards
         int i=0;
-        while (i < (game.getAdvDeckSize() / 2)){
+        while (i < (game.advDeck.getDeckSize() / 2)){
             if (i >= 0 && i < 8) {
                 assertTrue(advDeck.get(i).getName().equals("F") && advDeck.get(i).getValue() == 5, "F5s issue");
             } else if (i>=8 && i<15){
@@ -69,7 +70,7 @@ class MainTest {
 
         // check weapon cards
         i=50;
-        while (i<game.getAdvDeckSize()){
+        while (i<game.advDeck.getDeckSize()){
             if (i < 56){
                 assertTrue(advDeck.get(i).getName() == "D" && advDeck.get(i).getValue() == 5, "D5 issue");
             } else if (i >= 56 && i < 68){
@@ -90,14 +91,14 @@ class MainTest {
     @Test
     @DisplayName("Check Event Deck contents")
     public void RESP_1_test_04(){
-        Main game = new Main();
-        game.initEventDeck();
-        ArrayList<Main.Card> eventDeck = game.getEventDeck();
+        Game game = new Game();
+        game.eventDeck.initEventDeck();
+        List<Card> eventDeck = game.eventDeck.getDeck();
 
         // test 4: check that all card types of Quest and Event cards in the event deck
         // check quests
         int i=0;
-        while (i<game.getEventDeckSize() - 6){ // minus 5 for Events and minus 1 for index
+        while (i<game.eventDeck.getDeckSize() - 6){ // minus 5 for Events and minus 1 for index
             if (i < 3) {
                 assertTrue(eventDeck.get(i).getName() == "Q" && eventDeck.get(i).getValue() == 2, "Q2 issue");
             } else if (i >= 3 && i < 7){
@@ -112,7 +113,7 @@ class MainTest {
 
         // check events
         i=12;
-        while (i<game.getEventDeckSize()){
+        while (i<game.eventDeck.getDeckSize()){
             if (i==12) {
                 assertTrue(eventDeck.get(i).getName() == "Plague" && eventDeck.get(i).getValue() == 2, "Plague issue");
             } else if(i==13 || i==14){
@@ -129,30 +130,31 @@ class MainTest {
     @Test
     @DisplayName("Check for Shuffled Cards")
     public void RESP_2_test_01(){
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
 
         // test 1: check that both decks are shuffled
 
         // after decks that get updated once shuffled
-        ArrayList<Main.Card> afterAdvDeck = game.getAdvDeck();
-        ArrayList<Main.Card> afterEventDeck = game.getEventDeck();
+        List<Card> afterAdvDeck = game.advDeck.getDeck();
+        List<Card> afterEventDeck = game.eventDeck.getDeck();
 
         // create deep copy of decks before shuffle
-        ArrayList<Main.Card> beforeAdvDeck = new ArrayList<Main.Card>();
-        for (int i=0; i< game.getAdvDeckSize(); i++){
-            Main.Card card = game.new Card(afterAdvDeck.get(i).getType(), afterAdvDeck.get(i).getName(), afterAdvDeck.get(i).getValue());
+        ArrayList<Card> beforeAdvDeck = new ArrayList<Card>();
+        for (int i=0; i< game.advDeck.getDeckSize(); i++){
+            Card card = new Card(afterAdvDeck.get(i).getType(), afterAdvDeck.get(i).getName(), afterAdvDeck.get(i).getValue());
             beforeAdvDeck.add(card);
         }
-        ArrayList<Main.Card> beforeEventDeck = new ArrayList<Main.Card>();
-        for (int i=0; i< game.getEventDeckSize(); i++){
-            Main.Card card = game.new Card(afterEventDeck.get(i).getType(), afterEventDeck.get(i).getName(), afterEventDeck.get(i).getValue());
+        ArrayList<Card> beforeEventDeck = new ArrayList<Card>();
+        for (int i=0; i< game.eventDeck.getDeckSize(); i++){
+            Card card = new Card(afterEventDeck.get(i).getType(), afterEventDeck.get(i).getName(), afterEventDeck.get(i).getValue());
             beforeEventDeck.add(card);
         }
 
         //shuffle
-        game.shuffleDecks();
+        game.advDeck.shuffleDeck();
+        game.eventDeck.shuffleDeck();
 
         // check and compare
         assertNotEquals(beforeAdvDeck, afterAdvDeck);
@@ -162,14 +164,14 @@ class MainTest {
     @Test
     @DisplayName("Check for Card Distribution")
     public void RESP_2_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
 
-        Main.Player p1 = game.p1;
-        Main.Player p2 = game.p2;
-        Main.Player p3 = game.p3;
-        Main.Player p4 = game.p4;
+        Player p1 = game.p1;
+        Player p2 = game.p2;
+        Player p3 = game.p3;
+        Player p4 = game.p4;
 
         // don't shuffle cards first so we can tell they are being removed
         game.distributeCards();
@@ -184,20 +186,20 @@ class MainTest {
     @Test
     @DisplayName("Check that the Adventure Deck was Updated")
     public void RESP_2_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 1: check adventure size to ensure cards were distributed (100 - 12 - 12 - 12 - 12 = 52)
-        assertEquals(52, game.getAdvDeckSize(), "Cards were not distributed");
+        assertEquals(52, game.advDeck.getDeckSize(), "Cards were not distributed");
     }
 
     // COMMIT 3 - RESP 3
     @Test
     @DisplayName("Check Game's First Player")
     public void RESP_3_test_01() {
-        Main game = new Main();
+        Game game = new Game();
 
         // test 1: check that the game starts with player 1
         assertEquals("P1", game.currentPlayer.getID(), "Current player is incorrect");
@@ -206,7 +208,7 @@ class MainTest {
     @Test
     @DisplayName("Game assigns current player")
     public void RESP_3_test_02() {
-        Main game = new Main();
+        Game game = new Game();
 
         // test 2: check that the game loops in the correct order for 2 rounds
         int i=0;
@@ -232,8 +234,8 @@ class MainTest {
         String string = "";
         StringWriter stringWriter = new StringWriter(); // use stringWriter as a replacement for Scanner for JUnit tests
 
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
 
         // test 1: check that a player's cards were printed to the screen
@@ -247,9 +249,9 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Single Event Card and the event deck updates")
     public void RESP_5_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         // non-shuffled deck
 
         // test 1: a card is removed from event deck
@@ -260,32 +262,32 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Many Event Card and the event deck updates")
     public void RESP_5_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         // non-shuffled deck
 
         // test 2: Multiple drawn cards are removed from event deck
         game.p1.drawEventCard();
         game.p1.drawEventCard();
         game.p1.drawEventCard();
-        assertEquals(14, game.getEventDeckSize(), "Event card drawn issue");
+        assertEquals(14, game.eventDeck.getDeckSize(), "Event card drawn issue");
 
     }
 
     @Test
     @DisplayName("Player Draws Event Card and the correct card is drawn")
     public void RESP_5_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         // non-shuffled deck
 
         // test 3: a card is removed from event deck
         // getting last card in eventDeck
-        String name = game.eventDeck.get(game.getEventDeckSize() - 1).name;
-        String type = game.eventDeck.get(game.getEventDeckSize() - 1).type;
-        int value = game.eventDeck.get(game.getEventDeckSize() - 1).value;
+        String name = game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name;
+        String type = game.eventDeck.get(game.eventDeck.getDeckSize() - 1).type;
+        int value = game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value;
 
 
         game.p1.drawEventCard();
@@ -298,16 +300,16 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Many Event Cards and the correct card is drawn")
     public void RESP_5_test_04() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         // non-shuffled deck
 
         // test 4:  Multiple cards drawn are removed form the event deck
         // getting last card in eventDeck
-        String name = game.eventDeck.get(game.getEventDeckSize()-3).name;
-        String type = game.eventDeck.get(game.getEventDeckSize()-3).type;
-        int value = game.eventDeck.get(game.getEventDeckSize()-3).value;
+        String name = game.eventDeck.get(game.eventDeck.getDeckSize()-3).name;
+        String type = game.eventDeck.get(game.eventDeck.getDeckSize()-3).type;
+        int value = game.eventDeck.get(game.eventDeck.getDeckSize()-3).value;
 
         game.p1.drawEventCard();
         game.p1.drawEventCard();
@@ -321,13 +323,13 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Queens Favour E Card is Correct")
     public void RESP_6_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 1: check that the drawn card is Queens favor
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
         game.p1.drawEventCard();
         assertEquals("Queen’s favor", game.currentDrawnEventCard.getName());
     }
@@ -335,13 +337,13 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Queens Favour E Card draws 2 adv card")
     public void RESP_6_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 2: the player drew 2 cards
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
 //        game.drawEventCard();
 
         if (game.currentPlayer.getID().equals("P1")){
@@ -362,24 +364,24 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Queens Favour E Card number of Event and Adventure deck")
     public void RESP_6_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 3: check number of cards in deck after
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Queen’s favor"; // set last card as Queens favor
         game.p1.drawEventCard();
-        assertEquals(50, game.getAdvDeckSize());
+        assertEquals(50, game.advDeck.getDeckSize());
     }
 
     // COMMIT 7
     @Test
     @DisplayName("Player Trims Cards by 1")
     public void RESP_7_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 1: check that last card is removed
@@ -391,9 +393,9 @@ class MainTest {
     @DisplayName("Player Trims Cards by 3")
     public void RESP_7_test_02() {
         System.out.println("\n\n *Trim By 3*");
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 2: check that cards are removed
@@ -407,9 +409,9 @@ class MainTest {
     @DisplayName("Player Trims Cards by 4 Again")
     public void RESP_7_test_03() {
         System.out.println("\n\n *Trim By LAST 4*");
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // getting last card after last 4 cards were trimmed from hand
@@ -434,8 +436,8 @@ class MainTest {
         String string = "";
         StringWriter stringWriter = new StringWriter();
 
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
         // UNSHUFFLED CARDS SO THIS IS P1s ORG HAND: E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15
 
@@ -451,8 +453,8 @@ class MainTest {
     @DisplayName("Player has 12+ Cards and Trims Cards")
     public void RESP_7_test_05() {
         System.out.println("\n\n *Trim By LAST 5 Down to 12*");
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
         String input = String.valueOf("12\n12\n12\n12\n12\n");
         StringWriter output = new StringWriter();
@@ -473,8 +475,8 @@ class MainTest {
     public void RESP_7_test_06() {
         String input = "12\n";
         StringWriter output = new StringWriter();
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
 
         // test 4: check that a player's cards were printed to the screen after trim
@@ -487,30 +489,30 @@ class MainTest {
     @Test
     @DisplayName("From Hand to Discard pile via Trim")
     public void RESP_8_test_01(){
-        Main game = new Main();
-        game.advDeck = new ArrayList<Main.Card>();
+        Game game = new Game();
+        game.advDeck = new Deck();
 
         // test 1: add in adv cards and assign them to P1 then they discard them
-        Main.Card cardF5 = game.new Card("Adventure","F",5);
+        Card cardF5 = new Card("Adventure","F",5);
         game.advDeck.add(cardF5);
-        Main.Card cardF10 = game.new Card("Adventure","F",10);
+        Card cardF10 = new Card("Adventure","F",10);
         game.advDeck.add(cardF10);
 
         game.p1.drawAdvCard();
         game.p1.drawAdvCard();
         assertEquals(2, game.p1.getCardsSize());
-        assertEquals(0, game.getDiscardAdvDeckSize());
+        assertEquals(0, game.discardAdvDeck.getDeckSize());
         game.p1.trimCard(1);
         game.p1.trimCard(1);
         assertEquals(0, game.p1.getCardsSize());
-        assertEquals(2, game.getDiscardAdvDeckSize());
+        assertEquals(2, game.discardAdvDeck.getDeckSize());
     }
 
     @Test
     @DisplayName("From Hand to Discard pile via Trim to 12")
     public void RESP_8_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
         String input = String.valueOf("12\n12\n12\n12\n12\n");
         StringWriter output = new StringWriter();
@@ -524,20 +526,20 @@ class MainTest {
         game.p1.drawAdvCard();
         game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
         assertEquals(12, game.p1.getCardsSize());
-        assertEquals(5, game.getDiscardAdvDeckSize());
+        assertEquals(5, game.discardAdvDeck.getDeckSize());
     }
 
     // COMMIT 9
     @Test
     @DisplayName("Player Draws Prosperity E Card Correctly")
     public void RESP_9_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 1: check that the drawn card is Prosperity
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
         game.p1.drawEventCard();
         assertEquals("Prosperity", game.currentDrawnEventCard.getName());
     }
@@ -545,13 +547,13 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Prosperity E Card then draws 2 adv card")
     public void RESP_9_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 2: all players drew 2 cards
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
 
         if (game.currentPlayer.getID().equals("P1")){
             game.p1.drawEventCard();
@@ -583,29 +585,29 @@ class MainTest {
     @Test
     @DisplayName("Player Draws Prosperity E Card number of Event and Adventure deck")
     public void RESP_9_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck(); // no shuffle
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
 
         // test 3: check number of cards in adv deck after prosperity is drawn
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
         game.p1.drawEventCard();
-        assertEquals(44, game.getAdvDeckSize());
+        assertEquals(44, game.advDeck.getDeckSize());
     }
 
     @Test
     @DisplayName("All Players have 12+ Cards and Trims to 12")
     public void RESP_10_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = String.valueOf("12\n12\n12\n12\n12\n");
         StringWriter output = new StringWriter();
 
         // test 1: p1 picks Prosperity card and all players pick 2 and trim down to 12 cards
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
         game.p1.drawEventCard();
         game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
         game.p2.trimToTwelve(new Scanner(input), new PrintWriter(output));
@@ -622,13 +624,13 @@ class MainTest {
     public void RESP_10_test_02() {
         String input = "12\n12\n";
         StringWriter output = new StringWriter();
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 2: check that all player's cards were printed when trimmed & cleared on the screen after trim
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity"; // set last card as Prosperity
         game.p1.drawEventCard();
 
         game.p1.trimToTwelve(new Scanner(input), new PrintWriter(output));
@@ -655,91 +657,91 @@ class MainTest {
     @Test
     @DisplayName("Player Plays Plague E card")
     public void RESP_11_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 1: Player plays plague card with 0  shields
-        assertEquals(17, game.getEventDeckSize());
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(17, game.eventDeck.getDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Plague"; // set last card as Plague
         game.p1.drawEventCard();
         assertEquals(0, game.p1.getNumShields());
-        assertEquals(16, game.getEventDeckSize());
+        assertEquals(16, game.eventDeck.getDeckSize());
     }
 
     @Test
     @DisplayName("Player w/ 3 shields Plays Plague E card")
     public void RESP_11_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 2: Player plays plague card with many shields
-        assertEquals(17, game.getEventDeckSize());
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(17, game.eventDeck.getDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Plague"; // set last card as Plague
         game.p1.setNumShields(6);
         game.p1.drawEventCard();
         assertEquals(4, game.p1.getNumShields());
-        assertEquals(16, game.getEventDeckSize());
+        assertEquals(16, game.eventDeck.getDeckSize());
 
     }
 
     @Test
     @DisplayName("Player draws an E card then discarded")
     public void RESP_12_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 1: Player draws an E card, it gets played then discarded
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
-        assertEquals(0, game.getDiscardEventDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(0, game.discardEventDeck.getDeckSize());
         game.p1.drawEventCard();
-        assertEquals("Plague", game.getDiscardEventDeck().get(0).getName());
+        assertEquals("Plague", game.discardEventDeck.getDeck().get(0).getName());
     }
 
     @Test
     @DisplayName("Player draws many E cards then discarded")
     public void RESP_12_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
 
         // test 2: Player draws many E cards, they get played then discarded
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Plague"; // set last card as Plague
-        assertEquals(0, game.getDiscardEventDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Plague"; // set last card as Plague
+        assertEquals(0, game.discardEventDeck.getDeckSize());
         game.p1.drawEventCard();
-        assertEquals("Plague", game.getDiscardEventDeck().get(0).getName());
+        assertEquals("Plague", game.discardEventDeck.getDeck().get(0).getName());
 
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Queen's favour";
-        assertEquals(1, game.getDiscardEventDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Queen's favour";
+        assertEquals(1, game.discardEventDeck.getDeckSize());
         game.p1.drawEventCard();
-        assertEquals("Queen's favour", game.getDiscardEventDeck().get(1).getName());
+        assertEquals("Queen's favour", game.discardEventDeck.getDeck().get(1).getName());
 
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Prosperity";
-        assertEquals(2, game.getDiscardEventDeckSize());
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Prosperity";
+        assertEquals(2, game.discardEventDeck.getDeckSize());
         game.p1.drawEventCard();
-        assertEquals("Prosperity", game.getDiscardEventDeck().get(2).getName());
-        assertEquals(3, game.getDiscardEventDeckSize());
+        assertEquals("Prosperity", game.discardEventDeck.getDeck().get(2).getName());
+        assertEquals(3, game.discardEventDeck.getDeckSize());
 
     }
 
     @Test
     @DisplayName("Player draws a Q card and doesn't sponsor it")
     public void RESP_13_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\n";
         StringWriter output = new StringWriter();
 
         // test 1:
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.p1.drawQuestCard(new Scanner(input), new PrintWriter(output));
         assertTrue(output.toString().contains("input is valid"));
     }
@@ -747,15 +749,15 @@ class MainTest {
     @Test
     @DisplayName("Game prompts many players to sponsor quest")
     public void RESP_14_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\nN\nY\nN\n";
         StringWriter output = new StringWriter();
 
         // test 1: Game prompts many players to sponsor quest and p3 accepts and sponsors
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
         assertEquals(game.p3, game.sponsoringPlayer);
@@ -764,15 +766,15 @@ class MainTest {
     @Test
     @DisplayName("Test that no one sponsored and it's the next persons turn")
     public void RESP_14_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\nN\nN\nN\n";
         StringWriter output = new StringWriter();
 
         // test 2: Test that no one sponsored and it's the next persons turn
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         assertEquals(game.p1, game.currentPlayer);
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
@@ -784,15 +786,15 @@ class MainTest {
     @Test
     @DisplayName("Current player accepts sponsor")
     public void RESP_14_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "Y\nN\nN\nN\n";
         StringWriter output = new StringWriter();
 
         // test 2: Test that no one sponsored and it's the next persons turn
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         assertEquals(game.p1, game.currentPlayer);
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
@@ -802,17 +804,17 @@ class MainTest {
     @Test
     @DisplayName("Player builds stage for quest")
     public void RESP_15_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\nQ\n";
         StringWriter output = new StringWriter();
 
         // test 1: player 1 builds stage by adding into each stage and
-        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
-        game.getEventDeck().get(game.getEventDeckSize()-1).value = 4; // set last card as a Q card
-        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 4; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(2, game.stage1.size());
         assertEquals(2, game.stage2.size());
@@ -832,17 +834,17 @@ class MainTest {
     @Test
     @DisplayName("Player tries to quit w/ empty stage")
     public void RESP_15_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "12\n11\nQ\nQ\n10\n8\nQ\n";
         StringWriter output = new StringWriter();
 
         // test 2: player 1 builds stage and tries to quit with an empty stage but is reprompted to continue
-        game.getEventDeck().get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.getEventDeck().get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
-        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(2, game.stage1.size());
         assertEquals(2, game.stage2.size());
@@ -851,17 +853,17 @@ class MainTest {
     @Test
     @DisplayName("Player tries to enter invalid position")
     public void RESP_15_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\n0\nQ\n";
         StringWriter output = new StringWriter();
 
         // test 3: player 1 builds stage and tries to enter invalid position
-        game.getEventDeck().get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.getEventDeck().get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
-        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(2, game.stage1.size());
         assertEquals(2, game.stage2.size());
@@ -870,17 +872,17 @@ class MainTest {
     @Test
     @DisplayName("Player tries to add to last stage with empty hand")
     public void RESP_15_test_04() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\n1\n1\n1\nQ\n";
         StringWriter output = new StringWriter();
 
         // test 4: player 1 builds stage and add to last stage with empty hand
-        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
-        game.getEventDeck().get(game.getEventDeckSize()-1).value = 5; // set last card as a Q card
-        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 5; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(2, game.stage1.size());
         assertEquals(4, game.stage5.size());
@@ -889,17 +891,17 @@ class MainTest {
     @Test
     @DisplayName("Check that stage values are valid")
     public void RESP_15_test_05() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n";
         StringWriter output = new StringWriter();
 
         // test 5:
-        game.getEventDeck().get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
-        game.getEventDeck().get(game.getEventDeckSize()-1).value = 3; // set last card as a Q card
-        game.currentDrawnEventCard = game.getEventDeck().removeLast();
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 3; // set last card as a Q card
+        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(2, game.stage1.size());
         assertEquals(30, game.stage1Value);
@@ -911,15 +913,15 @@ class MainTest {
     @Test
     @DisplayName("Game gives eligible players")
     public void RESP_16_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\nY\n";
         StringWriter output = new StringWriter();
 
         // test
-        game.eventDeck.get(game.getEventDeckSize()-1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
         assertEquals(game.p2, game.sponsoringPlayer);
@@ -933,9 +935,9 @@ class MainTest {
     @Test
     @DisplayName("Prompt eligible players to join quest")
     public void RESP_17_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\nY\nN\n";
         String input2 = "Y\nN\nY\n";
@@ -943,7 +945,7 @@ class MainTest {
         StringWriter output2 = new StringWriter();
 
         // test 1: Some yes's
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
         assertEquals(0, game.eligiblePlayers.size());
@@ -958,9 +960,9 @@ class MainTest {
     @Test
     @DisplayName("Prompt eligible players to join quest w/ all no's")
     public void RESP_17_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "N\nY\nN\n";
         String input2 = "N\nN\nN\n";
@@ -968,7 +970,7 @@ class MainTest {
         StringWriter output2 = new StringWriter();
 
         // test 1: All no's for asking eligible players to join quest
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
         assertEquals(0, game.eligiblePlayers.size());
@@ -983,9 +985,9 @@ class MainTest {
     @Test
     @DisplayName("No quest participants end quest")
     public void RESP_18_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "Y\nN\nN\n";
         String input2 = "N\nN\nN\n";
@@ -994,8 +996,8 @@ class MainTest {
         StringWriter output2 = new StringWriter();
 
         // test 1: End quest cause of no quest participants
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 3; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 3; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(input3));
@@ -1023,9 +1025,9 @@ class MainTest {
     @Test
     @DisplayName("P2 sets up attack")
     public void RESP_19_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "1\n2\n2\nQ\n";
         StringWriter output = new StringWriter();
@@ -1039,17 +1041,17 @@ class MainTest {
     @Test
     @DisplayName("All eligible set up attack")
     public void RESP_19_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String input = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         String input2 = "Y\nN\nN\n";
         String input3 = "12\n11\nQ\n10\n1\nQ";
         StringWriter output = new StringWriter();
 
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(input2), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(input3));
@@ -1068,9 +1070,9 @@ class MainTest {
     @Test
     @DisplayName("Do attacks for all eligible")
     public void RESP_20_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         String sponsorPrompt = "Y\nN\nN\n";
@@ -1078,8 +1080,8 @@ class MainTest {
         String joinQuestInput = "Y\nY\nY\n";
         StringWriter output = new StringWriter();
 
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(buildStages));
@@ -1095,9 +1097,9 @@ class MainTest {
     @Test
     @DisplayName("Do attacks for all eligible and discard all attack cards")
     public void RESP_20_test_02() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         String sponsorPrompt = "Y\nN\nN\n";
@@ -1105,8 +1107,8 @@ class MainTest {
         String joinQuestInput = "Y\nY\nY\n";
         StringWriter output = new StringWriter();
 
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(buildStages));
@@ -1126,9 +1128,9 @@ class MainTest {
     @Test
     @DisplayName("Do attacks for all eligible for 2 stages")
     public void RESP_20_test_03() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String attackSetUp = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         String sponsorPrompt = "Y\nN\nN\n";
@@ -1137,8 +1139,8 @@ class MainTest {
         String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         StringWriter output = new StringWriter();
 
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         game.playersSponsorPrompt(new Scanner(sponsorPrompt), new PrintWriter(output));
         game.sponsoringPlayer.buildStages(new Scanner(buildStages));
@@ -1165,9 +1167,9 @@ class MainTest {
     @Test
     @DisplayName("Conclude Quest, distribute shields and check for winners")
     public void RESP_21_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
         game.distributeCards();
         String attackSetUp = "1\n2\nQ\n12\n1\n2\nQ\n1\n2\n2\nQ\n";
         String sponsorPrompt = "Y\nN\nN\n";
@@ -1176,8 +1178,8 @@ class MainTest {
         String attackSetUp2 = "1\n2\nQ\n1\n2\n2\nQ\n1\n2\n2\nQ\n";
         StringWriter output = new StringWriter();
 
-        game.eventDeck.get(game.getEventDeckSize() - 1).name = "Q"; // set last card as a Q card
-        game.eventDeck.get(game.getEventDeckSize() - 1).value = 2; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
+        game.eventDeck.get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
         game.p1.cards.get(11).value = 5;
 
         game.p3.cards.get(11).value = 20;
@@ -1208,8 +1210,8 @@ class MainTest {
     @Test
     @DisplayName("Rig hand")
     public void RESP_22_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
         game.overwriteCard(game.p1.cards, 0, "Adventure", "F", 10);
 
@@ -1221,8 +1223,8 @@ class MainTest {
     @Test
     @DisplayName("Sort player's hand")
     public void RESP_23_test_01() {
-        Main game = new Main();
-        game.initAdvDeck();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
         game.distributeCards();
         StringWriter output = new StringWriter();
         game.overwriteCard(game.p1.cards, 0, "Adventure", "F", 10);

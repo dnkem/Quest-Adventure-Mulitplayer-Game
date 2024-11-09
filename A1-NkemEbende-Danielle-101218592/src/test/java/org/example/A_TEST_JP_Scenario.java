@@ -14,15 +14,16 @@ public class A_TEST_JP_Scenario {
     @DisplayName("A-TEST-JP-Scenario")
     public void RESP_1_test_01() {
         // 1) Start game,decks are created, hands of the 4 players are set up with random cards
-        Main game = new Main();
-        game.initAdvDeck();
-        game.initEventDeck();
-        game.shuffleDecks();
+        Game game = new Game();
+        game.advDeck.initAdvDeck();
+        game.eventDeck.initEventDeck();
+        game.advDeck.shuffleDeck();
+        game.eventDeck.shuffleDeck();
         game.distributeCards();
 
         // extra tests
-        assertEquals(52, game.getAdvDeckSize());
-        assertEquals(17, game.getEventDeckSize());
+        assertEquals(52, game.advDeck.getDeckSize());
+        assertEquals(17, game.eventDeck.getDeckSize());
 
         // 2) Rig 4 hands
         // P1
@@ -114,7 +115,7 @@ public class A_TEST_JP_Scenario {
         game.askEligiblePlayers(new Scanner(promptQuest1), new PrintWriter(output));
         game.clearScreen(new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "F", 30);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "F", 30);
         game.p1.drawAdvCard();
         game.p1.sortCards();
         String index3 = "1\nQ\n";
@@ -122,7 +123,7 @@ public class A_TEST_JP_Scenario {
         assertEquals(12, game.p1.getCardsSize()); // extra tests
         game.clearScreen(new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "S", 10);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "S", 10);
         game.p3.drawAdvCard();
         game.p3.sortCards();
         String index2 = "1\nQ\n";
@@ -130,7 +131,7 @@ public class A_TEST_JP_Scenario {
         assertEquals(12, game.p3.getCardsSize()); // extra tests
         game.clearScreen(new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "B", 15);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "B", 15);
         game.p4.drawAdvCard();
         game.p4.sortCards();
         // extra tests
@@ -157,13 +158,13 @@ public class A_TEST_JP_Scenario {
         String promptQuest2 = "Y\nY\nY\n";
         game.askEligiblePlayers(new Scanner(promptQuest2), new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "F", 10);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "F", 10);
         game.p1.drawAdvCard();
         game.p1.sortCards();
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "L", 20);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "L", 20);
         game.p3.drawAdvCard();
         game.p3.sortCards();
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "L", 20);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "L", 20);
         game.p4.drawAdvCard();
         game.p4.sortCards();
 
@@ -190,10 +191,10 @@ public class A_TEST_JP_Scenario {
         String promptQuest3 = "Y\nY\n";
         game.askEligiblePlayers(new Scanner(promptQuest3), new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "B", 15);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "B", 15);
         game.p3.drawAdvCard();
         game.p3.sortCards();
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "S", 10);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "S", 10);
         game.p4.drawAdvCard();
         game.p4.sortCards();
 
@@ -207,10 +208,10 @@ public class A_TEST_JP_Scenario {
         String promptQuest4 = "Y\nY\n";
         game.askEligiblePlayers(new Scanner(promptQuest4), new PrintWriter(output));
 
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "F", 30);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "F", 30);
         game.p3.drawAdvCard();
         game.p3.sortCards();
-        game.overwriteCard(game.advDeck, game.getAdvDeckSize() -1, "Adventure", "L", 20);
+        game.overwriteCard(game.advDeck, game.advDeck.getDeckSize() -1, "Adventure", "L", 20);
         game.p4.drawAdvCard();
         game.p4.sortCards();
 
