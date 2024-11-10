@@ -241,7 +241,7 @@ class MainTest {
         // test 1: check that a player's cards were printed to the screen
         game.p1.printPlayersCards(new PrintWriter(stringWriter));
         string = stringWriter.toString();
-        assertTrue(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15"));
+        assertTrue(string.contains("E30 E30 L20 L20 L20 L20 L20 L20 B15 B15 B15 B15"));
         // note that the test doesn't need to actually print but it should when the corresponding function runs in main
     }
 
@@ -383,10 +383,11 @@ class MainTest {
         game.advDeck.initAdvDeck();
         game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
+        game.p1.drawAdvCard();
 
         // test 1: check that last card is removed
         game.p1.trimCard(12);
-        assertEquals(11, game.p1.getCardsSize());
+        assertEquals(12, game.p1.getCardsSize()); // updated the trim user, they can't reduce below 12 so this neeeded an update
     }
 
     @Test
@@ -397,12 +398,15 @@ class MainTest {
         game.advDeck.initAdvDeck();
         game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
+        game.p1.drawAdvCard(); // updated the trim user, they can't reduce below 12 so this needed to be added
+        game.p1.drawAdvCard();
+        game.p1.drawAdvCard();
 
         // test 2: check that cards are removed
         game.p1.trimCard(9);
         game.p1.trimCard(9);
         game.p1.trimCard(9);
-        assertEquals(9, game.p1.getCardsSize());
+        assertEquals(12, game.p1.getCardsSize()); // updated the trim user so they can't reduce below 12
     }
 
     @Test
@@ -413,15 +417,15 @@ class MainTest {
         game.advDeck.initAdvDeck();
         game.eventDeck.initEventDeck(); // no shuffle
         game.distributeCards();
+        game.p1.drawAdvCard(); // updated the trim user so they can't reduce below 12
+        game.p1.drawAdvCard(); // updated the trim user so they can't reduce below 12
 
         // getting last card after last 4 cards were trimmed from hand
-        String name = game.p1.cards.get(game.p1.getCardsSize() - 5).name;
-        String type = game.p1.cards.get(game.p1.getCardsSize()  - 5).type;
-        int value = game.p1.cards.get(game.p1.getCardsSize()  - 5).value;
+        String name = game.p1.cards.get(game.p1.getCardsSize() - 3).name;
+        String type = game.p1.cards.get(game.p1.getCardsSize()  - 3).type;
+        int value = game.p1.cards.get(game.p1.getCardsSize()  - 3).value;
 
         // test 3: check that 3 last cards were removed and that the last card in hand is correct
-        game.p1.trimCard(game.p1.getCardsSize());
-        game.p1.trimCard(game.p1.getCardsSize());
         game.p1.trimCard(game.p1.getCardsSize());
         game.p1.trimCard(game.p1.getCardsSize());
         assertEquals(name, game.p1.cards.get(game.p1.getCardsSize()-1).getName(), "Wrong card");
@@ -439,13 +443,14 @@ class MainTest {
         Game game = new Game();
         game.advDeck.initAdvDeck();
         game.distributeCards();
+        game.p1.drawAdvCard();// updated the trim user so they can't reduce below 12
         // UNSHUFFLED CARDS SO THIS IS P1s ORG HAND: E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15
 
         // test 4: check that a player's cards were printed to the screen after trim
         game.p1.trimCard(12); // trim last card B15
         game.p1.printPlayersCards(new PrintWriter(stringWriter));
         string = stringWriter.toString();
-        assertFalse(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15 "));
+        assertFalse(string.contains("E30   E30   L20   L20   L20   L20   L20   L20   B15   B15   B15   B15 ")); // updated the trim user so they can't reduce below 12
         // note that the test doesn't need to actually print but it should when the corresponding function runs in main
     }
 
@@ -504,8 +509,8 @@ class MainTest {
         assertEquals(0, game.discardAdvDeck.getDeckSize());
         game.p1.trimCard(1);
         game.p1.trimCard(1);
-        assertEquals(0, game.p1.getCardsSize());
-        assertEquals(2, game.discardAdvDeck.getDeckSize());
+        assertEquals(2, game.p1.getCardsSize());            // updated the trim user so they can't reduce below 12
+        assertEquals(0, game.discardAdvDeck.getDeckSize()); // updated the trim user so they can't reduce below 12
     }
 
     @Test

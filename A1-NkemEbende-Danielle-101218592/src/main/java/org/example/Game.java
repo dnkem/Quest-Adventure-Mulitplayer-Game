@@ -57,6 +57,8 @@ public class Game {
         noLongerEligible.clear();
         // discard current event drawn
         sponsoringPlayer.discardEventCard(currentDrawnEventCard);
+        sponsoringPlayer.discardStageCards();
+        nextPlayer();
     }
 
     public void checkForWinners() {
@@ -74,6 +76,37 @@ public class Game {
             winners.add(p4);
         }
         gameWinners = winners;
+    }
+
+    public void sponsorDrawsAdvCards(){
+        // get no. of cards used in all stages
+        int cardNum = stage1.size() + stage2.size() + stage3.size() + stage4.size() + stage5.size();
+
+        // get no. of stages
+        int stageNum = 0;
+        if (!stage1.isEmpty()){
+           stageNum++;
+        }
+        if (!stage2.isEmpty()) {
+            stageNum++;
+        }
+        if (!stage3.isEmpty()) {
+            stageNum++;
+        }
+        if (!stage4.isEmpty()) {
+            stageNum++;
+        }
+        if (!stage5.isEmpty()) {
+            stageNum++;
+        }
+
+
+        // sponsor draws adv card (cardNum + stageNum) times
+        int total = stageNum + cardNum;
+        for (int i=0; i<total; i++){
+            sponsoringPlayer.drawAdvCard();
+        }
+        sponsoringPlayer.sortCards();
     }
 
     public void printWinners() {
