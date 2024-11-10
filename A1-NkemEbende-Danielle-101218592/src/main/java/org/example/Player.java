@@ -351,6 +351,16 @@ public class Player {
     }
 
     public void buildSingleStage(int stageNum, int position){
+        if (stageNum > game.currentDrawnEventCard.getValue()){
+            System.out.println("Can't build more stages than the Quest card allows.");
+            return;
+        }
+
+        if (!this.getID().equals(game.sponsoringPlayer.getID())){
+            System.out.println("Only the Sponsoring player can build stages.");
+            return;
+        }
+
         switch (stageNum) {
             case 1:
                 game.stage1.add(cards.remove(position - 1));
@@ -478,7 +488,20 @@ public class Player {
         }
     }
 
+    public void printAttack(){
+        String attackStr = this.getID() + " Attack: ";
+        for (int i=0; i<attack.size(); i++){
+            attackStr += attack.get(i).getName() + attack.get(i).getValue() + " ";
+        }
+        System.out.println(attackStr);
+    }
+
     public String promptAttack(Scanner input) {
+        if (this.getID().equals(game.sponsoringPlayer.getID())) {
+            System.out.println("Sponsoring Player Can't Set Up an Attack");
+            return "";
+        }
+
         System.out.println(getID() + " Cards: " + cardsToString());
         System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attack (enter 'Q' to quit): ");
         String inputStr = input.nextLine();

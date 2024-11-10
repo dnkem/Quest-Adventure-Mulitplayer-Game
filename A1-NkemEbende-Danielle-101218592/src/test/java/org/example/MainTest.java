@@ -815,6 +815,7 @@ class MainTest {
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1;
 
         // test 1: player 1 builds stage by adding into each stage and
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
@@ -845,6 +846,8 @@ class MainTest {
         game.distributeCards();
         String input = "12\n11\nQ\nQ\n10\n8\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1;
+
 
         // test 2: player 1 builds stage and tries to quit with an empty stage but is reprompted to continue
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
@@ -864,6 +867,7 @@ class MainTest {
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\n0\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1;
 
         // test 3: player 1 builds stage and tries to enter invalid position
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
@@ -883,6 +887,8 @@ class MainTest {
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n1\n2\nQ\n1\n2\n1\n1\n1\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1;
+
 
         // test 4: player 1 builds stage and add to last stage with empty hand
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
@@ -902,6 +908,7 @@ class MainTest {
         game.distributeCards();
         String input = "12\n11\nQ\n10\n8\nQ\n7\n6\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1;
 
         // test 5:
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
@@ -1036,6 +1043,7 @@ class MainTest {
         game.distributeCards();
         String input = "1\n2\n2\nQ\n";
         StringWriter output = new StringWriter();
+        game.sponsoringPlayer = game.p1; // have to set sponsoring player to something to run
 
         assertEquals(12, game.p2.getCardsSize());
         game.p2.setUpAttack(new Scanner(input));

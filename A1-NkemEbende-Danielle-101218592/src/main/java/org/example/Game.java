@@ -1,5 +1,7 @@
 package org.example;
 
+import io.cucumber.java.ja.前提;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,11 +42,23 @@ public class Game {
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void concludeQuest(PrintWriter output) {
+        clearScreen(output);
         // distribute shields
         if (!eligiblePlayers.isEmpty()) {
             for (int i = 0; i < eligiblePlayers.size(); i++) {
                 eligiblePlayers.get(i).setNumShields(eligiblePlayers.get(i).getNumShields() + currentDrawnEventCard.getValue());
             }
+        }
+
+        // print winners
+        if (!eligiblePlayers.isEmpty()){
+            System.out.println("The winner(s) of this quest: ");
+            for (int i=0; i<eligiblePlayers.size(); i++){
+                System.out.println(eligiblePlayers.get(i).getID());
+            }
+        } else { // if sponsor wins
+            System.out.println("No winners for this quest.");
+
         }
 
         System.out.println("END OF " + currentPlayer.getID() + "'s TURN\n");
@@ -58,6 +72,15 @@ public class Game {
         // discard current event drawn
         sponsoringPlayer.discardEventCard(currentDrawnEventCard);
         sponsoringPlayer.discardStageCards();
+
+        // check for winners of the entire game
+        checkForWinners();
+        if (!gameWinners.isEmpty()){
+            printWinners();
+            return;
+        }
+
+        // no winner, next player
         nextPlayer();
     }
 
@@ -127,6 +150,11 @@ public class Game {
     }
 
     public void allEligiblePlayersAttackStage(ArrayList<Card> stage, String stageName) {
+        if (stage.isEmpty()) {
+            System.out.println("Can't attack an empty stage");
+            return;
+        }
+
         System.out.println("STAGE: " + arrayToString(stage) + "\n");
         for (int i=0; i<eligiblePlayers.size(); i++) {
             System.out.println(eligiblePlayers.get(i).getID());
