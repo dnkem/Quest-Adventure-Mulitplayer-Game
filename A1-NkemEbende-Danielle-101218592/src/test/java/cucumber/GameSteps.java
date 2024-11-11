@@ -543,6 +543,8 @@ public class GameSteps {
     @When("Sponsor builds stage {int} and adds card from position {int}")
     public void sponsorBuildsStageAndAddsCardFromPosition(int stageNum, int position) {
         StringWriter output = new StringWriter();
+        game.clearScreen(new PrintWriter(output));
+
         game.sponsoringPlayer.buildSingleStage(stageNum, position);
         game.sponsoringPlayer.assignStageValues(stageNum);
         game.sponsoringPlayer.printStage(stageNum);
@@ -573,6 +575,8 @@ public class GameSteps {
         game.printEligiblePlayers();
 
         StringWriter output = new StringWriter();
+        game.clearScreen(new PrintWriter(output));
+
         String response = "";
 
         if (decision.equals("declines")){
@@ -599,6 +603,8 @@ public class GameSteps {
 
     @When("P{int} draws adventure card and discards position {int}")
     public void p_draws_adventure_card_and_discards_position(int playerNum, int position) {
+        StringWriter output = new StringWriter();
+        game.clearScreen(new PrintWriter(output));
         switch (playerNum){
             case 1:
                 game.p1.drawAdvCard();
@@ -621,11 +627,14 @@ public class GameSteps {
                 game.p4.trimCard(position);
                 break;
         }
+        game.clearScreen(new PrintWriter(output));
     }
 
     @When("P{int} sets up an attack with card in position {int}")
     public void pSetsUpAnAttackWithCardInPosition(int playerNum, int position) {
         StringWriter output = new StringWriter();
+        game.clearScreen(new PrintWriter(output));
+
         String pos = "" + position;
         switch (playerNum){
             case 1:
@@ -645,7 +654,7 @@ public class GameSteps {
                 game.p4.printAttack();
                 break;
         }
-        game.clearScreen(new PrintWriter(output));
+//        game.clearScreen(new PrintWriter(output));
     }
 
     @When("Participants attack stage {int}")
@@ -728,8 +737,8 @@ public class GameSteps {
 
     @When("P{int} trims their hand at position {int}")
     public void pTrimsTheirHandAtPosition(int playerNum, int position) {
-//        StringWriter output = new StringWriter();
-//        game.clearScreen(new PrintWriter(output));
+        StringWriter output = new StringWriter();
+        game.clearScreen(new PrintWriter(output));
         switch(playerNum){
             case 1:
                 game.p1.trimCard(position);
