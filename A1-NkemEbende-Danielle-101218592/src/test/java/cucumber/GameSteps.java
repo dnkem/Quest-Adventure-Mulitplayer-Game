@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameSteps {
     private Game game;
@@ -22,6 +23,368 @@ public class GameSteps {
 
     @Given("the cards are rigged for scenario 1")
     public void the_game_starts_and_the_cards_are_rigged_for_scenario_1() {
+        List<Card> advCards = Arrays.asList(
+                // extra cards for sponsor to pick up
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+
+
+                // pick ups
+                new Card("Adventure", "L", 20), // 9)
+                new Card("Adventure", "F", 30), // 9)
+                new Card("Adventure", "S", 10), // 8)
+                new Card("Adventure", "B", 15), // 8)
+                new Card("Adventure", "L", 20), // 7)
+                new Card("Adventure", "L", 20), // 7)
+                new Card("Adventure", "F", 10), // 7)
+                new Card("Adventure", "B", 15), // 6)
+                new Card("Adventure", "S", 10), // 6)
+                new Card("Adventure", "F", 30), // 6)
+                // pick ups scenario 1
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                // p4's
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p3's cards
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 40),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p2's cards
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5)
+                // p1's cards
+        );
+
+        List<Card> eventCards = Arrays.asList(
+            new Card("Event", "Q", 2),
+            new Card("Event", "Q", 4)
+        );
+        game = new Game(new TestAdvDeck(advCards), new TestEventDeck(eventCards));
+    }
+
+    @Given("the cards are rigged for scenario 2")
+    public void theCardsAreRiggedForScenario2() {
+        List<Card> advCards = Arrays.asList(
+
+                // Round 2 extra random (drawing 6)
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "F", 35),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "F", 70),
+
+
+
+                // extra cards for sponsor to pick up hypothetically from discarded (13)
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "E", 30),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+
+
+                // pick ups Round 1
+                new Card("Adventure", "B", 15),// 4th set
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10), // 3rd set
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10), // 2nd set
+                new Card("Adventure", "D", 5), // - discarded D5 card from previous round
+                new Card("Adventure", "L", 20), // first set of drawn card
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "H", 10),
+                // pick ups scenario 2
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                // p4's
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p3's cards
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 40),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p2's cards
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5)
+                // p1's cards
+        );
+
+        List<Card> eventCards = Arrays.asList(
+                new Card("Event", "Q", 3),
+                new Card("Event", "Q", 4)
+        );
+        game = new Game(new TestAdvDeck(advCards), new TestEventDeck(eventCards));
+    }
+
+    @Given("the cards are rigged for scenario 3")
+    public void theCardsAreRiggedForScenario3() {
+        List<Card> advCards = Arrays.asList(
+
+                // filler
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 35),
+
+                // queens favor
+                new Card("Adventure", "S", 10),//
+                new Card("Adventure", "F", 5),
+
+                // Round 2 extra random (for prosperity event)
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "F", 35),
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "L", 20),
+
+
+
+                // extra cards for sponsor to pick up hypothetically from discarded (13)
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "E", 30),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+
+
+                // pick ups Round 1
+                new Card("Adventure", "B", 15), // set 4
+                new Card("Adventure", "H", 10), // p3
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10), // set 3
+                new Card("Adventure", "B", 15), // TBDDD P3
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10), // 2nd set
+                new Card("Adventure", "F", 25), // p3
+                new Card("Adventure", "D", 5), // - discarded D5 card from previous round
+                new Card("Adventure", "L", 20), // first set of drawn card
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "H", 10),
+                // pick ups scenario 2
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                // p4's
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p3's cards
+
+                new Card("Adventure", "E", 30),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 40),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // p2's cards
+
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "D", 5),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5)
+                // p1's cards
+        );
+
+        List<Card> eventCards = Arrays.asList(
+                new Card("Event", "Q", 3),
+                new Card("Event", "Queen’s favor", 2),
+                new Card("Event", "Prosperity", 2),
+                new Card("Event", "Plague", 2),
+                new Card("Event", "Q", 4)
+        );
+        game = new Game(new TestAdvDeck(advCards), new TestEventDeck(eventCards));
+    }
+
+    @Given("the cards are rigged for scenario 4")
+    public void theCardsAreRiggedForScenario4() {
         List<Card> advCards = Arrays.asList(
                 // extra cards for sponsor to pick up
                 new Card("Adventure", "F", 5),
@@ -121,8 +484,8 @@ public class GameSteps {
         );
 
         List<Card> eventCards = Arrays.asList(
-            new Card("Event", "Q", 2),
-            new Card("Event", "Q", 4)
+                new Card("Event", "Q", 2),
+                new Card("Event", "Q", 2)
         );
         game = new Game(new TestAdvDeck(advCards), new TestEventDeck(eventCards));
     }
@@ -258,8 +621,6 @@ public class GameSteps {
                 game.p4.trimCard(position);
                 break;
         }
-        StringWriter output = new StringWriter();
-        game.clearScreen(new PrintWriter(output));
     }
 
     @When("P{int} sets up an attack with card in position {int}")
@@ -365,6 +726,32 @@ public class GameSteps {
         game.sponsoringPlayer.trimCard(position);
     }
 
+    @When("P{int} trims their hand at position {int}")
+    public void pTrimsTheirHandAtPosition(int playerNum, int position) {
+//        StringWriter output = new StringWriter();
+//        game.clearScreen(new PrintWriter(output));
+        switch(playerNum){
+            case 1:
+                game.p1.trimCard(position);
+                break;
+            case 2:
+                game.p2.trimCard(position);
+                break;
+            case 3:
+                game.p3.trimCard(position);
+                break;
+            case 4:
+                game.p4.trimCard(position);
+                break;
+        }
+    }
+
+    @When("the quest ends")
+    public void theQuestEnds() {
+        StringWriter output = new StringWriter();
+        game.concludeQuest(new PrintWriter(output));
+    }
+
 
     @Then("P{int} has {int} cards and has {int} shields")
     public void pHasCardsAndHasShields(int player, int cards, int shields) {
@@ -384,116 +771,9 @@ public class GameSteps {
         }
     }
 
-    @Then("the quest ends")
-    public void theGameEnds() {
-        StringWriter output = new StringWriter();
-        game.concludeQuest(new PrintWriter(output));
-    }
-
-    @Given("the cards are rigged for scenario 2")
-    public void theCardsAreRiggedForScenario() {
-        List<Card> advCards = Arrays.asList(
-                // extra cards for sponsor to pick up
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "H", 10),
-
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
-
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5),
-
-
-                // pick ups
-                new Card("Adventure", "L", 20), // 9)
-                new Card("Adventure", "F", 30), // 9)
-                new Card("Adventure", "S", 10), // 8)
-                new Card("Adventure", "B", 15), // 8)
-                new Card("Adventure", "L", 20), // 7)
-                new Card("Adventure", "L", 20), // 7)
-                new Card("Adventure", "F", 10), // 7)
-                new Card("Adventure", "B", 15), // 6)
-                new Card("Adventure", "S", 10), // 6)
-                new Card("Adventure", "F", 30), // 6)
-                // pick ups
-
-                new Card("Adventure", "E", 30),
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "H", 10),
-
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
-                new Card("Adventure", "D", 5),
-
-                new Card("Adventure", "F", 40),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                // p4's
-
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "H", 10),
-
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
-
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5),
-                // p3's cards
-
-                new Card("Adventure", "E", 30),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "H", 10),
-
-
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
-                new Card("Adventure", "F", 40),
-
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5),
-                // p2's cards
-
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "H", 10),
-
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
-
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5)
-                // p1's cards
-        );
-
-        List<Card> eventCards = Arrays.asList(
-                new Card("Event", "Q", 2),
-                new Card("Event", "Q", 2)
-        );
-        game = new Game(new TestAdvDeck(advCards), new TestEventDeck(eventCards));
+    @Then("P{int} is a winner")
+    public void pIsAWinner(int playerNum) {
+        String num = "" + playerNum;
+        assertTrue(game.checkIfWinner(num));
     }
 }

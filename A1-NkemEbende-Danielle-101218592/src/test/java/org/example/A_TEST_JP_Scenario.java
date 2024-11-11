@@ -220,26 +220,9 @@ public class A_TEST_JP_Scenario {
         game.allEligiblePlayersAttackStage(game.stage4, "stage4");
         game.discardAllEligibleAttackCards();
         game.printEligiblePlayers();
-        game.concludeQuest(new PrintWriter(output));
-
-        // OFFICIAL ASSERT TEST
-        assertEquals(0, game.p3.getNumShields());
-        assertEquals(5, game.p3.getCardsSize());
-        assertEquals("F", game.p3.getCard(0).getName());assertEquals(5, game.p3.getCard(0).getValue());
-        assertEquals("F", game.p3.getCard(1).getName());assertEquals(5, game.p3.getCard(1).getValue());
-        assertEquals("F", game.p3.getCard(2).getName());assertEquals(15, game.p3.getCard(2).getValue());
-        assertEquals("F", game.p3.getCard(3).getName());assertEquals(30, game.p3.getCard(3).getValue());
-        assertEquals("S", game.p3.getCard(4).getName());assertEquals(10, game.p3.getCard(4).getValue());
-
-        assertEquals(4, game.p4.getNumShields());
-        assertEquals(4, game.p4.getCardsSize());
-        assertEquals("F", game.p4.getCard(0).getName());assertEquals(15, game.p4.getCard(0).getValue());
-        assertEquals("F", game.p4.getCard(1).getName());assertEquals(15, game.p4.getCard(1).getValue());
-        assertEquals("F", game.p4.getCard(2).getName());assertEquals(40, game.p4.getCard(2).getValue());
-        assertEquals("L", game.p4.getCard(3).getName());assertEquals(20, game.p4.getCard(3).getValue());
-
 
         // 10
+        // moved here to allow the sponsoring player to remove content before assigned to null
         game.sponsoringPlayer.discardStageCards();
         game.sponsoringPlayer.drawAdvCard();
         game.sponsoringPlayer.drawAdvCard();
@@ -261,7 +244,26 @@ public class A_TEST_JP_Scenario {
         String trim = "1\n3\n7\n4\n";
         game.sponsoringPlayer.trimToTwelve(new Scanner(trim), new PrintWriter(output));
         game.clearScreen(new PrintWriter(output));
+
         // OFFICIAL ASSERT TEST
         assertEquals(12, game.p2.getCardsSize());
+
+        game.concludeQuest(new PrintWriter(output));
+
+        // OFFICIAL ASSERT TEST
+        assertEquals(0, game.p3.getNumShields());
+        assertEquals(5, game.p3.getCardsSize());
+        assertEquals("F", game.p3.getCard(0).getName());assertEquals(5, game.p3.getCard(0).getValue());
+        assertEquals("F", game.p3.getCard(1).getName());assertEquals(5, game.p3.getCard(1).getValue());
+        assertEquals("F", game.p3.getCard(2).getName());assertEquals(15, game.p3.getCard(2).getValue());
+        assertEquals("F", game.p3.getCard(3).getName());assertEquals(30, game.p3.getCard(3).getValue());
+        assertEquals("S", game.p3.getCard(4).getName());assertEquals(10, game.p3.getCard(4).getValue());
+
+        assertEquals(4, game.p4.getNumShields());
+        assertEquals(4, game.p4.getCardsSize());
+        assertEquals("F", game.p4.getCard(0).getName());assertEquals(15, game.p4.getCard(0).getValue());
+        assertEquals("F", game.p4.getCard(1).getName());assertEquals(15, game.p4.getCard(1).getValue());
+        assertEquals("F", game.p4.getCard(2).getName());assertEquals(40, game.p4.getCard(2).getValue());
+        assertEquals("L", game.p4.getCard(3).getName());assertEquals(20, game.p4.getCard(3).getValue());
     }
 }

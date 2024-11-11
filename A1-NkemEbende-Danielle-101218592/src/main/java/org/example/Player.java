@@ -41,6 +41,7 @@ public class Player {
 
     // COMMIT 4 - RESP 4 - REFACTOR 1
     public void printPlayersCards(PrintWriter printWriter) {
+        sortCards();
         // collect player card info into a string
         String cards = getID() + ": ";
         for (int i = 0; i < getCardsSize(); i++) {
@@ -89,6 +90,11 @@ public class Player {
     }
 
     public void singleSponsorQuestion(Scanner input, PrintWriter output){
+        if (game.sponsoringPlayer != null){
+            System.out.println("Can't prompt as there is already a sponsoring player: " + game.sponsoringPlayer.getID());
+            return;
+        }
+
         String decision= this.promptSponsor(input, output, game.currentDrawnEventCard);
         if (decision.equals("Y")){
             game.sponsoringPlayer = this;
@@ -118,6 +124,7 @@ public class Player {
     }
 
     public void trimCard(int index) {
+        sortCards();
         // can't trim if hand is equal to 12
         if (cards.size() <= 12) {
             System.out.println("Can't trim hand if the size is 12 or less!!");
@@ -150,6 +157,10 @@ public class Player {
 
     // COMMIT 5 - RESP 5
     public void drawAdvCard() {
+        if (game.advDeck.cards.isEmpty()){
+//           game.cycleInDeck(game.advDeck, game.discardAdvDeck);
+//            System.out.println("\n**Cycled in New Cards From the Discarded Deck\n");
+        }
         cards.add(game.advDeck.getDeck().removeLast());
     }
 
@@ -158,10 +169,15 @@ public class Player {
         System.out.println("    " + game.currentDrawnEventCard.type + ": " + game.currentDrawnEventCard.getName() + game.currentDrawnEventCard.getValue());
         if (game.currentDrawnEventCard.getName().equals("Queen’s favor")) {
             playQueenEventCard(game.currentPlayer);
+            game.nextPlayer();
         } else if (game.currentDrawnEventCard.getName().equals("Prosperity")) {
             playProsperityCard(game.currentPlayer);
+            game.nextPlayer();
         } else if (game.currentDrawnEventCard.getName().equals("Plague")) {
             playPlagueCard(game.currentPlayer);
+            game.nextPlayer();
+        } else {
+            return;
         }
 
         // deal with used event card
@@ -283,16 +299,18 @@ public class Player {
 
     public boolean eligibleStage(ArrayList<Card> array) {
         boolean eligible = false;
+        // check if array has a foe
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getName().equals("F")) {
                 eligible = true;
             }
         }
+        // no repeated weapons
         for (int i = 0; i < array.size(); i++) {
-            for (int j = 1; j < array.size() - 1; j++) {
+            for (int j = i+1; j < array.size(); j++) {
                 if (array.get(i).getName().equals(array.get(j).getName())) {
                     eligible = false;
-                    cards.add(array.remove(j));
+                    cards.add(array.remove(j)); // put back in hand
                 }
             }
         }
@@ -301,9 +319,9 @@ public class Player {
 
     public void buildStages(Scanner input) {
         // loop the (no. of stages) times
-        for (int i = 0; i < game.currentDrawnEventCard.getValue(); i++) {
+        for (int i = 0; i < game.currentDrawnEventCard.getValue(); i++) { // loops through stages
             boolean go = true;
-            while (go) {
+            while (go) { // loops into a single stage
                 System.out.println(getID() + " Cards: " + cardsToString());
                 System.out.println("Stage " + (i+1) + ": Select what position (1-" + getCardsSize() + ") should be used in this stage (enter 'Q' to quit): ");
                 String inputStr = input.nextLine();
@@ -337,7 +355,28 @@ public class Player {
                         break;
                     }
                 }
+            }
 
+            if (i == 0) {
+                if (!eligibleStage(game.stage1)){
+                    System.out.println("Stage 1 is not eligible! Missing a Foe or has repeated Weapons");
+                    break;
+                }
+            } else if (i==1) {
+                if (!eligibleStage(game.stage2)) {
+                    System.out.println("Stage 2 is not eligible! Missing a Foe or has repeated Weapons");
+                    break;
+                }
+            }else if (i==2) {
+                if (!eligibleStage(game.stage3)) {
+                    System.out.println("Stage 3 is not eligible! Missing a Foe or has repeated Weapons");
+                    break;
+                }
+            } else if (i==3) {
+                if (!eligibleStage(game.stage4)) {
+                    System.out.println("Stage 4 is not eligible! Missing a Foe or has repeated Weapons");
+                    break;
+                }
             }
 
             // assign the stages values and check if valid
@@ -352,6 +391,7 @@ public class Player {
 
     public void buildSingleStage(int stageNum, int position){
         if (stageNum > game.currentDrawnEventCard.getValue()){
+            System.out.println(stageNum + " > " + game.currentDrawnEventCard.getValue());
             System.out.println("Can't build more stages than the Quest card allows.");
             return;
         }
@@ -390,8 +430,9 @@ public class Player {
                 if (game.getValues(game.stage2) > game.stage1Value) {
                     game.stage2Value = game.getValues(game.stage2);
                     eligible = true;
+                    System.out.println("\n                *Sufficient");
                 } else {
-                    System.out.println("*Insufficient value for stage 2");
+                    System.out.println("\n                *Insufficient value for the below stage 2");
                     return false;
                 }
                 break;
@@ -399,8 +440,9 @@ public class Player {
                 if (game.getValues(game.stage3) > game.stage2Value) {
                     game.stage3Value = game.getValues(game.stage3);
                     eligible = true;
+                    System.out.println("\n                *Sufficient");
                 } else {
-                    System.out.println("*Insufficient value for stage 3");
+                    System.out.println("\n                *Insufficient value for the below stage 3");
                     return false;
                 }
                 break;
@@ -408,8 +450,9 @@ public class Player {
                 if (game.getValues(game.stage4) > game.stage3Value) {
                     game.stage4Value = game.getValues(game.stage4);
                     eligible = true;
+                    System.out.println("\n                *Sufficient");
                 } else {
-                    System.out.println("*Insufficient value for stage 4");
+                    System.out.println("\n                *Insufficient value for the below stage 4");
                     return false;
                 }
                 break;
@@ -417,8 +460,9 @@ public class Player {
                 if (game.getValues(game.stage5) > game.stage4Value) {
                     game.stage5Value = game.getValues(game.stage5);
                     eligible = true;
+                    System.out.println("\n                *Sufficient");
                 } else {
-                    System.out.println("*Insufficient value for stage 5");
+                    System.out.println("\n                *Insufficient value for the below stage 5");
                     return false;
                 }
                 break;
@@ -535,6 +579,7 @@ public class Player {
         for (int i = 0; i < attack.size(); i++) {
             attackValue += attack.get(i).getValue();
         }
+        printAttack();
 
         if (stageStr.equals("stage1")) {
             System.out.println("Attack Value: " + attackValue);

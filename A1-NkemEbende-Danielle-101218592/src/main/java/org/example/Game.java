@@ -69,9 +69,10 @@ public class Game {
         // empty eligible players list
         eligiblePlayers.clear();
         noLongerEligible.clear();
-        // discard current event drawn
+        // discard current event drawn and stage cards
         sponsoringPlayer.discardEventCard(currentDrawnEventCard);
         sponsoringPlayer.discardStageCards();
+        sponsoringPlayer = null;
 
         // check for winners of the entire game
         checkForWinners();
@@ -101,6 +102,26 @@ public class Game {
         gameWinners = winners;
     }
 
+    public void cycleInDeck(Deck org, Deck discarded){
+        // shuffle discarded first
+        discarded.shuffleDeck();
+        // add discarded into org deck
+        for (int i=0; i<discarded.size(); i++){
+            org.add(discarded.get(i));
+        }
+        // clear discarded deck
+        discarded.cards.clear();
+    }
+
+    public boolean checkIfWinner(String num){
+        for (int i=0; i< gameWinners.size(); i++){
+            if (gameWinners.get(i).getID().contains(num)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void sponsorDrawsAdvCards(){
         // get no. of cards used in all stages
         int cardNum = stage1.size() + stage2.size() + stage3.size() + stage4.size() + stage5.size();
@@ -128,6 +149,7 @@ public class Game {
         int total = stageNum + cardNum;
         for (int i=0; i<total; i++){
             sponsoringPlayer.drawAdvCard();
+
         }
         sponsoringPlayer.sortCards();
     }
@@ -135,7 +157,7 @@ public class Game {
     public void printWinners() {
         String w = "";
         for (int i = 0; i < gameWinners.size(); i++) {
-            w += gameWinners.get(i).getID();
+            w += gameWinners.get(i).getID() + " ";
         }
         System.out.println("WINNER(S) of the game: " + w);
         if (gameWinners.isEmpty()) System.out.println("No Winners");
