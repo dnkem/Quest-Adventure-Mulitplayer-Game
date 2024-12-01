@@ -16,5 +16,6 @@ public class Card {
     public String getType() { return type; }
     public String getName() { return name; }
     public int getValue() { return value; }
+    public String getNameType() {return name + value; }
 
 }
