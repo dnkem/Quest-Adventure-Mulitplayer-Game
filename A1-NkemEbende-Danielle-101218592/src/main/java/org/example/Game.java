@@ -313,15 +313,19 @@ public class Game {
     public void distributeCards() {
         for (int j = 0; j < 12; j++) {
             p1.drawAdvCard();
+            p1.sortCards();
         }
         for (int j = 0; j < 12; j++) {
             p2.drawAdvCard();
+            p2.sortCards();
         }
         for (int j = 0; j < 12; j++) {
             p3.drawAdvCard();
+            p3.sortCards();
         }
         for (int j = 0; j < 12; j++) {
             p4.drawAdvCard();
+            p4.sortCards();
         }
     }
 

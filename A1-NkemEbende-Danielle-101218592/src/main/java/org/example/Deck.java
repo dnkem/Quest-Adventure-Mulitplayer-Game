@@ -23,6 +23,10 @@ public class Deck {
     public int getDeckSize() { return cards.size();}
     public int size() {return cards.size();}
     public Card get(int i) { return cards.get(i); }
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
 
     public void shuffleDeck() {
         Collections.shuffle(cards);
@@ -33,11 +37,11 @@ public class Deck {
     }
 
     public Card removeLast(){
-        return cards.removeLast();
+        return cards.remove(cards.size() - 1);
     }
 
     public Card removeFirst(){
-        return cards.removeFirst();
+        return cards.remove(0);
     }
 
     public void add(Card c){

@@ -161,7 +161,7 @@ public class Player {
 //           game.cycleInDeck(game.advDeck, game.discardAdvDeck);
 //            System.out.println("\n**Cycled in New Cards From the Discarded Deck\n");
         }
-        cards.add(game.advDeck.getDeck().removeLast());
+        cards.add(game.advDeck.getDeck().remove(game.advDeck.size() - 1));
     }
 
     public void drawEventCard() {
@@ -498,30 +498,30 @@ public class Player {
     public void discardStageCards() {
         int num = game.stage1.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(game.stage1.removeFirst());
+            discardAdvCard(game.stage1.remove(0));
         }
         num = game.stage2.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(game.stage2.removeLast());
+            discardAdvCard(game.stage2.remove(game.stage2.size() - 1));
         }
         num = game.stage3.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(game.stage3.removeLast());
+            discardAdvCard(game.stage3.remove(game.stage3.size() - 1));
         }
         num = game.stage4.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(game.stage4.removeLast());
+            discardAdvCard(game.stage4.remove(game.stage4.size() - 1));
         }
         num = game.stage5.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(game.stage5.removeLast());
+            discardAdvCard(game.stage5.remove(game.stage5.size() - 1));
         }
     }
 
     public void discardAttackCards() {
         int num = attack.size();
         for (int i = 0; i < num; i++) {
-            discardAdvCard(attack.removeFirst());
+            discardAdvCard(attack.remove(0));
         }
     }
 
@@ -538,6 +538,14 @@ public class Player {
             attackStr += attack.get(i).getName() + attack.get(i).getValue() + " ";
         }
         System.out.println(attackStr);
+    }
+
+    public String printHand(){
+        String handStr = this.getID() + " Cards: ";
+        for (int i=0; i<cards.size(); i++){
+            handStr += cards.get(i).getName() + cards.get(i).getValue() + " ";
+        }
+        return handStr;
     }
 
     public String promptAttack(Scanner input) {

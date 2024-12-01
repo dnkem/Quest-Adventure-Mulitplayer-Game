@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Danielle's COMP 4004 - A3 Game</h1>
+
+        <button onclick="startRandomGame()">Start Random Game</button>
+        <button onclick="startA1ScenarioGame()">Start A1 Scenario Game</button>
+        <button onclick="start2WinnerGame()">Start 2 Winner Game</button>
+        <button onclick="start1WinnerGame()">Start 1 Winner Game</button>
+        <button onclick="start0WinnerGame()">Start 0 Winner Game</button>
+
+        <div id="game-status"></div>
+        <div class="grid-player-container">
+            <div id="p1-hand" class="player-hand"></div>
+            <div id="p2-hand" class="player-hand"></div>
+            <div id="p3-hand" class="player-hand"></div>
+            <div id="p4-hand" class="player-hand"></div>
+        </div>
+<!--        <button onclick="currentPlayerDrawCard()">Current Player draw a Card</button>-->
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -820,7 +820,7 @@ class MainTest {
         // test 1: player 1 builds stage by adding into each stage and
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 4; // set last card as a Q card
-        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
+        game.currentDrawnEventCard = game.eventDeck.getDeck().remove(game.eventDeck.getDeckSize() - 1);
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(1, game.stage1.size());
         assertEquals(0, game.stage2.size());
@@ -852,7 +852,7 @@ class MainTest {
         // test 2: player 1 builds stage and tries to quit with an empty stage but is reprompted to continue
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
-        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
+        game.currentDrawnEventCard = game.eventDeck.getDeck().remove(game.eventDeck.getDeckSize() - 1);
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(1, game.stage1.size());
         assertEquals(0, game.stage2.size());
@@ -872,7 +872,7 @@ class MainTest {
         // test 3: player 1 builds stage and tries to enter invalid position
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).name = "Q"; // set last card as a Q card
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize() - 1).value = 2; // set last card as a Q card
-        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
+        game.currentDrawnEventCard = game.eventDeck.getDeck().remove(game.eventDeck.getDeckSize() - 1);
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(1, game.stage1.size());
         assertEquals(0, game.stage2.size());
@@ -893,7 +893,7 @@ class MainTest {
         // test 4: player 1 builds stage and add to last stage with empty hand
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 5; // set last card as a Q card
-        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
+        game.currentDrawnEventCard = game.eventDeck.getDeck().remove(game.eventDeck.getDeckSize() - 1);
         game.currentPlayer.buildStages(new Scanner(input));
         assertEquals(1, game.stage1.size());
         assertEquals(0, game.stage5.size());
@@ -913,7 +913,7 @@ class MainTest {
         // test 5:
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).name = "Q"; // set last card as a Q card
         game.eventDeck.getDeck().get(game.eventDeck.getDeckSize()-1).value = 3; // set last card as a Q card
-        game.currentDrawnEventCard = game.eventDeck.getDeck().removeLast();
+        game.currentDrawnEventCard = game.eventDeck.getDeck().remove(game.eventDeck.getDeckSize() - 1);
         game.currentPlayer.buildStages(new Scanner(input));
 //        assertEquals(2, game.stage1.size());
 //        assertEquals(30, game.stage1Value);
