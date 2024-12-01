@@ -52,6 +52,21 @@ public class A3_Controller {
         return "0 Winner Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
+    @PostMapping("/playEventCard")
+    public String playEventCard() {
+        if (game.currentDrawnEventCard.getName().equals("Queen’s favor")){
+            game.currentPlayer.playQueenEventCard(game.currentPlayer);
+            return game.currentPlayer.getID() + "drew 2 adventure cards";
+        } else if (game.currentDrawnEventCard.getName().equals("Plague")){
+            game.currentPlayer.playPlagueCard(game.currentPlayer);
+            return game.currentPlayer.getID() + "loses 2 shields if any";
+        } else if (game.currentDrawnEventCard.getName().equals("Prosperity")){
+            game.currentPlayer.playProsperityCard(game.currentPlayer);
+            return "All players drew 2 adventure cards";
+        }
+        return "Prompting " + game.currentPlayer.getID() + " to Sponsor the Quest";
+    }
+
     @GetMapping("/printP1Hand")
     public String printP1Hand() {
         return game.p1.printHand();

@@ -95,7 +95,7 @@ public class Player {
             return;
         }
 
-        String decision= this.promptSponsor(input, output, game.currentDrawnEventCard);
+        String decision = this.promptSponsor(input, output, game.currentDrawnEventCard);
         if (decision.equals("Y")){
             game.sponsoringPlayer = this;
         }

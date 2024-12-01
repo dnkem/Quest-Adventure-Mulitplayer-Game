@@ -76,3 +76,7 @@ button:active {
     grid-template-columns: auto auto auto auto;
     grid-gap: 10px;
 }
+
+.hidden {
+    display: none;
+}

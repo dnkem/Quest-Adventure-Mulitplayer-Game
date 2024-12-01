@@ -8,6 +8,7 @@ async function startRandomGame() {
         document.getElementById("game-status").innerText = result;
         updateHands();
         updateShields();
+        switchVisibilityOn("playEvent");
     } catch (error) {
         console.error("Error in startRandomGame:", error);
     }
@@ -72,20 +73,17 @@ async function updateHands() {
 
         const response2 = await fetch(`${apiBaseUrl}/printP2Hand`);
         const p2Hand = await response2.text();
-        console.log("Update Hands of Players", p2Hand);
         document.getElementById("p2-hand").innerText = p2Hand;
 
         const response3 = await fetch(`${apiBaseUrl}/printP3Hand`);
         const p3Hand = await response3.text();
-        console.log("Update Hands of Players", p3Hand);
         document.getElementById("p3-hand").innerText = p3Hand;
 
         const response4 = await fetch(`${apiBaseUrl}/printP4Hand`);
         const p4Hand = await response4.text();
-        console.log("Update Hands of Players", p4Hand);
         document.getElementById("p4-hand").innerText = p4Hand;
 
-        console.log("Update Hands of Players (", p1Hand, " ", p2Hand, " ", p3Hand, " ", p4Hand, ")");
+        console.log("Update Hands of Players");
 
         
     } catch (error) {
@@ -111,8 +109,55 @@ async function updateShields() {
         const p4Shields = await response4.text();
         document.getElementById("p4-shields").innerText = p4Shields;
 
-        console.log("Update Shields of Players (", p1Shields, " ", p2Shields, " ", p3Shields, " ", p4Shields, ")");
+        console.log("Update Shields of Players (", p1Shields, p2Shields, p3Shields, p4Shields, ")");
     } catch (error) {
         console.error("Error in Updating Shields:", error);
     }
 }
+
+async function playEventCard() {
+    try {
+        const response = await fetch(`${apiBaseUrl}/playEventCard`, { method: "POST" });
+        const result = await response.text();
+        document.getElementById("game-status").innerText = result;
+
+        if (result.includes("drew 2")){
+            updateHands();
+        } else if (result.includes("loses 2")){
+            updateShields();
+        } else {
+            // make the prompt sponsor buttons appear
+            console.log("sponsor prompt");
+        }
+        switchVisibilityOff("playEvent");
+        console.log("Event Card was played");
+    } catch (error) {
+        console.error("Error in Playing Event Card:", error);
+    }
+}
+
+async function switchVisibilityOff(id){
+    // make play event button visible
+    var btn = document.getElementById(id);
+    btn.style.display = 'none';
+}
+
+async function switchVisibilityOn(id){
+    // make play event button not visible
+    var btn = document.getElementById(id);
+    btn.style.display = 'block';
+}
+
+// async function sponsorPrompt() {
+//     try {
+//         const response = await fetch(`${apiBaseUrl}/playEventCard`);
+//         const card = await response.text();
+//         console.log("Start A1 Scenario Game Response:", result);
+//         document.getElementById("game-status").innerText = result;
+        
+
+//         console.log("Update Shields of Players (", p1Shields, " ", p2Shields, " ", p3Shields, " ", p4Shields, ")");
+//     } catch (error) {
+//         console.error("Error in Updating Shields:", error);
+//     }
+// }

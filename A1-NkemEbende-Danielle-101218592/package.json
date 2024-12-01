@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "axois": "^0.0.1-security",
+    "chromedriver": "^131.0.1",
+    "selenium-webdriver": "^4.27.0"
+  }
+}
