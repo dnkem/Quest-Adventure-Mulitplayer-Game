@@ -7,6 +7,7 @@ async function startRandomGame() {
         console.log("Start Random Game Response:", result);
         document.getElementById("game-status").innerText = result;
         updateHands();
+        updateShields();
     } catch (error) {
         console.error("Error in startRandomGame:", error);
     }
@@ -19,7 +20,7 @@ async function startA1ScenarioGame() {
         console.log("Start A1 Scenario Game Response:", result);
         document.getElementById("game-status").innerText = result;
         updateHands();
-
+        updateShields();
     } catch (error) {
         console.error("Error in A1ScenarioGame:", error);
     }
@@ -32,6 +33,7 @@ async function start2WinnerGame() {
         console.log("Start 2 Winner Game Response:", result);
         document.getElementById("game-status").innerText = result;
         updateHands();
+        updateShields();
     } catch (error) {
         console.error("Error in 2WinnerGame:", error);
     }
@@ -43,6 +45,7 @@ async function start1WinnerGame() {
         console.log("Start 1 Winner Game Response:", result);
         document.getElementById("game-status").innerText = result;
         updateHands();
+        updateShields();
     } catch (error) {
         console.error("Error in 1WinnerGame:", error);
     }
@@ -55,6 +58,7 @@ async function start0WinnerGame() {
         console.log("Start 0 Winner Game Response:", result);
         document.getElementById("game-status").innerText = result;
         updateHands();
+        updateShields();
     } catch (error) {
         console.error("Error in 0WinnerGame:", error);
     }
@@ -86,5 +90,29 @@ async function updateHands() {
         
     } catch (error) {
         console.error("Error in Updating Hands:", error);
+    }
+}
+
+async function updateShields() {
+    try {
+        const response = await fetch(`${apiBaseUrl}/getP1Shields`);
+        const p1Shields = await response.text();
+        document.getElementById("p1-shields").innerText = p1Shields;
+
+        const response2 = await fetch(`${apiBaseUrl}/getP2Shields`);
+        const p2Shields = await response2.text();
+        document.getElementById("p2-shields").innerText = p2Shields;
+
+        const response3 = await fetch(`${apiBaseUrl}/getP3Shields`);
+        const p3Shields = await response3.text();
+        document.getElementById("p3-shields").innerText = p3Shields;
+
+        const response4 = await fetch(`${apiBaseUrl}/getP4Shields`);
+        const p4Shields = await response4.text();
+        document.getElementById("p4-shields").innerText = p4Shields;
+
+        console.log("Update Shields of Players (", p1Shields, " ", p2Shields, " ", p3Shields, " ", p4Shields, ")");
+    } catch (error) {
+        console.error("Error in Updating Shields:", error);
     }
 }

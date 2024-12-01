@@ -72,6 +72,28 @@ public class A3_Controller {
         return game.p4.printHand();
     }
 
+    @GetMapping("/getP1Shields")
+    public String getP1Shields() {
+        return "P1 Shields: " + game.p1.getNumShields();
+    }
+
+    @GetMapping("/getP2Shields")
+    public String getP2Shields() {
+        return "P2 Shields: " + game.p2.getNumShields();
+    }
+
+    @GetMapping("/getP3Shields")
+    public String getP3Shields() {
+        return "P3 Shields: " + game.p3.getNumShields();
+    }
+
+    @GetMapping("/getP4Shields")
+    public String getP4Shields() {
+        return "P4 Shields: " + game.p4.getNumShields();
+    }
+
+    // methods
+
     private void resetGame() {
         game = new Game();
         game.advDeck.initAdvDeck();
