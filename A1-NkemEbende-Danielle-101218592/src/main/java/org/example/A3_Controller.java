@@ -20,35 +20,35 @@ public class A3_Controller {
     @GetMapping("/startRandomGame")
     public String startRandomGame() {
         resetGame();
-        game.currentPlayer.drawEventCard();
+        game.currentPlayer.drawFirstEventCard();
         return "Random Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
     @GetMapping("/startA1ScenarioGame")
     public String startA1ScenarioGame() {
         setUpA1Scenario();
-        game.currentPlayer.drawEventCard();
+        game.currentPlayer.drawFirstEventCard();
         return "A1 Scenario Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
     @GetMapping("/start2WinnerGame")
     public String start2WinnerGame() {
         setUp2Winner();
-        game.currentPlayer.drawEventCard();
+        game.currentPlayer.drawFirstEventCard();
         return "2 Winner Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
     @GetMapping("/start1WinnerGame")
     public String start1WinnerGame() {
         setUp1Winner();
-        game.currentPlayer.drawEventCard();
+        game.currentPlayer.drawFirstEventCard();
         return "1 Winner Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
     @GetMapping("/start0WinnerGame")
     public String start0WinnerGame() {
         setUp0Winner();
-        game.currentPlayer.drawEventCard();
+        game.currentPlayer.drawFirstEventCard();
         return "0 Winner Game started. P1 draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
@@ -56,10 +56,10 @@ public class A3_Controller {
     public String playEventCard() {
         if (game.currentDrawnEventCard.getName().equals("Queen’s favor")){
             game.currentPlayer.playQueenEventCard(game.currentPlayer);
-            return game.currentPlayer.getID() + "drew 2 adventure cards";
+            return game.currentPlayer.getID() + " drew 2 adventure cards";
         } else if (game.currentDrawnEventCard.getName().equals("Plague")){
             game.currentPlayer.playPlagueCard(game.currentPlayer);
-            return game.currentPlayer.getID() + "loses 2 shields if any";
+            return game.currentPlayer.getID() + " loses 2 shields if any";
         } else if (game.currentDrawnEventCard.getName().equals("Prosperity")){
             game.currentPlayer.playProsperityCard(game.currentPlayer);
             return "All players drew 2 adventure cards";

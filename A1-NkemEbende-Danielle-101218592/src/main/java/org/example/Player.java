@@ -164,6 +164,10 @@ public class Player {
         cards.add(game.advDeck.getDeck().remove(game.advDeck.size() - 1));
     }
 
+    public void drawFirstEventCard(){
+        game.currentDrawnEventCard = game.eventDeck.removeLast();
+    }
+
     public void drawEventCard() {
         game.currentDrawnEventCard = game.eventDeck.removeLast();
         System.out.println("    " + game.currentDrawnEventCard.type + ": " + game.currentDrawnEventCard.getName() + game.currentDrawnEventCard.getValue());
@@ -199,6 +203,7 @@ public class Player {
         if (game.currentPlayer.getID().equals(p.id) && game.currentDrawnEventCard.getName().equals("Queen’s favor")) {
             p.drawAdvCard();
             p.drawAdvCard();
+            p.sortCards();
         } else {
             System.out.println("Can't draw adv cards for Queens favor event");
         }
@@ -208,12 +213,16 @@ public class Player {
         if (game.currentPlayer.getID().equals(p.id) && game.currentDrawnEventCard.getName().equals("Prosperity")) {
             game.p1.drawAdvCard();
             game.p1.drawAdvCard();
+            game.p1.sortCards();
             game.p2.drawAdvCard();
             game.p2.drawAdvCard();
+            game.p2.sortCards();
             game.p3.drawAdvCard();
             game.p3.drawAdvCard();
+            game.p3.sortCards();
             game.p4.drawAdvCard();
             game.p4.drawAdvCard();
+            game.p4.sortCards();
         } else {
             System.out.println("Can't draw adv cards for Prosperity event");
         }

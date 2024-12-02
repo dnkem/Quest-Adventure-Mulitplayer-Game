@@ -70,6 +70,7 @@ async function updateHands() {
         const response = await fetch(`${apiBaseUrl}/printP1Hand`);
         const p1Hand = await response.text();
         document.getElementById("p1-hand").innerText = p1Hand;
+        console.log(p1Hand);
 
         const response2 = await fetch(`${apiBaseUrl}/printP2Hand`);
         const p2Hand = await response2.text();
@@ -84,8 +85,6 @@ async function updateHands() {
         document.getElementById("p4-hand").innerText = p4Hand;
 
         console.log("Update Hands of Players");
-
-        
     } catch (error) {
         console.error("Error in Updating Hands:", error);
     }
@@ -135,6 +134,10 @@ async function playEventCard() {
         console.error("Error in Playing Event Card:", error);
     }
 }
+
+// async function sleep(seconds){
+//     return new Promise((resolve)=>setTimeout(resolve, seconds * 1000));
+// }
 
 async function switchVisibilityOff(id){
     // make play event button visible
