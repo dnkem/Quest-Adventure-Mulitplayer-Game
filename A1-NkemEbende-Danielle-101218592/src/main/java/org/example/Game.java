@@ -39,6 +39,81 @@ public class Game {
 
     public Card currentDrawnEventCard;
 
+    public ArrayList<Player> promptedPlayers = new ArrayList<Player>();
+
+    public void initPromptedPlayers(){
+        promptedPlayers.clear();
+        // add in order of players depending on current player
+        if (currentPlayer.getID().equals("P1")){
+            promptedPlayers.add(p1);
+            promptedPlayers.add(p2);
+            promptedPlayers.add(p3);
+            promptedPlayers.add(p4);
+        } else if (currentPlayer.getID().equals("P2")) {
+            promptedPlayers.add(p2);
+            promptedPlayers.add(p3);
+            promptedPlayers.add(p4);
+            promptedPlayers.add(p1);
+        } else if (currentPlayer.getID().equals("P3")) {
+            promptedPlayers.add(p3);
+            promptedPlayers.add(p4);
+            promptedPlayers.add(p1);
+            promptedPlayers.add(p2);
+        } else if (currentPlayer.getID().equals("P4")) {
+            promptedPlayers.add(p4);
+            promptedPlayers.add(p1);
+            promptedPlayers.add(p2);
+            promptedPlayers.add(p3);
+        }
+    }
+
+    public String updatePromptedPlayers(){
+        if (promptedPlayers.isEmpty() || promptedPlayers.size() == 0) {
+            return "No players available to be prompted";
+        }
+        String p = promptedPlayers.get(0).getID();
+        promptedPlayers.remove(0);
+        System.out.println("Prompted Player List Size: " +  promptedPlayers.size());
+        return p + " was removed from prompted players list.";
+
+    }
+
+    public ArrayList<ArrayList> promptedStage = new ArrayList<ArrayList>();
+    int currentStage = 1;
+
+    public void initPromptedStages(){
+        promptedStage.clear();
+        if (currentDrawnEventCard.getValue() == 2){
+            promptedStage.add(stage1);
+            promptedStage.add(stage2);
+        } else if (currentDrawnEventCard.getValue() == 3){
+            promptedStage.add(stage1);
+            promptedStage.add(stage2);
+            promptedStage.add(stage3);
+        } else if (currentDrawnEventCard.getValue() == 4){
+            promptedStage.add(stage1);
+            promptedStage.add(stage2);
+            promptedStage.add(stage3);
+            promptedStage.add(stage4);
+        } else if (currentDrawnEventCard.getValue() == 5) {
+            promptedStage.add(stage1);
+            promptedStage.add(stage2);
+            promptedStage.add(stage3);
+            promptedStage.add(stage4);
+            promptedStage.add(stage4);
+        }
+    }
+
+    public String updatePromptedStages(){
+        if (promptedStage.isEmpty() || promptedStage.size() == 0) {
+            return "No Stages are available to be prompted";
+        }
+        promptedStage.remove(0);
+        currentStage = currentDrawnEventCard.getValue() - promptedStage.size() + 1;
+        System.out.println("Prompted Stages List Size: " +  promptedStage.size());
+        return "Stage was removed from prompted Stage list.";
+    }
+
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void concludeQuest(PrintWriter output) {

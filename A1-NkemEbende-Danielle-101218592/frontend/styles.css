@@ -49,7 +49,7 @@ button:active {
     transform: scale(0.95);
 }
 
-#game-status {
+#game-status, #prompt-status {
     font-size: 1.2em;
     margin-top: 20px;
     padding: 15px;
@@ -58,6 +58,13 @@ button:active {
     text-align: center;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+#input-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffcc00;
+    width: 1.6em;
 }
 
 .player-hand {

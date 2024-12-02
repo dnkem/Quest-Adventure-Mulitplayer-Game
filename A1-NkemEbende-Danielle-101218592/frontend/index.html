@@ -17,6 +17,12 @@
         <button onclick="start0WinnerGame()">Start 0 Winner Game</button>
 
         <div id="game-status"></div>
+        <form action="/prompt" method="post" class="hidden" id="input-container">
+            <input type="text" placeholder="Y/N" id="input-box" name="response" required>
+            <input type="submit"
+                   style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+                   tabindex="-1" />
+        </form>
         <div class="grid-player-container">
             <div id="p1-shields" class="player-hand"></div>
             <div id="p2-shields" class="player-hand"></div>

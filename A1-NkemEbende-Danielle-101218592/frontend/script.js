@@ -22,6 +22,7 @@ async function startA1ScenarioGame() {
         document.getElementById("game-status").innerText = result;
         updateHands();
         updateShields();
+        switchVisibilityOn("playEvent");
     } catch (error) {
         console.error("Error in A1ScenarioGame:", error);
     }
@@ -35,6 +36,7 @@ async function start2WinnerGame() {
         document.getElementById("game-status").innerText = result;
         updateHands();
         updateShields();
+        switchVisibilityOn("playEvent");
     } catch (error) {
         console.error("Error in 2WinnerGame:", error);
     }
@@ -47,6 +49,7 @@ async function start1WinnerGame() {
         document.getElementById("game-status").innerText = result;
         updateHands();
         updateShields();
+        switchVisibilityOn("playEvent");
     } catch (error) {
         console.error("Error in 1WinnerGame:", error);
     }
@@ -60,6 +63,7 @@ async function start0WinnerGame() {
         document.getElementById("game-status").innerText = result;
         updateHands();
         updateShields();
+        switchVisibilityOn("playEvent");
     } catch (error) {
         console.error("Error in 0WinnerGame:", error);
     }
@@ -122,10 +126,13 @@ async function playEventCard() {
 
         if (result.includes("drew 2")){
             updateHands();
+            // click next player
         } else if (result.includes("loses 2")){
             updateShields();
+            // click next player
         } else {
             // make the prompt sponsor buttons appear
+            switchVisibilityOn("input-container");
             console.log("sponsor prompt");
         }
         switchVisibilityOff("playEvent");
@@ -151,16 +158,47 @@ async function switchVisibilityOn(id){
     btn.style.display = 'block';
 }
 
-// async function sponsorPrompt() {
-//     try {
-//         const response = await fetch(`${apiBaseUrl}/playEventCard`);
-//         const card = await response.text();
-//         console.log("Start A1 Scenario Game Response:", result);
-//         document.getElementById("game-status").innerText = result;
-        
+// handles the submission of the prompt
+document.getElementById('input-container').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent the default form submission
 
-//         console.log("Update Shields of Players (", p1Shields, " ", p2Shields, " ", p3Shields, " ", p4Shields, ")");
-//     } catch (error) {
-//         console.error("Error in Updating Shields:", error);
-//     }
-// }
+    // for input box
+    const inputBox = document.getElementById('input-box');
+    const response = inputBox.value;
+    // for game status question
+    const question = document.getElementById("game-status").innerText;
+
+    // Send the response using fetch
+    const res = await fetch(`${apiBaseUrl}/prompt`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' // sets the content type for form-encoded data
+        },
+        body: new URLSearchParams({ response, question }) // encode your data
+    });
+
+    const responseText = await res.text();
+    console.log(responseText); // logs the response from the server
+    inputBox.value = '';
+    handleInput(response, question);
+    updateHands();
+});
+
+async function handleInput(response, question){
+    if (response.includes("N") && question.includes("Sponsor")){
+        const item = await fetch(`${apiBaseUrl}/setSponsorGameStatus`);
+        const result = await item.text();
+        console.log("Update game-status: " + result);
+        document.getElementById("game-status").innerText = result;
+    } else if (response.includes("Y") && question.includes("Sponsor")) {
+        document.getElementById("input-box").placeholder = "No.";
+        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
+        const result = await item.text();
+        document.getElementById("game-status").innerText = result;
+    } else if (isNaN(response) && question.includes("Stage")){
+        document.getElementById("input-box").placeholder = "No.";
+        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
+        const result = await item.text();
+        document.getElementById("game-status").innerText = result;
+    } 
+}

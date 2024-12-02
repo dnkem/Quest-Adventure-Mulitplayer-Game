@@ -1,12 +1,14 @@
 package org.example;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -64,7 +66,74 @@ public class A3_Controller {
             game.currentPlayer.playProsperityCard(game.currentPlayer);
             return "All players drew 2 adventure cards";
         }
-        return "Prompting " + game.currentPlayer.getID() + " to Sponsor the Quest";
+        // initialize/reset prompted players if Q
+        game.initPromptedPlayers();
+        return "Does " + game.currentPlayer.getID() + " want to Sponsor the Quest?";
+    }
+
+
+    @PostMapping("/prompt")
+    public ResponseEntity<String> prompt(@RequestParam String response, @RequestParam String question) {
+        String responseCopy = response + "\n";
+        // if the game status contains sponsor
+        if (question.contains("Sponsor") && !game.promptedPlayers.isEmpty()) {
+            sponsorPrompt(responseCopy);
+            System.out.println("IN SPONSOR");
+        } else if (question.contains("Stage")){
+            stagePrompt(response);
+        } else if (question.contains("Join")){
+//            stagePrompt(response);
+        } else if (question.contains("Discard")){
+//            stagePrompt(response);
+        } else if (question.contains("Attack")){
+//            stagePrompt(response);
+        }
+        String responseMessage = "The input was received: " + response;
+        return ResponseEntity.ok(responseMessage);
+    }
+
+    @GetMapping("/setStageGameStatus")
+    public String setStageGameStatus(String newStatus) {
+        if (game.promptedStage.isEmpty()){
+            System.out.println("Stages Done");
+            return "All Stages are Complete";
+        }
+        return game.sponsoringPlayer.getID() + " Build your Stage " + game.currentStage + " by Entering a Position from your Cards (Enter Q for next stage)";
+    }
+
+    public void stagePrompt(String position){
+        // if its a num, call build
+        int inputNum = -1;
+        try {
+            inputNum = Integer.parseInt(position);
+            game.sponsoringPlayer.buildSingleStage(game.currentStage, inputNum);
+           // worry about eligible later
+        } catch (NumberFormatException e){ // if it's not, update
+            game.updatePromptedStages();
+        }
+    }
+
+    @GetMapping("/setSponsorGameStatus")
+    public String setSponsorGameStatus(String newStatus) {
+        if (game.promptedPlayers.isEmpty()){
+            System.out.println("All Players Declined Sponsoring");
+            return "All Players Declined Sponsoring";
+        }
+        System.out.println("Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?");
+        return "Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?";
+    }
+
+    public void sponsorPrompt(String response){
+        // ask the sponsor question and respond
+        StringWriter output = new StringWriter();
+        game.promptedPlayers.get(0).singleSponsorQuestion(new Scanner(response), new PrintWriter(output));
+
+        // check the response
+        if (response.contains("N") && !(game.promptedPlayers.isEmpty())){
+            System.out.println(game.updatePromptedPlayers());
+        } else if (response.contains("Y") && !(game.promptedPlayers.isEmpty())){
+            game.initPromptedStages();
+        }
     }
 
     @GetMapping("/printP1Hand")
