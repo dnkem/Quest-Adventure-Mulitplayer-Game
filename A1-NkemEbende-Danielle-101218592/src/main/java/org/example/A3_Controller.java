@@ -78,11 +78,10 @@ public class A3_Controller {
         // if the game status contains sponsor
         if (question.contains("Sponsor") && !game.promptedPlayers.isEmpty()) {
             sponsorPrompt(responseCopy);
-            System.out.println("IN SPONSOR");
         } else if (question.contains("Stage")){
             stagePrompt(response);
         } else if (question.contains("Join")){
-//            stagePrompt(response);
+            joinPrompt(response);
         } else if (question.contains("Discard")){
 //            stagePrompt(response);
         } else if (question.contains("Attack")){
@@ -92,11 +91,29 @@ public class A3_Controller {
         return ResponseEntity.ok(responseMessage);
     }
 
+    @GetMapping("/setJoinGameStatus")
+    public String setJoinGameStatus(String newStatus) {
+        if (game.promptedEligiPlayers.isEmpty()){
+            System.out.println("All Eligible Players Responded to the Prompt");
+            return "All Eligible Players Responded to the Prompt";
+        }
+        return "Does " + game.promptedEligiPlayers.get(0).getID() + " want to Join the Quest?";
+    }
+
+    public void joinPrompt(String response){
+        StringWriter output = new StringWriter();
+        game.promptedEligiPlayers.get(0).singleJoinQuestion(new Scanner(response), new PrintWriter(output));
+
+        if (response.contains("N") || response.contains("Y")) {
+            game.updatePromptedEligiPlayers();
+        }
+    }
+
     @GetMapping("/setStageGameStatus")
     public String setStageGameStatus(String newStatus) {
         if (game.promptedStage.isEmpty()){
             System.out.println("Stages Done");
-            return "All Stages are Complete";
+            return "All Stages are Complete, Enter * For Player Join Prompt";
         }
         return game.sponsoringPlayer.getID() + " Build your Stage " + game.currentStage + " by Entering a Position from your Cards (Enter Q for next stage)";
     }
@@ -109,7 +126,9 @@ public class A3_Controller {
             game.sponsoringPlayer.buildSingleStage(game.currentStage, inputNum);
            // worry about eligible later
         } catch (NumberFormatException e){ // if it's not, update
-            game.updatePromptedStages();
+            if (position.contains("Q")){
+                game.updatePromptedStages();
+            }
         }
     }
 
@@ -133,6 +152,9 @@ public class A3_Controller {
             System.out.println(game.updatePromptedPlayers());
         } else if (response.contains("Y") && !(game.promptedPlayers.isEmpty())){
             game.initPromptedStages();
+            game.getEligiblePlayers();
+            game.initPromptedEligiPlayers();
+            game.printEligiblePlayers();
         }
     }
 

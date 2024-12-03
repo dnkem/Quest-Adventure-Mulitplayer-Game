@@ -2,6 +2,7 @@ const apiBaseUrl = "http://localhost:8080";
 
 async function startRandomGame() {
     try {
+        switchVisibilityOff("input-container")
         const response = await fetch(`${apiBaseUrl}/startRandomGame`);
         const result = await response.text();
         console.log("Start Random Game Response:", result);
@@ -16,6 +17,7 @@ async function startRandomGame() {
 
 async function startA1ScenarioGame() {
     try {
+        switchVisibilityOff("input-container")
         const response = await fetch(`${apiBaseUrl}/startA1ScenarioGame`);
         const result = await response.text();
         console.log("Start A1 Scenario Game Response:", result);
@@ -30,6 +32,7 @@ async function startA1ScenarioGame() {
 
 async function start2WinnerGame() {
     try {
+        switchVisibilityOff("input-container")
         const response = await fetch(`${apiBaseUrl}/start2WinnerGame`);
         const result = await response.text();
         console.log("Start 2 Winner Game Response:", result);
@@ -43,6 +46,7 @@ async function start2WinnerGame() {
 }
 async function start1WinnerGame() {
     try {
+        switchVisibilityOff("input-container")
         const response = await fetch(`${apiBaseUrl}/start1WinnerGame`);
         const result = await response.text();
         console.log("Start 1 Winner Game Response:", result);
@@ -57,6 +61,7 @@ async function start1WinnerGame() {
 
 async function start0WinnerGame() {
     try {
+        switchVisibilityOff("input-container")
         const response = await fetch(`${apiBaseUrl}/start0WinnerGame`);
         const result = await response.text();
         console.log("Start 0 Winner Game Response:", result);
@@ -185,20 +190,34 @@ document.getElementById('input-container').addEventListener('submit', async func
 });
 
 async function handleInput(response, question){
+    console.log("IN HANDLER");
     if (response.includes("N") && question.includes("Sponsor")){
         const item = await fetch(`${apiBaseUrl}/setSponsorGameStatus`);
         const result = await item.text();
         console.log("Update game-status: " + result);
         document.getElementById("game-status").innerText = result;
-    } else if (response.includes("Y") && question.includes("Sponsor")) {
+    } 
+    else if (response.includes("Y") && question.includes("Sponsor")) {
         document.getElementById("input-box").placeholder = "No.";
         const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
         const result = await item.text();
-        document.getElementById("game-status").innerText = result;
-    } else if (isNaN(response) && question.includes("Stage")){
-        document.getElementById("input-box").placeholder = "No.";
-        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
-        const result = await item.text();
+        console.log("Update sponsor game-status: " + result);
         document.getElementById("game-status").innerText = result;
     } 
+    else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
+        console.log("QUESTION " + question);
+        document.getElementById("input-box").placeholder = "Y/N";
+        const item = await fetch(`${apiBaseUrl}/setJoinGameStatus`);
+        const result = await item.text();
+        console.log("Update concluded build game-status: " + result);
+        document.getElementById("game-status").innerText = result;
+    } 
+    else if (isNaN(response) && question.includes("Stage")){
+        // document.getElementById("input-box").placeholder = "";
+        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
+        const result = await item.text();
+        console.log("Update stage game-status: " + result);
+        document.getElementById("game-status").innerText = result;
+    } 
+
 }

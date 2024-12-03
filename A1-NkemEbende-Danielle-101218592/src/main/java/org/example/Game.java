@@ -113,6 +113,20 @@ public class Game {
         System.out.println("Prompted Stages List Size: " +  promptedStage.size());
         return "Stage was removed from prompted Stage list.";
     }
+    public ArrayList<Player> promptedEligiPlayers;
+
+    public void initPromptedEligiPlayers(){
+        promptedEligiPlayers = new ArrayList<>(eligiblePlayers);
+    }
+    // this function is different form the others as it is a copy of eligible players which is already being
+    // updated so we use this list to make sure we're cycling through correctly
+    public String updatePromptedEligiPlayers(){
+        if (promptedEligiPlayers.isEmpty() || promptedEligiPlayers.size() == 0) {
+            return "No eligible players available to be prompted";
+        }
+        promptedEligiPlayers.remove(0);
+        return "";
+    }
 
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
