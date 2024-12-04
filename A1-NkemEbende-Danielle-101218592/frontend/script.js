@@ -203,6 +203,8 @@ async function handleInput(response, question){
         eligiblePlayersDrawAdv(response, question)
     } else if ((question.includes("Eligible Players drew an Adventure Card") && response.includes("*")) || question.includes("trimming their hand,")){
         trimHand(response, question);
+    } else if ((question.includes("No Hands to trim") && response.includes("*")) || question.includes("Build your Attack by")){
+        setBuildGameStatus(response, question);
     }
 
 }
@@ -249,6 +251,13 @@ async function trimHand(response, question) {
     const result = await item.text();
     document.getElementById("game-status").innerText = result;
     console.log("Update trimming game-status: " + result);
+}
+
+async function setBuildGameStatus(response, question) {
+    const item = await fetch(`${apiBaseUrl}/setBuildGameStatus`);
+    const result = await item.text();
+    document.getElementById("game-status").innerText = result;
+    console.log("Update attack game-status: " + result);
 }
 
 // export { startRandomGame };

@@ -86,10 +86,31 @@ public class A3_Controller {
         } else if (question.contains("Join")){
             joinPrompt(response);
         } else if (question.contains("Attack")){
-//            stagePrompt(response);
+            buildPrompt(response);
         }
         String responseMessage = "The input was received: " + response;
         return ResponseEntity.ok(responseMessage);
+    }
+
+    @GetMapping("/setBuildGameStatus")
+    public String setBuildGameStatus(String newStatus) {
+        if (game.buildingPlayers.isEmpty()){
+            System.out.println("All Players Built an Attack");
+            return "All Players Built an Attack, Enter * to Continue";
+        }
+        return game.buildingPlayers.get(0).getID() + " Build your Attack by Entering a Position from your Cards (Enter Q to Quit)";
+    }
+
+    public void buildPrompt(String position){
+        int inputNum = -1;
+        try {
+            inputNum = parseInt(position);
+            game.buildingPlayers.get(0).promptAttack(new Scanner((position)));
+        } catch (NumberFormatException e){ // if it's not, update
+            if (position.contains("Q")){
+                game.updateBuildingPlayers();
+            }
+        }
     }
 
     @GetMapping("/trimHand")
@@ -97,7 +118,7 @@ public class A3_Controller {
         if (!game.trimmingPlayers.isEmpty()){
             return game.trimmingPlayers.get(0).getID() + " is trimming their hand, Enter a position";
         }
-        return "No Hands to trim";
+        return "No Hands to trim, Enter * to continue";
     }
 
     public void trimPrompt(String position){
@@ -121,6 +142,7 @@ public class A3_Controller {
     public String setJoinGameStatus(String newStatus) {
         if (game.promptedEligiPlayers.isEmpty()){
             System.out.println("All Eligible Players Responded to the Prompt, Enter * to continue");
+            game.initBuildingPlayers();
             return "All Eligible Players Responded to the Prompt, Enter * to continue";
         }
         return "Does " + game.promptedEligiPlayers.get(0).getID() + " want to Join the Quest?";

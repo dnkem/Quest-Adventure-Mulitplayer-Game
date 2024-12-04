@@ -160,6 +160,16 @@ public class Game {
         }
     }
 
+    public ArrayList<Player> buildingPlayers;
+
+    public void initBuildingPlayers(){
+        buildingPlayers = new ArrayList<>(eligiblePlayers);;
+    }
+
+    public void updateBuildingPlayers(){
+        buildingPlayers.remove(0);
+    }
+
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void concludeQuest(PrintWriter output) {
