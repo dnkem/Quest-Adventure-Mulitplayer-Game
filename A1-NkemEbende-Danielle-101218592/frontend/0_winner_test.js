@@ -153,6 +153,77 @@ async function runTest() {
         await driver.sleep(2000);
         console.log("Eligible Players drew an Adventure Card");
 
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P2 Discards F5");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("4"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P3 Discards F15");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("3"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P4 Discards F10");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("12"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P2 Attacks with E30");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("Q"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        
+        await inputBox.clear();
+        await inputBox.sendKeys("Q"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P3 Attacks with empty stage");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("Q"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P4 Attacks with empty");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
 
 
     } catch (error) {

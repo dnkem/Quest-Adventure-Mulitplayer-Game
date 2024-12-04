@@ -60,13 +60,13 @@ public class A3_Controller {
     public String playEventCard() {
         if (game.currentDrawnEventCard.getName().equals("Queen’s favor")){
             game.currentPlayer.playQueenEventCard(game.currentPlayer);
-            return game.currentPlayer.getID() + " drew 2 adventure cards";
+            return "Queen's Favour Event: " + game.currentPlayer.getID() + " drew 2 adventure cards";
         } else if (game.currentDrawnEventCard.getName().equals("Plague")){
             game.currentPlayer.playPlagueCard(game.currentPlayer);
-            return game.currentPlayer.getID() + " loses 2 shields if any";
+            return "Plague Event: " +  game.currentPlayer.getID() + " loses 2 shields if any";
         } else if (game.currentDrawnEventCard.getName().equals("Prosperity")){
             game.currentPlayer.playProsperityCard(game.currentPlayer);
-            return "All players drew 2 adventure cards";
+            return "Prosperity Event: " +  "All players drew 2 adventure cards";
         }
         // initialize/reset prompted players if Q
         game.initPromptedPlayers();
@@ -85,8 +85,10 @@ public class A3_Controller {
             stagePrompt(response);
         } else if (question.contains("Join")){
             joinPrompt(response);
-        } else if (question.contains("Attack")){
+        } else if (question.contains("Build your Attack")){
             buildPrompt(response);
+        } else if (question.contains("All Eligible Players Built an Attack")){
+            playersAttack(String.valueOf(game.currentAttack));
         }
         String responseMessage = "The input was received: " + response;
         return ResponseEntity.ok(responseMessage);
@@ -95,10 +97,10 @@ public class A3_Controller {
     @GetMapping("/setBuildGameStatus")
     public String setBuildGameStatus(String newStatus) {
         if (game.buildingPlayers.isEmpty()){
-            System.out.println("All Players Built an Attack");
-            return "All Players Built an Attack, Enter * to Continue";
+            System.out.println("All Eligible Players Built an Attack");
+            return "All Eligible Players Built an Attack, Enter * to Continue";
         }
-        return game.buildingPlayers.get(0).getID() + " Build your Attack by Entering a Position from your Cards (Enter Q to Quit)";
+        return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + game.currentAttack + " by Entering a Position from your Cards (Enter Q to Quit)";
     }
 
     public void buildPrompt(String position){
@@ -110,6 +112,38 @@ public class A3_Controller {
             if (position.contains("Q")){
                 game.updateBuildingPlayers();
             }
+        }
+    }
+
+    @GetMapping("/attackStage")
+    public String attackStage() {
+        if (!game.eligiblePlayers.isEmpty()){
+            String result = "Players: ";
+            for (int i=0; i<game.eligiblePlayers.size(); i++){
+                result += game.eligiblePlayers.get(i).getID() + " ";
+            }
+            int stage = game.currentAttack - 1;
+            result += "Cleared Stage " + stage +  " cA:"+ game.currentAttack + " successfully";
+            return "Eligible Players Attack the Stage, \n" + result + "\n Enter * to continue";
+        }
+        return "Conclude Quest and Next Players Turn";
+    }
+
+    public void playersAttack(String str){
+        if (!game.eligiblePlayers.isEmpty()){
+            if (str.contains("stage1")){
+                game.allEligiblePlayersAttackStage(game.stage1, str);
+            } else if (str.contains("stage2")){
+                game.allEligiblePlayersAttackStage(game.stage2, str);
+            } else if (str.contains("stage3")){
+                game.allEligiblePlayersAttackStage(game.stage3, str);
+            } else if (str.contains("stage4")){
+                game.allEligiblePlayersAttackStage(game.stage4, str);
+            } else if (str.contains("stage5")){
+                game.allEligiblePlayersAttackStage(game.stage5, str);
+            }
+            game.updateCurrentAttack();
+            game.discardAllEligibleAttackCards();
         }
     }
 
@@ -159,9 +193,15 @@ public class A3_Controller {
 
     @GetMapping("/setStageGameStatus")
     public String setStageGameStatus(String newStatus) {
+        int attack = game.currentAttack - 1;
         if (game.promptedStage.isEmpty()){
-            System.out.println("Stages Done");
-            return "All Stages are Complete, Enter * For Player Join Prompt";
+            if (game.currentAttack == game.currentDrawnEventCard.getValue()){
+                System.out.println("This Quest is Over " + attack);
+                return "This Quest is Over";
+            }
+            System.out.println("This stage is complete " + attack + " Q" + game.currentDrawnEventCard.getValue());
+            game.initPromptedEligiPlayers();
+            return "This stage is complete, Enter * For Player Join Prompt";
         }
         return game.sponsoringPlayer.getID() + " Build your Stage " + game.currentStage + " by Entering a Position from your Cards (Enter Q for next stage)";
     }
@@ -174,6 +214,8 @@ public class A3_Controller {
             game.sponsoringPlayer.buildSingleStage(game.currentStage, inputNum);
            // worry about eligible later
         } catch (NumberFormatException e){ // if it's not, update
+            game.sponsoringPlayer.assignStageValues(game.currentStage);
+            game.sponsoringPlayer.printStage(game.currentStage);
             if (position.contains("Q")){
                 game.updatePromptedStages();
             }
@@ -183,8 +225,8 @@ public class A3_Controller {
     @GetMapping("/setSponsorGameStatus")
     public String setSponsorGameStatus(String newStatus) {
         if (game.promptedPlayers.isEmpty()){
-            System.out.println("All Players Declined Sponsoring");
-            return "All Players Declined Sponsoring";
+            System.out.println("All Players Declined Sponsoring, This Quest is Over");
+            return "All Players Declined Sponsoring, This Quest is Over";
         }
         System.out.println("Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?");
         return "Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?";
@@ -203,6 +245,8 @@ public class A3_Controller {
             game.getEligiblePlayers();
             game.initPromptedEligiPlayers();
             game.printEligiblePlayers();
+            game.initCurrentAttack();
+            game.initCurrentStage();
         }
     }
 
@@ -537,18 +581,18 @@ public class A3_Controller {
 
 
                 // pick ups Round 1
-                new Card("Adventure", "B", 15), // set 4
-                new Card("Adventure", "H", 10), // p3
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10), // set 3
-                new Card("Adventure", "B", 15), // TBDDD P3
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10), // 2nd set
-                new Card("Adventure", "F", 25), // p3
-                new Card("Adventure", "D", 5), // - discarded D5 card from previous round
-                new Card("Adventure", "L", 20), // first set of drawn card
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "H", 10),
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 20),// 4th set
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 5), // 3rd set
+                new Card("Adventure", "F", 25),
+                new Card("Adventure", "F", 5), // 2nd set
+                new Card("Adventure", "F", 15), // - discarded D5 card from previous round
+                new Card("Adventure", "F", 20), // first set of drawn card
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 5),
                 // pick ups scenario 2
 
 
@@ -638,44 +682,28 @@ public class A3_Controller {
         game = new Game();
         List<Card> advCards = Arrays.asList(
 
-                // Round 2 extra random (drawing 6)
-                new Card("Adventure", "F", 40),
-                new Card("Adventure", "F", 40),
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "F", 35),
                 new Card("Adventure", "S", 10),
-                new Card("Adventure", "F", 70),
-
-
-                // extra cards for sponsor to pick up hypothetically from discarded (13)
-                new Card("Adventure", "D", 5),
-                new Card("Adventure", "L", 20),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "E", 30),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
 
                 new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
 
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
                 new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 10),
                 new Card("Adventure", "F", 5),
 
-
-                // pick ups Round 1
-                new Card("Adventure", "B", 15),// 4th set
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10), // 3rd set
-                new Card("Adventure", "H", 10),
-                new Card("Adventure", "S", 10), // 2nd set
-                new Card("Adventure", "D", 5), // - discarded D5 card from previous round
-                new Card("Adventure", "L", 20), // first set of drawn card
-                new Card("Adventure", "D", 5),
-                new Card("Adventure", "H", 10),
-                // pick ups scenario 2
+//                Round 1
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 5),
+                // pick ups scenario
 
                 new Card("Adventure", "E", 30),
                 new Card("Adventure", "F", 50),

@@ -79,7 +79,11 @@ public class Game {
     }
 
     public ArrayList<ArrayList> promptedStage = new ArrayList<ArrayList>();
-    int currentStage = 1;
+    int currentStage;
+
+    public void initCurrentStage(){
+        currentStage = 1;
+    }
 
     public void initPromptedStages(){
         promptedStage.clear();
@@ -169,6 +173,21 @@ public class Game {
     public void updateBuildingPlayers(){
         buildingPlayers.remove(0);
     }
+
+    int currentAttack;
+
+    public void initCurrentAttack(){
+        currentAttack = 0;
+    }
+
+    public void updateCurrentAttack(){
+        System.out.println("OLD ATTACK: " + currentAttack);
+        if (currentAttack < currentDrawnEventCard.getValue()){
+            currentAttack += 1;
+        }
+        System.out.println("NEW ATTACK: " + currentAttack);
+    }
+
 
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 

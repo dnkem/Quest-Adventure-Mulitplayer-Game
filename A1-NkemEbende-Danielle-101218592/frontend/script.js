@@ -131,10 +131,10 @@ async function playEventCard() {
 
         if (result.includes("drew 2")){
             updateHands();
-            // click next player
+            switchVisibilityOn("concludeQuest");
         } else if (result.includes("loses 2")){
             updateShields();
-            // click next player
+            switchVisibilityOn("concludeQuest");
         } else {
             // make the prompt sponsor buttons appear
             switchVisibilityOn("input-container");
@@ -145,6 +145,13 @@ async function playEventCard() {
     } catch (error) {
         console.error("Error in Playing Event Card:", error);
     }
+}
+
+async function concludeQuest() {
+    const response = await fetch(`${apiBaseUrl}/playEventCard`, { method: "POST" });
+    const result = await response.text();
+    document.getElementById("game-status").innerText = result;
+
 }
 
 async function switchVisibilityOff(id){
@@ -195,16 +202,20 @@ async function handleInput(response, question){
     } 
     else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
         setJoinGameStatus(response, question)
-    } 
-    else if (isNaN(response) && question.includes("Stage")){
-        setStageGameStatus(response, question)
-    } 
+    }  
     else if (question.includes("All Eligible Players Responded to the Prompt") && response.includes("*")){
         eligiblePlayersDrawAdv(response, question)
     } else if ((question.includes("Eligible Players drew an Adventure Card") && response.includes("*")) || question.includes("trimming their hand,")){
         trimHand(response, question);
-    } else if ((question.includes("No Hands to trim") && response.includes("*")) || question.includes("Build your Attack by")){
+    } else if ((question.includes("No Hands to trim") && response.includes("*")) || question.includes("Build your Attack for")){
         setBuildGameStatus(response, question);
+    } else if ((question.includes("All Eligible Players Built an Attack") && response.includes("*"))){
+        attackStage(response, question)
+    } else if (isNaN(response) && question.includes("Stage")){
+        setStageGameStatus(response, question)
+    } else if (question.includes("This Quest is Over") || question.includes("Queen's Favour Event") || question.includes("Prosperity Event") || question.includes("Plague Event")){
+        switchVisibilityOff("input-box");
+        switchVisibilityOn("concludeQuest");
     }
 
 }
@@ -257,7 +268,14 @@ async function setBuildGameStatus(response, question) {
     const item = await fetch(`${apiBaseUrl}/setBuildGameStatus`);
     const result = await item.text();
     document.getElementById("game-status").innerText = result;
-    console.log("Update attack game-status: " + result);
+    console.log("Update BUILD attack game-status: " + result);
+}
+
+async function attackStage(response, question) {
+    const item = await fetch(`${apiBaseUrl}/attackStage`);
+    const result = await item.text();
+    document.getElementById("game-status").innerText = result;
+    console.log("Update attack STAGE game-status: " + result);
 }
 
 // export { startRandomGame };
