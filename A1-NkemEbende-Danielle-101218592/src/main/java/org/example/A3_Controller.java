@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -75,15 +77,14 @@ public class A3_Controller {
     @PostMapping("/prompt")
     public ResponseEntity<String> prompt(@RequestParam String response, @RequestParam String question) {
         String responseCopy = response + "\n";
-        // if the game status contains sponsor
         if (question.contains("Sponsor") && !game.promptedPlayers.isEmpty()) {
             sponsorPrompt(responseCopy);
+        } else if (!game.trimmingPlayers.isEmpty() || question.contains("trimming")) {
+            trimPrompt(response);
         } else if (question.contains("Stage")){
             stagePrompt(response);
         } else if (question.contains("Join")){
             joinPrompt(response);
-        } else if (question.contains("Discard")){
-//            stagePrompt(response);
         } else if (question.contains("Attack")){
 //            stagePrompt(response);
         }
@@ -91,11 +92,36 @@ public class A3_Controller {
         return ResponseEntity.ok(responseMessage);
     }
 
+    @GetMapping("/trimHand")
+    public String trimHand(String position) {
+        if (!game.trimmingPlayers.isEmpty()){
+            return game.trimmingPlayers.get(0).getID() + " is trimming their hand, Enter a position";
+        }
+        return "No Hands to trim";
+    }
+
+    public void trimPrompt(String position){
+        if (!game.trimmingPlayers.isEmpty()){
+            game.trimmingPlayers.get(0).trimCard(parseInt(position));
+            game.updateTrimmingPlayers();
+        }
+    }
+
+    @GetMapping("/eligiblePlayersDrawAdv")
+    public String eligiblePlayersDrawAdv(String newStatus) {
+        if (!game.eligiblePlayers.isEmpty()){
+            game.eligiblePlayersDrawAdvCard();
+            game.initTrimmingPlayers("eligible");
+            return "Eligible Players drew an Adventure Card, Enter * to continue";
+        }
+        return "Conclude Quest and Next Players Turn";
+    }
+
     @GetMapping("/setJoinGameStatus")
     public String setJoinGameStatus(String newStatus) {
         if (game.promptedEligiPlayers.isEmpty()){
-            System.out.println("All Eligible Players Responded to the Prompt");
-            return "All Eligible Players Responded to the Prompt";
+            System.out.println("All Eligible Players Responded to the Prompt, Enter * to continue");
+            return "All Eligible Players Responded to the Prompt, Enter * to continue";
         }
         return "Does " + game.promptedEligiPlayers.get(0).getID() + " want to Join the Quest?";
     }
@@ -122,7 +148,7 @@ public class A3_Controller {
         // if its a num, call build
         int inputNum = -1;
         try {
-            inputNum = Integer.parseInt(position);
+            inputNum = parseInt(position);
             game.sponsoringPlayer.buildSingleStage(game.currentStage, inputNum);
            // worry about eligible later
         } catch (NumberFormatException e){ // if it's not, update

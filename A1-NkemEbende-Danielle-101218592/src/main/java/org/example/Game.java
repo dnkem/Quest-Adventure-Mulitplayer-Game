@@ -128,6 +128,38 @@ public class Game {
         return "";
     }
 
+    public ArrayList<Player> trimmingPlayers = new ArrayList<>();
+
+    public void initTrimmingPlayers(String group){
+        if (group.equals("everyone")){
+            trimmingPlayers = new ArrayList<>();
+            if (p1.getCardsSize() > 12){
+                trimmingPlayers.add(p1);
+            }
+            if (p2.getCardsSize() > 12){
+                trimmingPlayers.add(p2);
+            }
+            if (p3.getCardsSize() > 12){
+                trimmingPlayers.add(p3);
+            }
+            if (p4.getCardsSize() > 12){
+                trimmingPlayers.add(p4);
+            }
+        } else if (group.equals("eligible")){
+            for (int i=0; i< eligiblePlayers.size(); i++){
+                if (eligiblePlayers.get(i).getCardsSize()>12) {
+                    trimmingPlayers.add(eligiblePlayers.get(i));
+                }
+            }
+        }
+    }
+
+    public void updateTrimmingPlayers(){
+        if (trimmingPlayers.get(0).getCardsSize() <= 12){
+            trimmingPlayers.remove(0);
+        }
+    }
+
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void concludeQuest(PrintWriter output) {

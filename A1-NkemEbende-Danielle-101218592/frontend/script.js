@@ -79,7 +79,7 @@ async function updateHands() {
         const response = await fetch(`${apiBaseUrl}/printP1Hand`);
         const p1Hand = await response.text();
         document.getElementById("p1-hand").innerText = p1Hand;
-        console.log(p1Hand);
+        // console.log(p1Hand);
 
         const response2 = await fetch(`${apiBaseUrl}/printP2Hand`);
         const p2Hand = await response2.text();
@@ -147,10 +147,6 @@ async function playEventCard() {
     }
 }
 
-// async function sleep(seconds){
-//     return new Promise((resolve)=>setTimeout(resolve, seconds * 1000));
-// }
-
 async function switchVisibilityOff(id){
     // make play event button visible
     var btn = document.getElementById(id);
@@ -190,34 +186,69 @@ document.getElementById('input-container').addEventListener('submit', async func
 });
 
 async function handleInput(response, question){
-    console.log("IN HANDLER");
+    // console.log("IN HANDLER");
     if (response.includes("N") && question.includes("Sponsor")){
-        const item = await fetch(`${apiBaseUrl}/setSponsorGameStatus`);
-        const result = await item.text();
-        console.log("Update game-status: " + result);
-        document.getElementById("game-status").innerText = result;
+        setSponsorGameStatus(response, question);
     } 
     else if (response.includes("Y") && question.includes("Sponsor")) {
-        document.getElementById("input-box").placeholder = "No.";
-        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
-        const result = await item.text();
-        console.log("Update sponsor game-status: " + result);
-        document.getElementById("game-status").innerText = result;
+        setStageGameStatus(response, question)
     } 
     else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
-        console.log("QUESTION " + question);
-        document.getElementById("input-box").placeholder = "Y/N";
-        const item = await fetch(`${apiBaseUrl}/setJoinGameStatus`);
-        const result = await item.text();
-        console.log("Update concluded build game-status: " + result);
-        document.getElementById("game-status").innerText = result;
+        setJoinGameStatus(response, question)
     } 
     else if (isNaN(response) && question.includes("Stage")){
-        // document.getElementById("input-box").placeholder = "";
-        const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
-        const result = await item.text();
-        console.log("Update stage game-status: " + result);
-        document.getElementById("game-status").innerText = result;
+        setStageGameStatus(response, question)
     } 
+    else if (question.includes("All Eligible Players Responded to the Prompt") && response.includes("*")){
+        eligiblePlayersDrawAdv(response, question)
+    } else if ((question.includes("Eligible Players drew an Adventure Card") && response.includes("*")) || question.includes("trimming their hand,")){
+        trimHand(response, question);
+    }
 
 }
+
+async function setSponsorGameStatus(response, question) {
+    const item = await fetch(`${apiBaseUrl}/setSponsorGameStatus`);
+    const result = await item.text();
+    console.log("Update game-status: " + result);
+    document.getElementById("game-status").innerText = result;
+}
+
+async function setStageGameStatus(response, question) {
+    document.getElementById("input-box").placeholder = "No.";
+    const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
+    const result = await item.text();
+    console.log("Update sponsor game-status: " + result);
+    document.getElementById("game-status").innerText = result;
+}
+
+async function setJoinGameStatus(response, question) {
+    console.log("QUESTION " + question);
+    document.getElementById("input-box").placeholder = "Y/N";
+    const item = await fetch(`${apiBaseUrl}/setJoinGameStatus`);
+    const result = await item.text();
+    console.log("Update concluded build game-status: " + result);
+    document.getElementById("game-status").innerText = result;
+}
+async function setStageGameStatus(response, question) {
+    // document.getElementById("input-box").placeholder = "";
+    const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
+    const result = await item.text();
+    console.log("Update stage game-status: " + result);
+    document.getElementById("game-status").innerText = result;   
+}
+
+async function eligiblePlayersDrawAdv(response, question) {
+    const item = await fetch(`${apiBaseUrl}/eligiblePlayersDrawAdv`);
+    const result = await item.text();
+    document.getElementById("game-status").innerText = result;
+}
+
+async function trimHand(response, question) {
+    const item = await fetch(`${apiBaseUrl}/trimHand`);
+    const result = await item.text();
+    document.getElementById("game-status").innerText = result;
+    console.log("Update trimming game-status: " + result);
+}
+
+// export { startRandomGame };

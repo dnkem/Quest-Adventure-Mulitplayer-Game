@@ -123,12 +123,12 @@ public class Player {
         trimCard(inputNum);
     }
 
-    public void trimCard(int index) {
+    public String trimCard(int index) {
         sortCards();
         // can't trim if hand is equal to 12
         if (cards.size() <= 12) {
             System.out.println("Can't trim hand if the size is 12 or less!!");
-            return;
+            return "";
         }
 
         // print
@@ -142,6 +142,7 @@ public class Player {
 
         // re print correctly
         System.out.println("Cards After deletion:       " + cardsToString());
+        return "" + index;
     }
 
     public void trimToTwelve(Scanner input, PrintWriter output) {
