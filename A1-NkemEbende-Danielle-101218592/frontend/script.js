@@ -159,6 +159,10 @@ async function concludeQuest() {
     const result = await response.text();
     document.getElementById("game-status").innerText = result;
     updateShields();
+
+    if (result.includes("WINNER(S) of the game:")){
+        switchVisibilityOff("input-container")
+    }
 }
 
 async function switchVisibilityOff(id){
