@@ -75,7 +75,7 @@ public class A3_Controller {
         }
         // initialize/reset prompted players if Q
         game.initPromptedPlayers();
-        return "Does " + game.currentPlayer.getID() + " want to Sponsor the Quest?";
+        return "Does " + game.currentPlayer.getID() + " want to Sponsor the Quest? " + game.currentDrawnEventCard.getNameType();
     }
 
 
@@ -95,12 +95,13 @@ public class A3_Controller {
             joinPrompt(response);
         } else if (question.contains("Build your Attack")){
             buildPrompt(response);
-        } else if (question.contains("All Eligible Players Responded to the Prompt")){
+        }
+//        else if (question.contains("All Eligible Players Responded to the Prompt")){
 //            if (game.eligiblePlayers.isEmpty()){
 //                g
 //            }
 //            System.out.println("SPONSOR DOESNT PICK UP");
-        }
+//        }
 //        else if (){ // next player
 //            game.currentPlayer.drawEventCard();
 //        }
@@ -124,16 +125,12 @@ public class A3_Controller {
         return "Sponsor Picks up";
     }
 
-//    @PostMapping("/concludeQuest")
-//    public String concludeQuest() {
-//        StringWriter output = new StringWriter();
-//        if (game.currentDrawnEventCard.getName().equals("Q")){
-//            game.sponsorDrawsAdvCards();
-////            return "Sponsor may need to trim their hand after pick up";
-//        }
-//        game.concludeQuest(new PrintWriter(output));
-//        return game.printWinners() + ", Enter * to continue";
-//    }
+    @PostMapping("/concludeQuest")
+    public String concludeQuest() {
+        StringWriter output = new StringWriter();
+        game.concludeQuest(new PrintWriter(output));
+        return game.printWinners() + ", Enter * to continue";
+    }
 
     @GetMapping("/setBuildGameStatus")
     public String setBuildGameStatus(String newStatus) {
@@ -239,7 +236,7 @@ public class A3_Controller {
             game.initBuildingPlayers();
             return "All Eligible Players Responded to the Prompt, Enter * to continue";
         }
-        return "Does " + game.promptedEligiPlayers.get(0).getID() + " want to Join the Quest?";
+        return "Does " + game.promptedEligiPlayers.get(0).getID() + " want to Join the Quest? " + game.currentDrawnEventCard.getNameType();
     }
 
     public void joinPrompt(String response){
@@ -290,7 +287,7 @@ public class A3_Controller {
             return "All Players Declined Sponsoring, This Quest is Over \nEnter * to continue";
         }
         System.out.println("Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?");
-        return "Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?";
+        return "Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest? " + game.currentDrawnEventCard.getNameType();
     }
 
     public void sponsorPrompt(String response){

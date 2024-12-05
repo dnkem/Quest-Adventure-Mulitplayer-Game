@@ -136,16 +136,16 @@ async function playEventCard() {
 
         if (result.includes("drew 2")){
             updateHands();
-            switchVisibilityOn("input-container");
             // switchVisibilityOn("concludeQuest");
         } else if (result.includes("loses 2")){
             updateShields();
             // switchVisibilityOn("concludeQuest");
         } else {
             // make the prompt sponsor buttons appear
-            switchVisibilityOn("input-container");
+           
             console.log("sponsor prompt");
         }
+        switchVisibilityOn("input-container");
         switchVisibilityOff("playEvent");
         console.log("Event Card was played");
     } catch (error) {
@@ -153,13 +153,13 @@ async function playEventCard() {
     }
 }
 
-// async function concludeQuest() {
-//     switchVisibilityOff("concludeQuest");
-//     const response = await fetch(`${apiBaseUrl}/concludeQuest`, { method: "POST" });
-//     const result = await response.text();
-//     document.getElementById("game-status").innerText = result;
-//     updateShields();
-// }
+async function concludeQuest() {
+    switchVisibilityOff("concludeQuest");
+    const response = await fetch(`${apiBaseUrl}/concludeQuest`, { method: "POST" });
+    const result = await response.text();
+    document.getElementById("game-status").innerText = result;
+    updateShields();
+}
 
 async function switchVisibilityOff(id){
     // make play event button visible
@@ -207,6 +207,10 @@ async function handleInput(response, question){
     else if (response.includes("Y") && question.includes("Sponsor")) {
         setStageGameStatus(response, question)
     } 
+    else if(question.includes("This Quest is Over")){
+        switchVisibilityOn("concludeQuest");
+        // switchVisibilityOff("input-container");
+    }
     else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
         setJoinGameStatus(response, question)
     }  
