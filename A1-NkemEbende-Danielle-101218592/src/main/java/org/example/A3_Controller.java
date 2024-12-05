@@ -58,6 +58,11 @@ public class A3_Controller {
 
     @PostMapping("/playEventCard")
     public String playEventCard() {
+        // this is for when starting with and action card
+        if (game.sponsoringPlayer == null){
+            game.sponsoringPlayer = game.p1;
+        }
+
         if (game.currentDrawnEventCard.getName().equals("Queen’s favor")){
             game.currentPlayer.playQueenEventCard(game.currentPlayer);
             return "Queen's Favour Event: " + game.currentPlayer.getID() + " drew 2 adventure cards";
@@ -81,14 +86,15 @@ public class A3_Controller {
             sponsorPrompt(responseCopy);
         } else if (!game.trimmingPlayers.isEmpty() || question.contains("trimming")) {
             trimPrompt(response);
+        } else if (question.contains("All Eligible Players Built an Attack")){
+//            System.out.println(question + " AND THE STAGE NAME: " + game.currentAttack);
+            playersAttack(game.currentAttack);
         } else if (question.contains("Stage")){
             stagePrompt(response);
         } else if (question.contains("Join")){
             joinPrompt(response);
         } else if (question.contains("Build your Attack")){
             buildPrompt(response);
-        } else if (question.contains("All Eligible Players Built an Attack")){
-            playersAttack(game.currentAttack);
         }
 //        else if (){ // next player
 //            game.currentPlayer.drawEventCard();
@@ -105,8 +111,11 @@ public class A3_Controller {
 
     @PostMapping("/concludeQuest")
     public String concludeQuest() {
-        // check if winners is empty
         StringWriter output = new StringWriter();
+        if (game.currentDrawnEventCard.getName().equals("Q")){
+            game.sponsorDrawsAdvCards();
+//            return "Sponsor may need to trim their hand after pick up";
+        }
         game.concludeQuest(new PrintWriter(output));
         return game.printWinners() + ", Enter * to continue";
     }
@@ -117,7 +126,7 @@ public class A3_Controller {
             System.out.println("All Eligible Players Built an Attack");
             return "All Eligible Players Built an Attack, Enter * to Continue";
         }
-        return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + (game.currentAttack + 1) + " by Entering a Position from your Cards (Enter Q to Quit)";
+        return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + game.currentAttack + " by Entering a Position from your Cards (Enter Q to Quit)";
     }
 
     public void buildPrompt(String position){
@@ -125,9 +134,12 @@ public class A3_Controller {
         try {
             inputNum = parseInt(position);
             game.buildingPlayers.get(0).promptAttack(new Scanner((position)));
-            System.out.println("ADDED ATTACK: " + game.buildingPlayers.get(0).attack.get(0).getNameType());
+//            System.out.println("ADDED ATTACK: " + game.buildingPlayers.get(0).attack.get(0).getNameType());
         } catch (NumberFormatException e){ // if it's not, update
-            if (position.contains("Q")){
+            if (position.contains("Q") && game.buildingPlayers.get(0).attack.isEmpty()){
+                game.updateEligiblePlayers(game.buildingPlayers.get(0));
+                game.updateBuildingPlayers();
+            } else if (position.contains("Q")){
                 game.updateBuildingPlayers();
             }
         }
@@ -136,6 +148,7 @@ public class A3_Controller {
     @GetMapping("/attackStage")
     public String attackStage() {
         if (!game.eligiblePlayers.isEmpty()){
+//            game.removeIneligiblePlayersFromList();
             String result = "Players: ";
             for (int i=0; i<game.eligiblePlayers.size(); i++){
                 result += game.eligiblePlayers.get(i).getID() + " ";
@@ -143,7 +156,7 @@ public class A3_Controller {
             result += "Cleared Stage " + game.currentAttack + " successfully";
             return "Eligible Players Attack the Stage, \n" + result + "\n Enter * to continue";
         }
-        return "Conclude Quest and Next Players Turn";
+        return "Eligible Players Attack the Stage Unsuccessfully, \nConclude Quest and Next Players Turn";
     }
 
     public void playersAttack(int stage){
@@ -160,6 +173,8 @@ public class A3_Controller {
             } else if (str.contains("stage5")){
                 game.allEligiblePlayersAttackStage(game.stage5, str);
             }
+            System.out.println("ELIGIBLE PLAYERS:");
+            game.printEligiblePlayers();
             game.updateCurrentAttack();
             game.discardAllEligibleAttackCards();
         }
@@ -213,7 +228,7 @@ public class A3_Controller {
     public String setStageGameStatus(String newStatus) {
 //        int attack = game.currentAttack - 1;
         if (game.promptedStage.isEmpty()){
-            if (game.currentAttack == game.currentDrawnEventCard.getValue()){
+            if (game.currentAttack > game.currentDrawnEventCard.getValue()){
                 System.out.println("This Quest is Over " + game.currentAttack);
                 return "This Quest is Over, Enter * to Continue";
             }
@@ -234,7 +249,7 @@ public class A3_Controller {
         } catch (NumberFormatException e){ // if it's not, update
             if (position.contains("Q")){
                 game.sponsoringPlayer.assignStageValues(game.currentStage);
-                System.out.println("PRINTED STAGE: " + game.currentStage);
+                System.out.println("BUILDING SPONSORS STAGE: " + game.currentStage);
                 game.sponsoringPlayer.printStage(game.currentStage);
                 game.updatePromptedStages();
             }
@@ -700,7 +715,23 @@ public class A3_Controller {
     private void setUp0Winner(){
         game = new Game();
         List<Card> advCards = Arrays.asList(
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
 
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 70),
+                new Card("Adventure", "F", 50),
+                // extra
+
+                // for p1
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "S", 10),
@@ -717,6 +748,7 @@ public class A3_Controller {
                 new Card("Adventure", "F", 15),
                 new Card("Adventure", "F", 10),
                 new Card("Adventure", "F", 5),
+                // for p1 to pick up
 
 //                Round 1
                 new Card("Adventure", "F", 10),

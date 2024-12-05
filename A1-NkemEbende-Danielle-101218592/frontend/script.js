@@ -3,6 +3,7 @@ const apiBaseUrl = "http://localhost:8080";
 async function startRandomGame() {
     try {
         switchVisibilityOff("input-container");
+        switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/startRandomGame`);
         const result = await response.text();
         console.log("Start Random Game Response:", result);
@@ -18,6 +19,7 @@ async function startRandomGame() {
 async function startA1ScenarioGame() {
     try {
         switchVisibilityOff("input-container");
+        switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/startA1ScenarioGame`);
         const result = await response.text();
         console.log("Start A1 Scenario Game Response:", result);
@@ -32,7 +34,8 @@ async function startA1ScenarioGame() {
 
 async function start2WinnerGame() {
     try {
-        switchVisibilityOff("input-container");
+        switchVisibilityOff("input-container");        switchVisibilityOff("concludeQuest");
+        switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start2WinnerGame`);
         const result = await response.text();
         console.log("Start 2 Winner Game Response:", result);
@@ -47,6 +50,7 @@ async function start2WinnerGame() {
 async function start1WinnerGame() {
     try {
         switchVisibilityOff("input-container");
+        switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start1WinnerGame`);
         const result = await response.text();
         console.log("Start 1 Winner Game Response:", result);
@@ -62,6 +66,7 @@ async function start1WinnerGame() {
 async function start0WinnerGame() {
     try {
         switchVisibilityOff("input-container");
+        switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start0WinnerGame`);
         const result = await response.text();
         console.log("Start 0 Winner Game Response:", result);
@@ -152,15 +157,7 @@ async function concludeQuest() {
     const response = await fetch(`${apiBaseUrl}/concludeQuest`, { method: "POST" });
     const result = await response.text();
     document.getElementById("game-status").innerText = result;
-
-
-    if (result.includes("No Winners Yet")){
-        // make input box visible
-        switchVisibilityOn("input-box");
-        // tell user the next players turn and that they pick
-        // document.getElementById("game-status").innerText =
-    }
-
+    updateShields();
 }
 
 async function switchVisibilityOff(id){
@@ -227,10 +224,7 @@ async function handleInput(response, question){
     } else if (question.includes("No Winners") && response.includes("*")){
         nextTurn()
         switchVisibilityOn("playEvent");
-    } else if (question.includes("No Winners") && response.includes("*")){
-        nextTurn()
-        switchVisibilityOn("playEvent");
-    }
+    } 
 
 }
 
@@ -292,7 +286,6 @@ async function attackStage(response, question) {
     console.log("Update attack STAGE game-status: " + result);
     if (result.includes("Conclude Quest and Next Players Turn")){
         switchVisibilityOn("concludeQuest");
-        updateShields();
     }
 }
 

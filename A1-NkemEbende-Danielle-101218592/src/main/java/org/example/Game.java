@@ -39,6 +39,7 @@ public class Game {
 
     public Card currentDrawnEventCard;
 
+    // prompted for sponsorship
     public ArrayList<Player> promptedPlayers = new ArrayList<Player>();
 
     public void initPromptedPlayers(){
@@ -73,7 +74,7 @@ public class Game {
         }
         String p = promptedPlayers.get(0).getID();
         promptedPlayers.remove(0);
-        System.out.println("Prompted Player List Size: " +  promptedPlayers.size());
+//        System.out.println("Prompted Player List Size: " +  promptedPlayers.size());
         return p + " was removed from prompted players list.";
 
     }
@@ -114,9 +115,11 @@ public class Game {
         }
         promptedStage.remove(0);
         currentStage = currentDrawnEventCard.getValue() - promptedStage.size() + 1;
-        System.out.println("Prompted Stages List Size: " +  promptedStage.size());
+//        System.out.println("Prompted Stages List Size: " +  promptedStage.size());
         return "Stage was removed from prompted Stage list.";
     }
+
+    //prompted for joining the quest
     public ArrayList<Player> promptedEligiPlayers;
 
     public void initPromptedEligiPlayers(){
@@ -174,14 +177,16 @@ public class Game {
         buildingPlayers.remove(0);
     }
 
+    // attck number for
+
     int currentAttack;
 
     public void initCurrentAttack(){
-        currentAttack = 0;
+        currentAttack = 1;
     }
 
     public void updateCurrentAttack(){
-        if (currentAttack < currentDrawnEventCard.getValue()){
+        if (currentAttack <= currentDrawnEventCard.getValue()){
             currentAttack += 1;
         }
     }
@@ -190,7 +195,7 @@ public class Game {
     public Player sponsoringPlayer; // shallow copy of sponsoring player
 
     public void concludeQuest(PrintWriter output) {
-        clearScreen(output);
+//        clearScreen(output);
         // distribute shields
         if (!eligiblePlayers.isEmpty()) {
             for (int i = 0; i < eligiblePlayers.size(); i++) {
@@ -198,7 +203,7 @@ public class Game {
             }
         }
 
-        // print winners
+        // print winners OF THIS QUEST
         if (!eligiblePlayers.isEmpty()){
             System.out.println("The winner(s) of this quest: ");
             for (int i=0; i<eligiblePlayers.size(); i++){
@@ -309,8 +314,8 @@ public class Game {
         }
         System.out.println("WINNER(S) of the game: " + w);
         if (gameWinners.isEmpty()) {
-            System.out.println("No Winners Yet");
-            return "No Winners";
+            System.out.println("No Winners of the game");
+            return "No Winners of the game";
         }
         return "WINNER(S) of the game: " + w;
     }
@@ -329,11 +334,9 @@ public class Game {
             return;
         }
 
-        System.out.println("STAGE: " + arrayToString(stage) + "\n");
+        System.out.println("STAGE ~ " + stageName + " | " + arrayToString(stage) + "\n\n");
         for (int i=0; i<eligiblePlayers.size(); i++) {
-            System.out.println(eligiblePlayers.get(i).getID());
             eligiblePlayers.get(i).attackStage(stage, stageName);
-            System.out.println();
         }
         removeIneligiblePlayersFromList();
     }

@@ -90,10 +90,10 @@ public class Player {
     }
 
     public void singleSponsorQuestion(Scanner input, PrintWriter output){
-        if (game.sponsoringPlayer != null){
-            System.out.println("Can't prompt as there is already a sponsoring player: " + game.sponsoringPlayer.getID());
-            return;
-        }
+//        if (game.sponsoringPlayer != null){
+//            System.out.println("Can't prompt as there is already a sponsoring player: " + game.sponsoringPlayer.getID());
+//            return;
+//        }
 
         String decision = this.promptSponsor(input, output, game.currentDrawnEventCard);
         if (decision.equals("Y")){
@@ -132,16 +132,16 @@ public class Player {
         }
 
         // print
-        System.out.println("Cards Before Deletion:      " + cardsToString());
+//        System.out.println("Cards Before Deletion:      " + cardsToString());
 
         // delete at index
         if (index > 0 && index <= this.getCardsSize()) {
             this.discardAdvCard(cards.remove(index -1));
-            System.out.println("Deleted card at position: " + index);
+//            System.out.println("Deleted card at position: " + index);
         }
 
         // re print correctly
-        System.out.println("Cards After deletion:       " + cardsToString());
+//        System.out.println("Cards After deletion:       " + cardsToString());
         return "" + index;
     }
 
@@ -565,8 +565,8 @@ public class Player {
             return "";
         }
 
-        System.out.println(getID() + " Cards: " + cardsToString());
-        System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attack (enter 'Q' to quit): ");
+//        System.out.println(getID() + " Cards: " + cardsToString());
+//        System.out.println(getID() + " select what position (1-" + getCardsSize() + ") should be used in the attack (enter 'Q' to quit): ");
         String inputStr = input.nextLine();
         int inputNum = -1;
 
@@ -575,9 +575,11 @@ public class Player {
         try {
             inputNum = Integer.parseInt(inputStr);
             attack.add(cards.remove(inputNum - 1));
-            System.out.println(inputNum);
+//            System.out.println("From cards to attack: " + inputNum);
             return inputStr;
         } catch (NumberFormatException e) {
+//            System.out.println(this.getID() + " attack is below: ");
+            System.out.println("\n" + this.getID());
             printAttack();
             System.out.println("Q");
             return inputStr;

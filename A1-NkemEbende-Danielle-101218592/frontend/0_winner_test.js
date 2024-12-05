@@ -75,6 +75,7 @@ async function runTest() {
         await driver.sleep(1500);
         await inputBox.sendKeys(Key.RETURN); 
         await driver.sleep(2000);
+        console.log("Stage 1 is Built")
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
@@ -117,6 +118,7 @@ async function runTest() {
         await driver.sleep(1500);
         await inputBox.sendKeys(Key.RETURN); 
         await driver.sleep(2000);
+        console.log("Stage 2 is built")
         console.log("P1 Finished Building the Stages");
 
         await inputBox.clear();
@@ -224,6 +226,10 @@ async function runTest() {
         await driver.sleep(1500);
         await inputBox.sendKeys(Key.RETURN); 
         await driver.sleep(2000);
+        console.log("Display shows who passed")
+
+        
+
 
 
     } catch (error) {
