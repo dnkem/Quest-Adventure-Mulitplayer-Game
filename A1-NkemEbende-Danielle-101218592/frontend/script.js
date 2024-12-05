@@ -2,8 +2,8 @@ const apiBaseUrl = "http://localhost:8080";
 
 async function startRandomGame() {
     try {
-        switchVisibilityOff("input-container");
-        switchVisibilityOff("concludeQuest");
+        // switchVisibilityOff("input-container");
+        // switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/startRandomGame`);
         const result = await response.text();
         console.log("Start Random Game Response:", result);
@@ -18,8 +18,8 @@ async function startRandomGame() {
 
 async function startA1ScenarioGame() {
     try {
-        switchVisibilityOff("input-container");
-        switchVisibilityOff("concludeQuest");
+        // switchVisibilityOff("input-container");
+        // switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/startA1ScenarioGame`);
         const result = await response.text();
         console.log("Start A1 Scenario Game Response:", result);
@@ -34,8 +34,8 @@ async function startA1ScenarioGame() {
 
 async function start2WinnerGame() {
     try {
-        switchVisibilityOff("input-container");        switchVisibilityOff("concludeQuest");
-        switchVisibilityOff("concludeQuest");
+        // switchVisibilityOff("input-container");
+        // switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start2WinnerGame`);
         const result = await response.text();
         console.log("Start 2 Winner Game Response:", result);
@@ -49,8 +49,8 @@ async function start2WinnerGame() {
 }
 async function start1WinnerGame() {
     try {
-        switchVisibilityOff("input-container");
-        switchVisibilityOff("concludeQuest");
+        // switchVisibilityOff("input-container");
+        // switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start1WinnerGame`);
         const result = await response.text();
         console.log("Start 1 Winner Game Response:", result);
@@ -65,8 +65,8 @@ async function start1WinnerGame() {
 
 async function start0WinnerGame() {
     try {
-        switchVisibilityOff("input-container");
-        switchVisibilityOff("concludeQuest");
+        // switchVisibilityOff("input-container");
+        // switchVisibilityOff("concludeQuest");
         const response = await fetch(`${apiBaseUrl}/start0WinnerGame`);
         const result = await response.text();
         console.log("Start 0 Winner Game Response:", result);
@@ -136,10 +136,11 @@ async function playEventCard() {
 
         if (result.includes("drew 2")){
             updateHands();
-            switchVisibilityOn("concludeQuest");
+            switchVisibilityOn("input-container");
+            // switchVisibilityOn("concludeQuest");
         } else if (result.includes("loses 2")){
             updateShields();
-            switchVisibilityOn("concludeQuest");
+            // switchVisibilityOn("concludeQuest");
         } else {
             // make the prompt sponsor buttons appear
             switchVisibilityOn("input-container");
@@ -152,13 +153,13 @@ async function playEventCard() {
     }
 }
 
-async function concludeQuest() {
-    switchVisibilityOff("concludeQuest");
-    const response = await fetch(`${apiBaseUrl}/concludeQuest`, { method: "POST" });
-    const result = await response.text();
-    document.getElementById("game-status").innerText = result;
-    updateShields();
-}
+// async function concludeQuest() {
+//     switchVisibilityOff("concludeQuest");
+//     const response = await fetch(`${apiBaseUrl}/concludeQuest`, { method: "POST" });
+//     const result = await response.text();
+//     document.getElementById("game-status").innerText = result;
+//     updateShields();
+// }
 
 async function switchVisibilityOff(id){
     // make play event button visible
@@ -182,17 +183,17 @@ document.getElementById('input-container').addEventListener('submit', async func
     // for game status question
     const question = document.getElementById("game-status").innerText;
 
-    // Send the response using fetch
+    // Send the response to the backend using fetch
     const res = await fetch(`${apiBaseUrl}/prompt`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' // sets the content type for form-encoded data
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({ response, question }) // encode your data
+        body: new URLSearchParams({ response, question })
     });
 
     const responseText = await res.text();
-    console.log(responseText); // logs the response from the server
+    console.log(responseText);
     inputBox.value = '';
     handleInput(response, question);
     updateHands();
@@ -211,21 +212,38 @@ async function handleInput(response, question){
     }  
     else if (question.includes("All Eligible Players Responded to the Prompt") && response.includes("*")){
         eligiblePlayersDrawAdv(response, question)
-    } else if ((question.includes("Eligible Players drew an Adventure Card") && response.includes("*")) || question.includes("trimming their hand,")){
+    } else if ((question.includes("Eligible Players drew an Adventure Card") && response.includes("*")) || question.includes("trimming their hand,") || question.includes("Sponsor Picks up") || question.includes("drew 2 adventure cards")){
         trimHand(response, question);
     } else if ((question.includes("No Hands to trim") && response.includes("*")) || question.includes("Build your Attack for")){
         setBuildGameStatus(response, question);
     } else if ((question.includes("All Eligible Players Built an Attack") && response.includes("*"))){
         attackStage(response, question)
     } else if (isNaN(response) && question.includes("Stage")){
-        setStageGameStatus(response, question)
-    } else if (question.includes("This Quest is Over") || question.includes("Queen's Favour Event") || question.includes("Prosperity Event") || question.includes("Plague Event") && response.includes("*")){
-        switchVisibilityOn("concludeQuest");
-    } else if (question.includes("No Winners") && response.includes("*")){
+        setStageGameStatus(response, question);
+    } 
+    // (SPONSOR PICK UP but need TRIM)
+
+    // (SPONSOR DIDNT PICK UP) - PUT IT AT THE TOP
+    else if (question.includes("Queen's Favour Event") || question.includes("Prosperity Event") || question.includes("Plague Event") || question.includes("This Quest is Over") && response.includes("*")){
+        // switchVisibilityOn("concludeQuest");
+    }
+    
+    // (SPONSOR NEEDS TO UP) NO sponsor, completed quest that needs to conclude 
+    else if (question.includes("Conclude Quest and Next Players Turn") && response.includes("*")){
+        sponsorDrawsCardsBack(response, question);
+
+    } 
+    else if (question.includes("No Winners") && response.includes("*")){
         nextTurn()
         switchVisibilityOn("playEvent");
     } 
 
+}
+async function sponsorDrawsCardsBack(response, question) {
+    const item = await fetch(`${apiBaseUrl}/sponsorDrawsCardsBack`);
+    const result = await item.text();
+    console.log("Update draw Cards BACK-status: " + result);
+    document.getElementById("game-status").innerText = result;
 }
 
 async function setSponsorGameStatus(response, question) {
@@ -250,13 +268,6 @@ async function setJoinGameStatus(response, question) {
     const result = await item.text();
     console.log("Update concluded build game-status: " + result);
     document.getElementById("game-status").innerText = result;
-}
-async function setStageGameStatus(response, question) {
-    // document.getElementById("input-box").placeholder = "";
-    const item = await fetch(`${apiBaseUrl}/setStageGameStatus`);
-    const result = await item.text();
-    console.log("Update stage game-status: " + result);
-    document.getElementById("game-status").innerText = result;   
 }
 
 async function eligiblePlayersDrawAdv(response, question) {
@@ -285,7 +296,7 @@ async function attackStage(response, question) {
     document.getElementById("game-status").innerText = result;
     console.log("Update attack STAGE game-status: " + result);
     if (result.includes("Conclude Quest and Next Players Turn")){
-        switchVisibilityOn("concludeQuest");
+        // switchVisibilityOn("concludeQuest");
     }
 }
 

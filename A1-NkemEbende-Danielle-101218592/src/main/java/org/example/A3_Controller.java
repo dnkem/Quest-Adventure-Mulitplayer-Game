@@ -68,7 +68,7 @@ public class A3_Controller {
             return "Queen's Favour Event: " + game.currentPlayer.getID() + " drew 2 adventure cards";
         } else if (game.currentDrawnEventCard.getName().equals("Plague")){
             game.currentPlayer.playPlagueCard(game.currentPlayer);
-            return "Plague Event: " +  game.currentPlayer.getID() + " loses 2 shields if any";
+            return "Plague Event: " +  game.currentPlayer.getID() + " loses 2 shields if any, This Quest is Over";
         } else if (game.currentDrawnEventCard.getName().equals("Prosperity")){
             game.currentPlayer.playProsperityCard(game.currentPlayer);
             return "Prosperity Event: " +  "All players drew 2 adventure cards";
@@ -95,6 +95,11 @@ public class A3_Controller {
             joinPrompt(response);
         } else if (question.contains("Build your Attack")){
             buildPrompt(response);
+        } else if (question.contains("All Eligible Players Responded to the Prompt")){
+//            if (game.eligiblePlayers.isEmpty()){
+//                g
+//            }
+//            System.out.println("SPONSOR DOESNT PICK UP");
         }
 //        else if (){ // next player
 //            game.currentPlayer.drawEventCard();
@@ -109,23 +114,39 @@ public class A3_Controller {
         return "Game Continues, "  + game.currentPlayer.getID() + " draws an Event Card: " + game.currentDrawnEventCard.getNameType();
     }
 
-    @PostMapping("/concludeQuest")
-    public String concludeQuest() {
-        StringWriter output = new StringWriter();
-        if (game.currentDrawnEventCard.getName().equals("Q")){
+    // sponsor draws their card back and Trims
+    @GetMapping("/sponsorDrawsCardsBack")
+    public String sponsorDrawsCardsBack() {
+        if (game.eligiblePlayers.isEmpty()){
             game.sponsorDrawsAdvCards();
-//            return "Sponsor may need to trim their hand after pick up";
+            game.initTrimmingPlayers("everyone");
         }
-        game.concludeQuest(new PrintWriter(output));
-        return game.printWinners() + ", Enter * to continue";
+        return "Sponsor Picks up";
     }
+
+//    @PostMapping("/concludeQuest")
+//    public String concludeQuest() {
+//        StringWriter output = new StringWriter();
+//        if (game.currentDrawnEventCard.getName().equals("Q")){
+//            game.sponsorDrawsAdvCards();
+////            return "Sponsor may need to trim their hand after pick up";
+//        }
+//        game.concludeQuest(new PrintWriter(output));
+//        return game.printWinners() + ", Enter * to continue";
+//    }
 
     @GetMapping("/setBuildGameStatus")
     public String setBuildGameStatus(String newStatus) {
-        if (game.buildingPlayers.isEmpty()){
+        // there were no eligible players at all, no one joined
+        if (game.eligiblePlayers.isEmpty()){
+            return "This Quest is Over, Enter * to Continue";
+        }
+        // people joined but eligible players is still full
+        if (game.buildingPlayers.isEmpty() && !game.eligiblePlayers.isEmpty()){
             System.out.println("All Eligible Players Built an Attack");
             return "All Eligible Players Built an Attack, Enter * to Continue";
         }
+        // there are still eligible players that need to build their attack
         return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + game.currentAttack + " by Entering a Position from your Cards (Enter Q to Quit)";
     }
 
@@ -148,15 +169,16 @@ public class A3_Controller {
     @GetMapping("/attackStage")
     public String attackStage() {
         if (!game.eligiblePlayers.isEmpty()){
+            int num = game.currentAttack - 1;
 //            game.removeIneligiblePlayersFromList();
             String result = "Players: ";
             for (int i=0; i<game.eligiblePlayers.size(); i++){
                 result += game.eligiblePlayers.get(i).getID() + " ";
             }
-            result += "Cleared Stage " + game.currentAttack + " successfully";
+            result += "Cleared Stage " + num + " successfully";
             return "Eligible Players Attack the Stage, \n" + result + "\n Enter * to continue";
         }
-        return "Eligible Players Attack the Stage Unsuccessfully, \nConclude Quest and Next Players Turn";
+        return "Eligible Players Attack the Stage Unsuccessfully, \nNo Eligible Players \nConclude Quest and Next Players Turn";
     }
 
     public void playersAttack(int stage){
@@ -182,6 +204,11 @@ public class A3_Controller {
 
     @GetMapping("/trimHand")
     public String trimHand(String position) {
+        // end game for other non quest events
+        if (!game.currentDrawnEventCard.getName().equals("Q")){
+            game.initTrimmingPlayers("everyone");
+        }
+
         if (!game.trimmingPlayers.isEmpty()){
             return game.trimmingPlayers.get(0).getID() + " is trimming their hand, Enter a position";
         }
@@ -202,7 +229,7 @@ public class A3_Controller {
             game.initTrimmingPlayers("eligible");
             return "Eligible Players drew an Adventure Card, Enter * to continue";
         }
-        return "Conclude Quest and Next Players Turn";
+        return "No Eligible Players, Conclude Quest and Next Players Turn";
     }
 
     @GetMapping("/setJoinGameStatus")
@@ -260,7 +287,7 @@ public class A3_Controller {
     public String setSponsorGameStatus(String newStatus) {
         if (game.promptedPlayers.isEmpty()){
             System.out.println("All Players Declined Sponsoring, This Quest is Over");
-            return "All Players Declined Sponsoring, This Quest is Over";
+            return "All Players Declined Sponsoring, This Quest is Over \nEnter * to continue";
         }
         System.out.println("Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?");
         return "Does " + game.promptedPlayers.get(0).getID() + " want to Sponsor the Quest?";
