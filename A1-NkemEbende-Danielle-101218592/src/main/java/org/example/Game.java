@@ -181,11 +181,9 @@ public class Game {
     }
 
     public void updateCurrentAttack(){
-        System.out.println("OLD ATTACK: " + currentAttack);
         if (currentAttack < currentDrawnEventCard.getValue()){
             currentAttack += 1;
         }
-        System.out.println("NEW ATTACK: " + currentAttack);
     }
 
 
@@ -304,13 +302,17 @@ public class Game {
         sponsoringPlayer.sortCards();
     }
 
-    public void printWinners() {
+    public String printWinners() {
         String w = "";
         for (int i = 0; i < gameWinners.size(); i++) {
             w += gameWinners.get(i).getID() + " ";
         }
         System.out.println("WINNER(S) of the game: " + w);
-        if (gameWinners.isEmpty()) System.out.println("No Winners");
+        if (gameWinners.isEmpty()) {
+            System.out.println("No Winners Yet");
+            return "No Winners";
+        }
+        return "WINNER(S) of the game: " + w;
     }
 
     public void eligiblePlayersDrawAdvCard(){

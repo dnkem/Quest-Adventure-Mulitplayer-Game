@@ -88,10 +88,27 @@ public class A3_Controller {
         } else if (question.contains("Build your Attack")){
             buildPrompt(response);
         } else if (question.contains("All Eligible Players Built an Attack")){
-            playersAttack(String.valueOf(game.currentAttack));
+            playersAttack(game.currentAttack);
         }
+//        else if (){ // next player
+//            game.currentPlayer.drawEventCard();
+//        }
         String responseMessage = "The input was received: " + response;
         return ResponseEntity.ok(responseMessage);
+    }
+
+    @GetMapping("/nextTurn")
+    public String nextTurn() {
+        game.currentPlayer.drawFirstEventCard();
+        return "Game Continues, "  + game.currentPlayer.getID() + " draws an Event Card: " + game.currentDrawnEventCard.getNameType();
+    }
+
+    @PostMapping("/concludeQuest")
+    public String concludeQuest() {
+        // check if winners is empty
+        StringWriter output = new StringWriter();
+        game.concludeQuest(new PrintWriter(output));
+        return game.printWinners() + ", Enter * to continue";
     }
 
     @GetMapping("/setBuildGameStatus")
@@ -100,7 +117,7 @@ public class A3_Controller {
             System.out.println("All Eligible Players Built an Attack");
             return "All Eligible Players Built an Attack, Enter * to Continue";
         }
-        return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + game.currentAttack + " by Entering a Position from your Cards (Enter Q to Quit)";
+        return game.buildingPlayers.get(0).getID() + " Build your Attack for stage " + (game.currentAttack + 1) + " by Entering a Position from your Cards (Enter Q to Quit)";
     }
 
     public void buildPrompt(String position){
@@ -108,6 +125,7 @@ public class A3_Controller {
         try {
             inputNum = parseInt(position);
             game.buildingPlayers.get(0).promptAttack(new Scanner((position)));
+            System.out.println("ADDED ATTACK: " + game.buildingPlayers.get(0).attack.get(0).getNameType());
         } catch (NumberFormatException e){ // if it's not, update
             if (position.contains("Q")){
                 game.updateBuildingPlayers();
@@ -122,14 +140,14 @@ public class A3_Controller {
             for (int i=0; i<game.eligiblePlayers.size(); i++){
                 result += game.eligiblePlayers.get(i).getID() + " ";
             }
-            int stage = game.currentAttack - 1;
-            result += "Cleared Stage " + stage +  " cA:"+ game.currentAttack + " successfully";
+            result += "Cleared Stage " + game.currentAttack + " successfully";
             return "Eligible Players Attack the Stage, \n" + result + "\n Enter * to continue";
         }
         return "Conclude Quest and Next Players Turn";
     }
 
-    public void playersAttack(String str){
+    public void playersAttack(int stage){
+        String str = "stage" + stage;
         if (!game.eligiblePlayers.isEmpty()){
             if (str.contains("stage1")){
                 game.allEligiblePlayersAttackStage(game.stage1, str);
@@ -193,13 +211,13 @@ public class A3_Controller {
 
     @GetMapping("/setStageGameStatus")
     public String setStageGameStatus(String newStatus) {
-        int attack = game.currentAttack - 1;
+//        int attack = game.currentAttack - 1;
         if (game.promptedStage.isEmpty()){
             if (game.currentAttack == game.currentDrawnEventCard.getValue()){
-                System.out.println("This Quest is Over " + attack);
-                return "This Quest is Over";
+                System.out.println("This Quest is Over " + game.currentAttack);
+                return "This Quest is Over, Enter * to Continue";
             }
-            System.out.println("This stage is complete " + attack + " Q" + game.currentDrawnEventCard.getValue());
+            System.out.println("This stage is complete " + game.currentAttack + " Q" + game.currentDrawnEventCard.getValue());
             game.initPromptedEligiPlayers();
             return "This stage is complete, Enter * For Player Join Prompt";
         }
@@ -214,9 +232,10 @@ public class A3_Controller {
             game.sponsoringPlayer.buildSingleStage(game.currentStage, inputNum);
            // worry about eligible later
         } catch (NumberFormatException e){ // if it's not, update
-            game.sponsoringPlayer.assignStageValues(game.currentStage);
-            game.sponsoringPlayer.printStage(game.currentStage);
             if (position.contains("Q")){
+                game.sponsoringPlayer.assignStageValues(game.currentStage);
+                System.out.println("PRINTED STAGE: " + game.currentStage);
+                game.sponsoringPlayer.printStage(game.currentStage);
                 game.updatePromptedStages();
             }
         }

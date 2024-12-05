@@ -411,6 +411,7 @@ public class Player {
             return;
         }
 
+        System.out.println(this.getID() + " BUILding STAGE: " +  stageNum + " ADDING IN: " + cards.get(position -1).getNameType());
         switch (stageNum) {
             case 1:
                 game.stage1.add(cards.remove(position - 1));
@@ -569,12 +570,15 @@ public class Player {
         String inputStr = input.nextLine();
         int inputNum = -1;
 
+        System.out.println();
+
         try {
             inputNum = Integer.parseInt(inputStr);
             attack.add(cards.remove(inputNum - 1));
             System.out.println(inputNum);
             return inputStr;
         } catch (NumberFormatException e) {
+            printAttack();
             System.out.println("Q");
             return inputStr;
         }
