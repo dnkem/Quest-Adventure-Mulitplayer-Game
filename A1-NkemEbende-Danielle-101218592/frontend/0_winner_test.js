@@ -213,7 +213,7 @@ async function runTest() {
         await driver.sleep(1500);
         await inputBox.sendKeys(Key.RETURN); 
         await driver.sleep(2000);
-        console.log("P4 Attacks with empty");
+        console.log("P4 Attacks with empty stage");
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
@@ -226,11 +226,79 @@ async function runTest() {
         await driver.sleep(1500);
         await inputBox.sendKeys(Key.RETURN); 
         await driver.sleep(2000);
-        console.log("Display shows who passed")
+        console.log("Display shows who passed");
 
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
         
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
 
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("\nSponsor Picks Up");
 
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P1 Trims F5");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("P1 Trims 10");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("The Quest is Over");
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("The Quest is Over");
+
+        // click
+        let concludeButton = await driver.findElement(By.xpath("//button[contains(text(), 'Conclude Quest')]"));
+        await concludeButton.click();
+        await driver.sleep(2000);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1500);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(2000);
+        console.log("\n\nEnd of 0 Winner Scenario");
+        
 
     } catch (error) {
         console.error("Test encountered an error:", error);
