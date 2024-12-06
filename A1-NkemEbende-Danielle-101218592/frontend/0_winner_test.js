@@ -2,8 +2,8 @@ const { Builder, By, until, Key } = require('selenium-webdriver');
 // import { startRandomGame } from "./script.js";
 
 async function runTest() {
+    let driver = await new Builder().forBrowser('chrome').build();
     try {
-        let driver = await new Builder().forBrowser('chrome').build();
         await driver.get('http://127.0.0.1:8081');
 
         await driver.sleep(2000);
