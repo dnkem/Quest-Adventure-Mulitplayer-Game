@@ -98,6 +98,24 @@ async function updateHands() {
         const p4Hand = await response4.text();
         document.getElementById("p4-hand").innerText = p4Hand;
 
+        // just updating nums here cause it's easier
+        const response5 = await fetch(`${apiBaseUrl}/printP1HandNum`);
+        const p1HandNum = await response5.text();
+        document.getElementById("p1-num").innerText = p1HandNum;
+        // console.log(p1Hand);
+
+        const response6 = await fetch(`${apiBaseUrl}/printP2HandNum`);
+        const p2HandNum = await response6.text();
+        document.getElementById("p2-num").innerText = p2HandNum;
+
+        const response7 = await fetch(`${apiBaseUrl}/printP3HandNum`);
+        const p3HandNum = await response7.text();
+        document.getElementById("p3-num").innerText = p3HandNum;
+
+        const response8 = await fetch(`${apiBaseUrl}/printP4HandNum`);
+        const p4HandNum = await response8.text();
+        document.getElementById("p4-num").innerText = p4HandNum;
+
         console.log("Update Hands of Players");
     } catch (error) {
         console.error("Error in Updating Hands:", error);
@@ -204,6 +222,9 @@ document.getElementById('input-container').addEventListener('submit', async func
 });
 
 async function handleInput(response, question){
+    const quest = await fetch(`${apiBaseUrl}/questValue`);
+    const questValue = await quest.text();
+
     // console.log("IN HANDLER");
     if (response.includes("N") && question.includes("Sponsor")){
         setSponsorGameStatus(response, question);
@@ -214,8 +235,7 @@ async function handleInput(response, question){
     else if(question.includes("This Quest is Over")){
         switchVisibilityOn("concludeQuest");
         // switchVisibilityOff("input-container");
-    }
-    else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
+    } else if ((question.includes("Join") && (response.includes("Y") || response.includes("N"))) || (question.includes("Join") && response.includes("*"))){
         setJoinGameStatus(response, question)
     }  
     else if (question.includes("All Eligible Players Responded to the Prompt") && response.includes("*")){
@@ -226,6 +246,8 @@ async function handleInput(response, question){
         setBuildGameStatus(response, question);
     } else if ((question.includes("All Eligible Players Built an Attack") && response.includes("*"))){
         attackStage(response, question)
+    } else if ((question.includes("Conclude Quest and Next Players Turn") && response.includes("*")) || (question.includes("Cleared Stage " + questValue) && response.includes("*"))){
+        sponsorDrawsCardsBack(response, question);
     } else if (isNaN(response) && question.includes("Stage")){
         setStageGameStatus(response, question);
     } 
@@ -303,9 +325,9 @@ async function attackStage(response, question) {
     const result = await item.text();
     document.getElementById("game-status").innerText = result;
     console.log("Update attack STAGE game-status: " + result);
-    if (result.includes("Conclude Quest and Next Players Turn")){
-        // switchVisibilityOn("concludeQuest");
-    }
+    // if (result.includes("Conclude Quest and Next Players Turn")){
+    //     // switchVisibilityOn("concludeQuest");
+    // }
 }
 
 async function nextTurn() {

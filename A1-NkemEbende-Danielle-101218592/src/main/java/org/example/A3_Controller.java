@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Integer.compare;
 import static java.lang.Integer.parseInt;
 
 
@@ -109,6 +110,11 @@ public class A3_Controller {
         return ResponseEntity.ok(responseMessage);
     }
 
+    @GetMapping("/questValue")
+    public String questValue() {
+        return "" + game.currentDrawnEventCard.getValue();
+    }
+
     @GetMapping("/nextTurn")
     public String nextTurn() {
         game.currentPlayer.drawFirstEventCard();
@@ -118,7 +124,17 @@ public class A3_Controller {
     // sponsor draws their card back and Trims
     @GetMapping("/sponsorDrawsCardsBack")
     public String sponsorDrawsCardsBack() {
-        if (game.eligiblePlayers.isEmpty()){
+        if (game.eligiblePlayers.isEmpty()) { // if no one joing
+            game.sponsorDrawsAdvCards();
+            game.initTrimmingPlayers("everyone");
+        } else if ((game.currentDrawnEventCard.getValue() + 1) < game.currentAttack){
+            // indicate it's the last stage
+            System.out.println(">    Q" + (game.currentDrawnEventCard.getValue() + 1) + " and Current Stage: " + game.currentAttack);
+            game.sponsorDrawsAdvCards();
+            game.initTrimmingPlayers("everyone");
+        } else if ((game.currentDrawnEventCard.getValue() + 1) == game.currentAttack){
+            // indicate it's the last stage
+            System.out.println("==    Q" + (game.currentDrawnEventCard.getValue() + 1) + " and Current Stage: " + game.currentAttack);
             game.sponsorDrawsAdvCards();
             game.initTrimmingPlayers("everyone");
         }
@@ -136,6 +152,10 @@ public class A3_Controller {
     public String setBuildGameStatus(String newStatus) {
         // there were no eligible players at all, no one joined
         if (game.eligiblePlayers.isEmpty()){
+            return "This Quest is Over, Enter * to Continue";
+        }
+        // completed the last stage therefore the attacks and quest are over
+        if ((game.currentDrawnEventCard.getValue() + 1) == game.currentAttack){
             return "This Quest is Over, Enter * to Continue";
         }
         // people joined but eligible players is still full
@@ -209,6 +229,13 @@ public class A3_Controller {
         if (!game.trimmingPlayers.isEmpty()){
             return game.trimmingPlayers.get(0).getID() + " is trimming their hand, Enter a position";
         }
+
+        // this is for the 4/4 completed stages where players won the quest
+        // basically for the sponsor to trim their cards
+        if (game.currentDrawnEventCard.getName().equals("Q") && game.sponsoringPlayer.getCardsSize() != 12){
+            game.initTrimmingPlayers("everyone");
+        }
+
         return "No Hands to trim, Enter * to continue";
     }
 
@@ -306,6 +333,26 @@ public class A3_Controller {
             game.initCurrentAttack();
             game.initCurrentStage();
         }
+    }
+
+    @GetMapping("/printP1HandNum")
+    public String printP1HandNum() {
+        return "P1 # Cards: " + game.p1.getCardsSize();
+    }
+
+    @GetMapping("/printP2HandNum")
+    public String printP2HandNum() {
+        return "P2 # Cards: " + game.p2.getCardsSize();
+    }
+
+    @GetMapping("/printP3HandNum")
+    public String printP3HandNum() {
+        return "P3 # Cards: " + game.p3.getCardsSize();
+    }
+
+    @GetMapping("/printP4HandNum")
+    public String printP4HandNum() {
+        return "P4 # Cards: " + game.p4.getCardsSize();
     }
 
     @GetMapping("/printP1Hand")
@@ -603,12 +650,8 @@ public class A3_Controller {
                 new Card("Adventure", "F", 20),
                 new Card("Adventure", "D", 5),
                 new Card("Adventure", "F", 35),
-
-                // queens favor
                 new Card("Adventure", "S", 10),//
                 new Card("Adventure", "F", 5),
-
-                // Round 2 extra random (for prosperity event)
                 new Card("Adventure", "F", 15),
                 new Card("Adventure", "F", 5),
                 new Card("Adventure", "E", 30),
@@ -617,26 +660,54 @@ public class A3_Controller {
                 new Card("Adventure", "F", 35),
                 new Card("Adventure", "E", 30),
                 new Card("Adventure", "L", 20),
-
-
-
                 // extra cards for sponsor to pick up hypothetically from discarded (13)
+
+                // end
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "S", 10),
+
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "F", 35),
+
+                // & sponsor
+                new Card("Adventure", "F", 50),
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "S", 10),
+
+                new Card("Adventure", "S", 10),
+                new Card("Adventure", "F", 50),
+                new Card("Adventure", "H", 10),
+                new Card("Adventure", "B", 15),
+                // // participation draw
+
+                new Card("Adventure", "F", 30),
+                new Card("Adventure", "F", 25),
+
                 new Card("Adventure", "D", 5),
-                new Card("Adventure", "L", 20),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 40),
                 new Card("Adventure", "B", 15),
-                new Card("Adventure", "B", 15),
-                new Card("Adventure", "E", 30),
 
                 new Card("Adventure", "H", 10),
                 new Card("Adventure", "S", 10),
-                new Card("Adventure", "S", 10),
-                new Card("Adventure", "D", 5),
+                new Card("Adventure", "F", 25),
+                new Card("Adventure", "F", 25),
+                // prosperity pick ups
 
                 new Card("Adventure", "F", 15),
                 new Card("Adventure", "F", 15),
-                new Card("Adventure", "F", 5),
-                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
 
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 5),
+                new Card("Adventure", "F", 5),
+                // sponsor pick up
 
                 // pick ups Round 1
                 new Card("Adventure", "F", 20),
