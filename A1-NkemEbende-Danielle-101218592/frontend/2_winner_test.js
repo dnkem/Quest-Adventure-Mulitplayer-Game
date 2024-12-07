@@ -5,7 +5,7 @@ async function runTest() {
     try {
         await driver.get('http://127.0.0.1:8081');
 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // click Start 2 Winner Game Button
         let startButton = await driver.findElement(By.xpath("//button[contains(text(), 'Start 2 Winner Game')]"));
@@ -14,831 +14,832 @@ async function runTest() {
         // check for notif status to be correct
         await driver.wait(until.elementTextContains(driver.findElement(By.id('game-status')), '2 Winner Game started. P1 draws an Event Card'), 10000);
         console.log("Game started successfully.");
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // click Play Event Card
         let playEventButton = await driver.findElement(By.xpath("//button[contains(text(), 'Current Player Play Event Card')]"));
         await playEventButton.click();
         console.log("Playing the Event Card\n");
 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // Enter Yes to Sponsor the Quest
         let inputBox = await driver.findElement(By.xpath("//input[@id='input-box']"));
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
         console.log("P1 Decides to Sponsor");
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("5"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("4"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("4"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         // end of stage building
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
-        await inputBox.clear();
-        await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
-        await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        // await inputBox.clear();
+        // await inputBox.sendKeys("*"); 
+        // await driver.sleep(1100);
+        // await inputBox.sendKeys(Key.RETURN); 
+        // await driver.sleep(1400);
 
         // agree to stage 1 of q4
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
+
+        //
+        await inputBox.clear();
+        await inputBox.sendKeys("*"); 
+        await driver.sleep(1100);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1100);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(1400);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1100);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(1400);
+
+        await inputBox.clear();
+        await inputBox.sendKeys("1"); 
+        await driver.sleep(1100);
+        await inputBox.sendKeys(Key.RETURN); 
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
-
-        await inputBox.clear();
-        await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
-        await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
-
-        await inputBox.clear();
-        await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
-        await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
-
-        await inputBox.clear();
-        await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
-        await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
-
-        await inputBox.clear();
-        await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
-        await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("7"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         // finished attack 1
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // agree to participate
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("4"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("4"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         // built stage 2
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // agree to participate
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("5"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("5"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // participate in stage 4
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
         
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // attack 4
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // trimming sponsors hand
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // end of quest
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         let concludeButton = await driver.findElement(By.xpath("//button[contains(text(), 'Conclude Quest')]"));
         await concludeButton.click();
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await playEventButton.click();
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("N"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // stages q3
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("3"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("4"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // P1 declinse joining q3
         await inputBox.clear();
         await inputBox.sendKeys("N"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // others agree
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // attacks 1
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("6"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // attack 2
         await inputBox.clear();
         await inputBox.sendKeys("7"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("7"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Y"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // attack 3
         await inputBox.clear();
         await inputBox.sendKeys("10"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("10"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("Q"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         // sponsor trims
         await inputBox.clear();
         await inputBox.sendKeys("1"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("2"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("2"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await inputBox.clear();
         await inputBox.sendKeys("*"); 
-        await driver.sleep(1500);
+        await driver.sleep(1100);
         await inputBox.sendKeys(Key.RETURN); 
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
         await concludeButton.click();
-        await driver.sleep(2000);
+        await driver.sleep(1400);
 
 
         // ASSERTS

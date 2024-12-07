@@ -569,14 +569,14 @@ public class A3_Controller {
                 new Card("Adventure", "F", 20),
                 // Sponsor pick up
 
-                // Q3 pick ups
+                // Q pick ups
+                new Card("Adventure", "F", 25),
                 new Card("Adventure", "F", 25),
                 new Card("Adventure", "F", 15),
-
+                new Card("Adventure", "F", 15),
                 new Card("Adventure", "D", 5),
                 new Card("Adventure", "D", 5),
-                new Card("Adventure", "D", 5),
-                // Q3 pick ups
+                // Q pick ups
 
                 // sponsor pick up after Q4
                 new Card("Adventure", "F", 30),
