@@ -609,11 +609,36 @@ async function runTest() {
 
         let request = await driver.findElement(By.id('p1-shields'));
         let response = await request.getText();
-        console.assert(response === "P1 Shields: 0", "P1 Shields Assertion Failed");
         console.assert(response == "P1 Shields: 0", "P1 Shields Assertion Failed");
+        
+        let shield2 = await driver.findElement(By.id('p2-shields'));
+        let response2 = await shield2.getText();
+        console.assert(response2 == "P2 Shields: 0", "P2 Shields Assertion Failed");
 
+        let shield3 = await driver.findElement(By.id('p3-shields'));
+        let response3 = await shield3.getText();
+        console.assert(response3 == "P3 Shields: 0", "P3 Shields Assertion Failed");
 
+        let shield4 = await driver.findElement(By.id('p4-shields'));
+        let response4 = await shield4.getText();
+        console.assert(response4 == "P4 Shields: 4", "P4 Shields Assertion Failed");
 
+        let numRequest = await driver.findElement(By.id('p1-num'));
+        let num1 = await numRequest.getText();
+        console.assert(num1 == "P1 # Cards: 9", "P1 Shields Assertion Failed");
+
+        let numRequest2 = await driver.findElement(By.id('p2-num'));
+        let num2 = await numRequest2.getText();
+        console.assert(num2 == "P2 # Cards: 12", "P2 Shields Assertion Failed");
+
+        let numRequest3 = await driver.findElement(By.id('p3-num'));
+        let num3 = await numRequest3.getText();
+        console.assert(num3 == "P3 # Cards: 5", "P3 Shields Assertion Failed");
+
+        let numRequest4 = await driver.findElement(By.id('p4-num'));
+        let num4 = await numRequest4.getText();
+        console.assert(num4 == "P4 # Cards: 4", "P4 Shields Assertion Failed");
+         
     } catch (error) {
         console.error("Test encountered an error:", error);
     } finally {
