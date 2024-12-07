@@ -522,7 +522,7 @@ public class A3_Controller {
         game = new Game();
         List<Card> advCards = Arrays.asList(
 
-                // Round 2 extra random (drawing 6)
+                // FILLER
                 new Card("Adventure", "F", 40),
                 new Card("Adventure", "F", 40),
                 new Card("Adventure", "L", 20),
@@ -530,8 +530,6 @@ public class A3_Controller {
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "F", 70),
 
-
-                // extra cards for sponsor to pick up hypothetically from discarded (13)
                 new Card("Adventure", "D", 5),
                 new Card("Adventure", "L", 20),
                 new Card("Adventure", "B", 15),
@@ -548,8 +546,6 @@ public class A3_Controller {
                 new Card("Adventure", "F", 5),
                 new Card("Adventure", "F", 5),
 
-
-                // pick ups Round 1
                 new Card("Adventure", "B", 15),// 4th set
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "S", 10), // 3rd set
@@ -559,7 +555,60 @@ public class A3_Controller {
                 new Card("Adventure", "L", 20), // first set of drawn card
                 new Card("Adventure", "D", 5),
                 new Card("Adventure", "H", 10),
-                // pick ups scenario 2
+                // FILLER
+
+                // Sponsor pick up
+                new Card("Adventure", "L", 20),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "B", 15),
+                new Card("Adventure", "S", 10),
+
+                new Card("Adventure", "F", 30),
+                new Card("Adventure", "F", 25),
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 20),
+                // Sponsor pick up
+
+                // Q3 pick ups
+                new Card("Adventure", "F", 25),
+                new Card("Adventure", "F", 15),
+
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+                new Card("Adventure", "D", 5),
+                // Q3 pick ups
+
+                // sponsor pick up after Q4
+                new Card("Adventure", "F", 30),
+
+                new Card("Adventure", "F", 25),
+                new Card("Adventure", "F", 25),
+
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 20),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 5),
+                // sponsor pick up after Q4
+
+                // end of Q4 pick ups
+                new Card("Adventure", "F", 20),
+                new Card("Adventure", "F", 15),
+
+                new Card("Adventure", "F", 15),
+                new Card("Adventure", "F", 30),
+
+                new Card("Adventure", "F", 30),
+                new Card("Adventure", "F", 10),
+
+                new Card("Adventure", "F", 10),
+                new Card("Adventure", "F", 40),
+                new Card("Adventure", "F", 5),
+                // participation pick up
 
                 new Card("Adventure", "E", 30),
                 new Card("Adventure", "L", 20),
@@ -602,7 +651,6 @@ public class A3_Controller {
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "S", 10),
                 new Card("Adventure", "S", 10),
-
 
                 new Card("Adventure", "H", 10),
                 new Card("Adventure", "H", 10),

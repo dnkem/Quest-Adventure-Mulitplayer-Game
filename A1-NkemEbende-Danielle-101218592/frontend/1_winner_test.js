@@ -8,7 +8,7 @@ async function runTest() {
 
         await driver.sleep(2000);
 
-        // click Start 0 Winner Game Button
+        // click Start 1 Winner Game Button
         let startButton = await driver.findElement(By.xpath("//button[contains(text(), 'Start 1 Winner Game')]"));
         await startButton.click();
 
@@ -1030,35 +1030,39 @@ async function runTest() {
         console.log("End of Game, Starting Asserts")
 
         // ASSERTS
-        // driver.findElement(By.id('p1-num')).getText().then(textValue => {
-        //     assert.equal('P1 # Cards: 12', textValue);
-        // });
-        // driver.findElement(By.id('p2-num')).getText().then(textValue => {
-        //     assert.equal('P2 # Cards: 9', textValue);
-        // });
-        // driver.findElement(By.id('p3-num')).getText().then(textValue => {
-        //     assert.equal('P3 # Cards: 10', textValue);
-        // });
-        // driver.findElement(By.id('p4-num')).getText().then(textValue => {
-        //     assert.equal('P4 # Cards: 11', textValue);
-        // });
+        let p1_num = driver.findElements(By.id('p1-num'));
+        console.assert('P1 # Cards: 12', textValue);
+        
+        console.assert()
+        driver.findElements(By.id('p1-num')).getText().then(textValue => {
+            assert.equal('P1 # Cards: 12', textValue);
+        });
+        driver.findElement(By.id('p2-num')).getText().then(textValue => {
+            assert.equal('P2 # Cards: 9', textValue);
+        });
+        driver.findElement(By.id('p3-num')).getText().then(textValue => {
+            assert.equal('P3 # Cards: 10', textValue);
+        });
+        driver.findElement(By.id('p4-num')).getText().then(textValue => {
+            assert.equal('P4 # Cards: 11', textValue);
+        });
 
-        // driver.findElement(By.id('game-status')).getText().then(textValue => {
-        //     assert.equal('WINNER(S) of the game: P3', textValue);
-        // });
+        driver.findElement(By.id('game-status')).getText().then(textValue => {
+            assert.equal('WINNER(S) of the game: P3', textValue);
+        });
 
-        // driver.findElement(By.id('p1-shields')).getText().then(textValue => {
-        //     assert.equal('P1 Shields: 0', textValue);
-        // });
-        // driver.findElement(By.id('p2-shields')).getText().then(textValue => {
-        //     assert.equal('P2 Shields: 5', textValue);
-        // });
-        // driver.findElement(By.id('p3-shields')).getText().then(textValue => {
-        //     assert.equal('P3 Shields: 7', textValue);
-        // });
-        // driver.findElement(By.id('p4-shields')).getText().then(textValue => {
-        //     assert.equal('P4 Shields: 4', textValue);
-        // });
+        driver.findElement(By.id('p1-shields')).getText().then(textValue => {
+            assert.equal('P1 Shields: 0', textValue);
+        });
+        driver.findElement(By.id('p2-shields')).getText().then(textValue => {
+            assert.equal('P2 Shields: 5', textValue);
+        });
+        driver.findElement(By.id('p3-shields')).getText().then(textValue => {
+            assert.equal('P3 Shields: 7', textValue);
+        });
+        driver.findElement(By.id('p4-shields')).getText().then(textValue => {
+            assert.equal('P4 Shields: 4', textValue);
+        });
 
 
     } catch (error) {
