@@ -845,40 +845,34 @@ async function runTest() {
         let request = await driver.findElement(By.id('p1-shields'));
         let response = await request.getText();
         console.assert(response == "P1 Shields: 0", "P1 Shields Assertion Failed");
+       
+        let shield2 = await driver.findElement(By.id('p2-shields'));
+        let response2 = await shield2.getText();
+        console.assert(response2 == "P2 Shields: 7", "P2 Shields Assertion Failed");
 
+        let shield3 = await driver.findElement(By.id('p3-shields'));
+        let response3 = await shield3.getText();
+        console.assert(response3 == "P3 Shields: 0", "P3 Shields Assertion Failed");
 
-        // console.assert(playCards.length &gt;= 2, "Player should have at least 2 cards after pitting.");
+        let shield4 = await driver.findElement(By.id('p4-shields'));
+        let response4 = await shield4.getText();
+        console.assert(response4 == "P4 Shields: 7", "P4 Shields Assertion Failed");
 
-        // driver.findElement(By.id('p1-num')).getText().then(textValue => {
-        //     assert.equal('P1 # Cards: 12', textValue);
-        // });
-        // driver.findElement(By.id('p2-num')).getText().then(textValue => {
-        //     assert.equal('P2 # Cards: 9', textValue);
-        // });
-        // driver.findElement(By.id('p3-num')).getText().then(textValue => {
-        //     assert.equal('P3 # Cards: 10', textValue);
-        // });
-        // driver.findElement(By.id('p4-num')).getText().then(textValue => {
-        //     assert.equal('P4 # Cards: 11', textValue);
-        // });
+        let numRequest = await driver.findElement(By.id('p1-num'));
+        let num1 = await numRequest.getText();
+        console.assert(num1 == "P1 # Cards: 12", "P1 Shields Assertion Failed");
 
-        // driver.findElement(By.id('game-status')).getText().then(textValue => {
-        //     assert.equal('WINNER(S) of the game: P3', textValue);
-        // });
+        let numRequest2 = await driver.findElement(By.id('p2-num'));
+        let num2 = await numRequest2.getText();
+        console.assert(num2 == "P2 # Cards: 9", "P2 Shields Assertion Failed");
 
-        // driver.findElement(By.id('p1-shields')).getText().then(textValue => {
-        //     assert.equal('P1 Shields: 0', textValue);
-        // });
-        // driver.findElement(By.id('p2-shields')).getText().then(textValue => {
-        //     assert.equal('P2 Shields: 5', textValue);
-        // });
-        // driver.findElement(By.id('p3-shields')).getText().then(textValue => {
-        //     assert.equal('P3 Shields: 7', textValue);
-        // });
-        // driver.findElement(By.id('p4-shields')).getText().then(textValue => {
-        //     assert.equal('P4 Shields: 4', textValue);
-        // });
+        let numRequest3 = await driver.findElement(By.id('p3-num'));
+        let num3 = await numRequest3.getText();
+        console.assert(num3 == "P3 # Cards: 12", "P3 Shields Assertion Failed");
 
+        let numRequest4 = await driver.findElement(By.id('p4-num'));
+        let num4 = await numRequest4.getText();
+        console.assert(num4 == "P4 # Cards: 9", "P4 Shields Assertion Failed");
 
     } catch (error) {
         console.error("Test encountered an error:", error);
