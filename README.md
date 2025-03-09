@@ -38,19 +38,17 @@
 - Go to the A3branch for the code
 ## Main Files of Note:
 - A3_Controller.java (DaniellesFiles/src/main/java/org/example/A3_Controller.java)
-  : 
+  : Backend portion of the Springboot framework (REST Controller responsible for handling incoming HTTP requests and returning an appropriate response)
 - A3_Application.java (DaniellesFiles/src/main/java/org/example/A3_Application.java)
-  : empty file to run the springboot application
-- GameState.java (DaniellesFiles/src/main/java/org/example/GameState.java)
-  :
-- A1_scenario_test.js (DaniellesFiles/frontend/A1_scenario_test.js)
-  :
-- 2_winner_test.js (DaniellesFiles/frontend/2_winner_test.js)
-  : 
-- 0_winner_test.js (DaniellesFiles/frontend/0_winner_test.js)
-  :
+  : empty file to run the springboot application (executable)
 - script.js (DaniellesFiles/frontend/script.js)
-  :
+  : client porrtion of the Springboot framework (Javascript functions that call the backend)
+- A1_scenario_test.js (DaniellesFiles/frontend/A1_scenario_test.js)
+  : specific selenium test scenario
+- 2_winner_test.js (DaniellesFiles/frontend/2_winner_test.js)
+  : specific selenium test scenario
+- 0_winner_test.js (DaniellesFiles/frontend/0_winner_test.js)
+  : specific selenium test scenario
   
 
 - the link of it running: 
